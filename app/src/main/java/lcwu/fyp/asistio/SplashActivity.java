@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 //        splash.setAnimationType(Splash.AnimationType.TYPE_2);
         splash.perform();
 
-        new CountDownTimer(2000, 1000) {
+        new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
