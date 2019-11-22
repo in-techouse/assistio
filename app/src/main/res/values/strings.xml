@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Asistio</string>
     <string name="login_screen">Login Screen</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="email">Enter Email</string>
+    <string name="password">Enter Password</string>
     <string name="login">LOGIN</string>
+    <string name="registration_form">Registration Form</string>
+    <string name="enter_first_name">Enter FIrst Name</string>
+    <string name="enter_last_name">Enter Last Name</string>
+    <string name="phone_number">Enter Phone Number</string>
+    <string name="submit">REGISTER</string>
+    <string name="confirm_password">Password Confirmation</string>
 </resources>

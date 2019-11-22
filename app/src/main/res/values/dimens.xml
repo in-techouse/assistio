@@ -2,4 +2,8 @@
 <resources>
     <dimen name="HeadingPadding">15sp</dimen>
     <dimen name="TextSizeHeading">24sp</dimen>
+    <dimen name="paddingbottom">20dp</dimen>
+    <dimen name="txtsize">17dp</dimen>
+    <dimen name="padding">12dp</dimen>
+    <dimen name="btn_size">17dp</dimen>
 </resources>
