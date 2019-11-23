@@ -23,6 +23,7 @@
     
     <EditText
         android:id="@+id/edtEmail"
+        android:inputType="textEmailAddress"
         android:hint="@string/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,6 +67,14 @@
         android:textAlignment="center"
         android:text="Don't have an account? Click here to REGISTER"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/login_process"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 

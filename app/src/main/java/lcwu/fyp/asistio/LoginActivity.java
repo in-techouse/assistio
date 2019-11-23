@@ -1,15 +1,21 @@
 package lcwu.fyp.asistio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -17,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView go_to_registration;
     EditText edtEmail, edtPassword;
     String strEmail , strPassword;
+    ProgressBar login_process;
 
 
     @Override
@@ -28,9 +35,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         go_to_registration = findViewById(R.id.go_to_registration);
-
         btnLogin.setOnClickListener(this);
         go_to_registration.setOnClickListener(this);
+
+        login_process = findViewById(R.id.login_process);
     }
 
     @Override
@@ -44,9 +52,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                    boolean flag = isValid();
                     if (flag) {
+
+                        login_process.setVisibility(View.VISIBLE);
+                        btnLogin.setVisibility(View.GONE);
                         //Firebase
                         FirebaseAuth auth = FirebaseAuth.getInstance();
-                        auth.signInWithEmailAndPassword(strEmail,strPassword);
+                        auth.signInWithEmailAndPassword(strEmail,strPassword)
+                                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                    @Override
+                                    public void onSuccess(AuthResult authResult) {
+                                        login_process.setVisibility(View.GONE);
+                                        btnLogin.setVisibility(View.VISIBLE);
+                                        Log.e("Login","Success");
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                login_process.setVisibility(View.GONE);
+                                btnLogin.setVisibility(View.VISIBLE);
+                                Log.e("Login","Fail " + e.getMessage());
+                            }
+                        });
 
                     }
                     break;
