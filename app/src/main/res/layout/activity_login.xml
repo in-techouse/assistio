@@ -58,6 +58,17 @@
         android:text="@string/login" />
 
 
+    <TextView
+        android:id="@+id/go_to_registration"
+        android:textStyle="bold"
+        android:layout_margin="12dp"
+        android:padding="12dp"
+        android:textAlignment="center"
+        android:text="Don't have an account? Click here to REGISTER"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
 
 
 
