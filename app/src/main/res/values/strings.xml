@@ -10,4 +10,8 @@
     <string name="phone_number">Enter Phone Number</string>
     <string name="submit">REGISTER</string>
     <string name="confirm_password">Password Confirmation</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="Change_password">Submit</string>
 </resources>

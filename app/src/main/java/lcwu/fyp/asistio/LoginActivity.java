@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnLogin;
-    TextView go_to_registration;
+    TextView go_to_registration, forgotPassword;
     EditText edtEmail, edtPassword;
     String strEmail , strPassword;
     ProgressBar login_process;
@@ -35,10 +35,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         go_to_registration = findViewById(R.id.go_to_registration);
+        login_process = findViewById(R.id.login_process);
+        forgotPassword = findViewById(R.id.fogotPasword);
+
+
         btnLogin.setOnClickListener(this);
         go_to_registration.setOnClickListener(this);
+        forgotPassword.setOnClickListener(this);
 
-        login_process = findViewById(R.id.login_process);
+
     }
 
     @Override
@@ -83,6 +88,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
                 break;
             }
+
+            case R.id.fogotPasword:{
+                Intent it = new Intent(LoginActivity.this, ForgotPasswordAcitivity.class);
+                startActivity(it);
+                break;
+            }
+
         }
 
     }
