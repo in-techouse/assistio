@@ -3,7 +3,10 @@ package lcwu.fyp.asistio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -12,11 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnLogin;
@@ -47,8 +53,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btnLogin: {
-                 strEmail = edtEmail.getText().toString();
-                 strPassword = edtPassword.getText().toString();
+                boolean isConn = isConnected();
+                if (!isConn) {
+                    //show error message
+                    new FancyGifDialog.Builder(this)
+                            .setTitle("ERROR")
+                            .setMessage("Internet Connection Error")
+                            .setNegativeBtnText("Cancel")
+                            .setPositiveBtnBackground("#FF4081")
+                            .setPositiveBtnText("Ok")
+                            .setNegativeBtnBackground("#FFA9A7A8")
+                            .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+                            .isCancellable(true)
+                            .OnPositiveClicked(new FancyGifDialogListener() {
+                                @Override
+                                public void OnClick() {
+                                    Toast.makeText(LoginActivity.this, "Ok", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .OnNegativeClicked(new FancyGifDialogListener() {
+                                @Override
+                                public void OnClick() {
+                                    Toast.makeText(LoginActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .build();
+                    strEmail = edtEmail.getText().toString();
+                    strPassword = edtPassword.getText().toString();
+                }
 
                    boolean flag = isValid();
                     if (flag) {
@@ -63,6 +95,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     public void onSuccess(AuthResult authResult) {
                                         login_process.setVisibility(View.GONE);
                                         btnLogin.setVisibility(View.VISIBLE);
+
+                                            Intent it=new Intent(LoginActivity.this,Dashboard.class);
+                                        startActivity(it);
+                                        finish();
+
                                         Log.e("Login","Success");
 
                                     }
@@ -71,6 +108,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onFailure(@NonNull Exception e) {
                                 login_process.setVisibility(View.GONE);
                                 btnLogin.setVisibility(View.VISIBLE);
+                                new FancyGifDialog.Builder(LoginActivity.this)
+                                        .setTitle("ERROR")
+                                        .setMessage(e.getMessage())
+                                        .setNegativeBtnText("Cancel")
+                                        .setPositiveBtnBackground("#FF4081")
+                                        .setPositiveBtnText("Ok")
+                                        .setNegativeBtnBackground("#FFA9A7A8")
+                                        .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+                                        .isCancellable(true)
+                                        .OnPositiveClicked(new FancyGifDialogListener() {
+                                            @Override
+                                            public void OnClick() {
+                                                Toast.makeText(LoginActivity.this,"Ok",Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .OnNegativeClicked(new FancyGifDialogListener() {
+                                            @Override
+                                            public void OnClick() {
+                                                Toast.makeText(LoginActivity.this,"Cancel",Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .build();
                                 Log.e("Login","Fail " + e.getMessage());
                             }
                         });
@@ -102,7 +161,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             edtPassword.setError(null);
         }
         return flag;
+
     }
+    public boolean isConnected(Context c) {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected = false;
+        return  connected;
+    }
+
+        public boolean isConnected() {
+            boolean connected = false;
+            ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+                connected = true;
+            else
+                connected = false;
+            return  connected;
+        }
+
 
 
 }
