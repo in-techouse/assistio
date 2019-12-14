@@ -3,7 +3,10 @@ package lcwu.fyp.asistio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -52,6 +55,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btnLogin: {
+                // Check internet ;
+
+                boolean isCon = isConnected();
+                if(!isCon){
+                    //Show error Message, because no internet found
+
+                    return;
+
+                }
+
                  strEmail = edtEmail.getText().toString();
                  strPassword = edtPassword.getText().toString();
 
@@ -60,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         login_process.setVisibility(View.VISIBLE);
                         btnLogin.setVisibility(View.GONE);
+
                         //Firebase
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         auth.signInWithEmailAndPassword(strEmail,strPassword)
@@ -115,6 +129,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         return flag;
     }
+    // Check Internet Connection
+    private boolean isConnected() {
+        boolean connected = false;
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+                == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
+                (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected = false;
+        return  connected;
+    }
+
 
 
 }
