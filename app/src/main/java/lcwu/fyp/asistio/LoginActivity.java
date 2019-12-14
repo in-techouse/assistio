@@ -26,7 +26,7 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnLogin;
-    TextView go_to_registration;
+    TextView go_to_registration, forgotPassword;
     EditText edtEmail, edtPassword;
     String strEmail , strPassword;
     ProgressBar login_process;
@@ -41,10 +41,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         go_to_registration = findViewById(R.id.go_to_registration);
+        login_process = findViewById(R.id.login_process);
+        forgotPassword = findViewById(R.id.fogotPasword);
+
+
         btnLogin.setOnClickListener(this);
         go_to_registration.setOnClickListener(this);
+        forgotPassword.setOnClickListener(this);
 
-        login_process = findViewById(R.id.login_process);
+
     }
 
     @Override
@@ -53,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btnLogin: {
+<<<<<<< HEAD
                 boolean isConn = isConnected();
                 if (!isConn) {
                     //show error message
@@ -81,12 +87,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     strEmail = edtEmail.getText().toString();
                     strPassword = edtPassword.getText().toString();
                 }
+=======
+                // Check internet ;
+
+                boolean isCon = isConnected();
+                if(!isCon){
+                    //Show error Message, because no internet found
+
+                    return;
+
+                }
+
+                 strEmail = edtEmail.getText().toString();
+                 strPassword = edtPassword.getText().toString();
+>>>>>>> 97ae82dcd2bbf0230a315b6803aa6182f0e6f1ff
 
                    boolean flag = isValid();
                     if (flag) {
 
                         login_process.setVisibility(View.VISIBLE);
                         btnLogin.setVisibility(View.GONE);
+
                         //Firebase
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         auth.signInWithEmailAndPassword(strEmail,strPassword)
@@ -142,6 +163,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
                 break;
             }
+
+            case R.id.fogotPasword:{
+                Intent it = new Intent(LoginActivity.this, ForgotPasswordAcitivity.class);
+                startActivity(it);
+                break;
+            }
+
         }
 
     }
@@ -172,6 +200,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             connected = false;
         return  connected;
     }
+    // Check Internet Connection
+    private boolean isConnected() {
+        boolean connected = false;
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+                == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
+                (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected = false;
+        return  connected;
+    }
+
 
         public boolean isConnected() {
             boolean connected = false;

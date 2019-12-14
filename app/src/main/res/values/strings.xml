@@ -10,6 +10,7 @@
     <string name="phone_number">Enter Phone Number</string>
     <string name="submit">REGISTER</string>
     <string name="confirm_password">Password Confirmation</string>
+<<<<<<< HEAD
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -24,4 +25,10 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+=======
+    <string name="forgot_password">Forgot Password</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="Change_password">Submit</string>
+>>>>>>> 97ae82dcd2bbf0230a315b6803aa6182f0e6f1ff
 </resources>
