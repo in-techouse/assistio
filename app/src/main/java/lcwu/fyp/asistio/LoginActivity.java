@@ -58,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btnLogin: {
-<<<<<<< HEAD
                 boolean isConn = isConnected();
                 if (!isConn) {
                     //show error message
@@ -87,7 +86,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     strEmail = edtEmail.getText().toString();
                     strPassword = edtPassword.getText().toString();
                 }
-=======
                 // Check internet ;
 
                 boolean isCon = isConnected();
@@ -100,7 +98,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                  strEmail = edtEmail.getText().toString();
                  strPassword = edtPassword.getText().toString();
->>>>>>> 97ae82dcd2bbf0230a315b6803aa6182f0e6f1ff
 
                    boolean flag = isValid();
                     if (flag) {
@@ -215,15 +212,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-        public boolean isConnected() {
-            boolean connected = false;
-            ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-                connected = true;
-            else
-                connected = false;
-            return  connected;
-        }
+
 
 
 

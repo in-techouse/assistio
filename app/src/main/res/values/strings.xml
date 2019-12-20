@@ -10,7 +10,6 @@
     <string name="phone_number">Enter Phone Number</string>
     <string name="submit">REGISTER</string>
     <string name="confirm_password">Password Confirmation</string>
-<<<<<<< HEAD
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
