@@ -22,10 +22,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
+
+import lcwu.fyp.asistio.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -111,12 +114,18 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                           .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                               @Override
                               public void onSuccess(AuthResult authResult) {
-                                  registrationProgress.setVisibility(View.GONE);
-                                  btnRegister.setVisibility(View.VISIBLE);
-                                  Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
-                                  startActivity(it);
-                                  finish();
-                                  Log.e("Registration" , "Success");
+                                  DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
+                                  //Save  Registration
+                                  User user = new User();
+                               //   reference.child("Users") .setValue
+
+
+//                                  registrationProgress.setVisibility(View.GONE);
+//                                 btnRegister.setVisibility(View.VISIBLE);
+//                                  Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
+//                                 startActivity(it);
+//                                 finish();
+//                                  Log.e("Registration" , "Success");
 
                               }
                           }).addOnFailureListener(new OnFailureListener() {

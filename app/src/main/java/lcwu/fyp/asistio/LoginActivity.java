@@ -61,29 +61,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 boolean isConn = helpers.isConnected(LoginActivity.this);
                 if (!isConn) {
                     helpers.showError(LoginActivity.this , "Internet Error","There is no internet connection"   );
-                    //show error message because no error found
-                    new FancyGifDialog.Builder(this)
-                            .setTitle("Internet Error")
-                            .setMessage("There is no internet connection")
-                            .setNegativeBtnText("Cancel")
-                            .setPositiveBtnBackground("#FF4081")
-                            .setPositiveBtnText("Ok")
-                            .setNegativeBtnBackground("#FFA9A7A8")
-                            .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
-                            .isCancellable(true)
-                            .OnPositiveClicked(new FancyGifDialogListener() {
-                                @Override
-                                public void OnClick() {
-                                    Toast.makeText(LoginActivity.this, "Ok", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .OnNegativeClicked(new FancyGifDialogListener() {
-                                @Override
-                                public void OnClick() {
-                                    Toast.makeText(LoginActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .build();
                 }
 
                  strEmail = edtEmail.getText().toString();
@@ -116,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onFailure(@NonNull Exception e) {
                                 login_process.setVisibility(View.GONE);
                                 btnLogin.setVisibility(View.VISIBLE);
-                                helpers.showError(LoginActivity.this, "Title" , e.getMessage());
+                                helpers.showError(LoginActivity.this, "Login Error" , e.getMessage());
 
                             }
                         });
@@ -157,15 +134,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return flag;
 
     }
-    public boolean isConnected(Context c) {
-        boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected = false;
-        return  connected;
-    }
-
-
 }
