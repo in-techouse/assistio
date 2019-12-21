@@ -21,6 +21,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
@@ -39,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         helpers = new Helpers();
         btnLogin = findViewById(R.id.btnLogin);
         edtEmail = findViewById(R.id.edtEmail);
@@ -46,9 +52,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         go_to_registration = findViewById(R.id.go_to_registration);
         login_process = findViewById(R.id.login_process);
         forgotPassword = findViewById(R.id.fogotPasword);
+
+
         btnLogin.setOnClickListener(this);
         go_to_registration.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
+
 
     }
 
@@ -58,9 +67,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btnLogin: {
-                boolean isConn = helpers.isConnected(LoginActivity.this);
+                boolean isConn = isConnected();
                 if (!isConn) {
-                    helpers.showError(LoginActivity.this , "Internet Error","There is no internet connection"   );
+                    helpers.showError(LoginActivity.this,  "ERROR","Internet Connection Error");
+                    return;
                 }
 
                  strEmail = edtEmail.getText().toString();
@@ -78,14 +88,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        login_process.setVisibility(View.GONE);
-                                        btnLogin.setVisibility(View.VISIBLE);
 
-                                            Intent it=new Intent(LoginActivity.this,Dashboard.class);
-                                        startActivity(it);
-                                        finish();
+                                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-                                        Log.e("Login","Success");
+                                        reference.child("Users").addValueEventListener(new ValueEventListener() {
+                                            //reading login data from database
+
+                                            @Override
+                                            //if successfully read
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                            }
+
+                                            @Override
+                                            //if not successfully read
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+                                            }
+                                        });
+//                                        login_process.setVisibility(View.GONE);
+//                                        btnLogin.setVisibility(View.VISIBLE);
+//
+//                                            Intent it=new Intent(LoginActivity.this,Dashboard.class);
+//                                        startActivity(it);
+//                                        finish();
+//
+//                                        Log.e("Login","Success");
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -93,8 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             public void onFailure(@NonNull Exception e) {
                                 login_process.setVisibility(View.GONE);
                                 btnLogin.setVisibility(View.VISIBLE);
-                                helpers.showError(LoginActivity.this, "Login Error" , e.getMessage());
-
+                                helpers.showError(LoginActivity.this,  "ERROR",e.getMessage());
                             }
                         });
 
@@ -134,4 +162,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return flag;
 
     }
+    public boolean isConnected(Context c) {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+                == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected = false;
+        return  connected;
+    }
+    // Check Internet Connection
+    private boolean isConnected() {
+        boolean connected = false;
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+                == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
+                (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
+            connected = true;
+        else
+            connected = false;
+        return  connected;
+    }
+
+
+
+
+
+
 }
