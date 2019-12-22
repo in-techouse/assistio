@@ -28,6 +28,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
+import lcwu.fyp.asistio.Director.Helpers;
+import lcwu.fyp.asistio.Director.Session;
 import lcwu.fyp.asistio.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText edtFName,edtLName,edtphno,edtemail1,edtpass,edtpass1;
     String strFName , strLName ,strphno ,stremai1 , strpass , strpass1;
     ProgressBar registrationProgress;
+    Helpers helpers;
 
 
     @Override
@@ -45,6 +48,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_registration);
 
         btnRegister = findViewById(R.id.btnRegister);
+        helpers= new Helpers();
 
         edtFName = findViewById(R.id.edtFName);
         edtLName = findViewById(R.id.edtLName);
@@ -116,8 +120,27 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                               public void onSuccess(AuthResult authResult) {
                                   DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
                                   //Save  Registration
-                                  User user = new User();
-                               //   reference.child("Users") .setValue
+                                  final User user = new User();
+                                  // ya line data save kar da ge
+                                 reference.child("Users") .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                     @Override
+                                     public void onSuccess(Void aVoid) {
+                                         Session session=new Session(RegistrationActivity.this);
+                                         session.setSession(user);
+                                         //Start Dashboard Activity
+
+                                     }
+                                 }).addOnFailureListener(new OnFailureListener() {
+                                     @Override
+                                     public void onFailure(@NonNull Exception e) {
+                                         registrationProgress.setVisibility(View.GONE);
+                                         btnRegister.setVisibility(View.VISIBLE);
+                                         helpers.showError(RegistrationActivity.this,"ERROR","Something went wrong");
+
+
+                                     }
+                                 });
+
 
 
 //                                  registrationProgress.setVisibility(View.GONE);
