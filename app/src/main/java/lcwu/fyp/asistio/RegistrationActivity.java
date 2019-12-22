@@ -121,13 +121,25 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                   DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
                                   //Save  Registration
                                   final User user = new User();
+                                  user.setFirst_Name(strFName);
+                                  user.setLast_Name(strLName);
+                                  user.setPhone_no(strphno);
+                                  user.setEmail(stremai1);
+                                  String id = stremai1.replace("@","-");
+                                  id = id.replace(".","_");
+                                  user.setId(id);
+
+
                                   // ya line data save kar da ge
-                                 reference.child("Users") .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                 reference.child("Users").child(id) .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                      @Override
                                      public void onSuccess(Void aVoid) {
                                          Session session=new Session(RegistrationActivity.this);
                                          session.setSession(user);
                                          //Start Dashboard Activity
+                                         Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
+                                         startActivity(it);
+                                         finish();
 
                                      }
                                  }).addOnFailureListener(new OnFailureListener() {

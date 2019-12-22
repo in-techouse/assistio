@@ -3,16 +3,17 @@ package lcwu.fyp.asistio.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String first_Name, last_Name,id,phone_no;
+    private String first_Name, last_Name,id,phone_no,email;
 
     public User() {
     }
 
-    public User(String first_Name, String last_Name, String id, String phone_no) {
+    public User(String first_Name, String last_Name, String id, String phone_no, String email) {
         this.first_Name = first_Name;
         this.last_Name = last_Name;
         this.id = id;
         this.phone_no = phone_no;
+        this.email = email;
     }
 
     public String getFirst_Name() {
@@ -46,4 +47,14 @@ public class User implements Serializable {
     public void setPhone_no(String phone_no) {
         this.phone_no = phone_no;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
+
+
