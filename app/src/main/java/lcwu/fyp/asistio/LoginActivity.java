@@ -30,6 +30,8 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import lcwu.fyp.asistio.Director.Helpers;
+import lcwu.fyp.asistio.Director.Session;
+import lcwu.fyp.asistio.model.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnLogin;
@@ -90,19 +92,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     public void onSuccess(AuthResult authResult) {
 
                                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                        String id = strEmail.replace("@","-");
+                                        id = id.replace(".","_");
 
-                                        reference.child("Users").addValueEventListener(new ValueEventListener() {
+                                        reference.child("Users").child(id).addValueEventListener(new ValueEventListener() {
                                             //reading login data from database
 
                                             @Override
                                             //if successfully read
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                if(dataSnapshot.getValue() != null){
+                                                    //Data is Valid
+                                                    User u = dataSnapshot.getValue(User.class);
+                                                    Session session = new Session(LoginActivity.this);
+                                                    session.setSession(u);
+
+                                                    //Start Dashboard Activity
+                                                    Intent it = new Intent(LoginActivity.this, Dashboard.class);
+                                                    startActivity(it);
+                                                    finish();
+
+                                                }
+                                                else{
+                                                    login_process.setVisibility(View.GONE);
+                                                    btnLogin.setVisibility(View.VISIBLE);
+                                                    helpers.showError(LoginActivity.this, "ERROR", "Something Went Wrong");
+                                                }
 
                                             }
 
                                             @Override
                                             //if not successfully read
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                login_process.setVisibility(View.GONE);
+                                                btnLogin.setVisibility(View.VISIBLE);
+                                                helpers.showError(LoginActivity.this, "ERROR","Something Went Wrong");
 
 
                                             }
