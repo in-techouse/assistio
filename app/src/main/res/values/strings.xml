@@ -119,5 +119,9 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="auto_reply">Auto Reply</string>
+    <string name="sms_scheduler">SMS Scheduler</string>
+    <string name="speech_notes">Speech Notes</string>
+    <string name="logout">LogOut</string>
     >>>>>>> 97ae82dcd2bbf0230a315b6803aa6182f0e6f1ff
 </resources>
