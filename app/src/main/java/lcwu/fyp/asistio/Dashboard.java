@@ -21,14 +21,25 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
+import lcwu.fyp.asistio.Director.Helpers;
+import lcwu.fyp.asistio.Director.Session;
+import lcwu.fyp.asistio.model.User;
+
 public class Dashboard extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private Helpers helpers;
+    private User user;
+    private Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        helpers = new Helpers();
+        session = new Session(Dashboard.this);
+        user = session.getUser();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
