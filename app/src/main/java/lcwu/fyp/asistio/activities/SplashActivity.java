@@ -1,4 +1,4 @@
-package lcwu.fyp.asistio;
+package lcwu.fyp.asistio.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 
 import com.appus.splash.Splash;
+
+import lcwu.fyp.asistio.R;
 
 public class SplashActivity extends AppCompatActivity {
 

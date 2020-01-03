@@ -1,36 +1,29 @@
-package lcwu.fyp.asistio;
+package lcwu.fyp.asistio.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.Menu;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import java.util.jar.Attributes;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import lcwu.fyp.asistio.Director.Helpers;
 import lcwu.fyp.asistio.Director.Session;
+import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.User;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +52,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
        profile_image = header.findViewById(R.id.profile_image);
        profile_name = header.findViewById(R.id.profile_name);
@@ -73,25 +69,30 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         switch (id){
-            case R.id.nav_home:{
-                break;
-            }
             case R.id.nav_autoreply:{
+                Intent it= new Intent(Dashboard.this,AutoReply.class);
+                startActivity(it);
                 break;
             }
             case R.id.nav_smssch:{
+                Intent it= new Intent(Dashboard.this,SmsSchedular.class);
+                startActivity(it);
                 break;
             }
 
             case R.id.nav_speech:{
+                Intent it= new Intent(Dashboard.this,SpeechNotes.class);
+                startActivity(it);
                 break;
             }
             case R.id.nav_logout:{
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.signOut();
+                Intent it= new Intent(Dashboard.this,LoginActivity.class);
+                startActivity(it);
+                finish();
                 break;
             }
-
-
-
         }
         drawer.closeDrawer(GravityCompat.START);
         return false;

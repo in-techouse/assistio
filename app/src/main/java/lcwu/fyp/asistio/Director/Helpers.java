@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.widget.Toast;
 
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
-import lcwu.fyp.asistio.LoginActivity;
 import lcwu.fyp.asistio.R;
 
 public class Helpers {

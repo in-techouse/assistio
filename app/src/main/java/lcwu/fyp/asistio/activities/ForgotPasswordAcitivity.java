@@ -1,4 +1,4 @@
-package lcwu.fyp.asistio;
+package lcwu.fyp.asistio.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import lcwu.fyp.asistio.R;
 
 public class ForgotPasswordAcitivity extends AppCompatActivity implements View.OnClickListener {
     EditText edtEmail;

@@ -3,17 +3,16 @@ package lcwu.fyp.asistio.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class messsagescheduler implements Serializable {
-    private String id,message,time;
-    private List<contact> contactList;
+public class SmartReply implements Serializable {
+    private String id,message;
+    private List<Contact>contactList;
 
-    public messsagescheduler() {
+    public SmartReply() {
     }
 
-    public messsagescheduler(String id, String message, String time, List<contact> contactList) {
+    public SmartReply(String id, String message, List<Contact> contactList) {
         this.id = id;
         this.message = message;
-        this.time = time;
         this.contactList = contactList;
     }
 
@@ -33,19 +32,11 @@ public class messsagescheduler implements Serializable {
         this.message = message;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public List<contact> getContactList() {
+    public List<Contact> getContactList() {
         return contactList;
     }
 
-    public void setContactList(List<contact> contactList) {
+    public void setContactList(List<Contact> contactList) {
         this.contactList = contactList;
     }
 }

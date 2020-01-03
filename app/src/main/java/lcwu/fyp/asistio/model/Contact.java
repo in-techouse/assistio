@@ -2,13 +2,13 @@ package lcwu.fyp.asistio.model;
 
 import java.io.Serializable;
 
-public class contact implements Serializable {
+public class Contact implements Serializable {
     private String name,number;
 
-    public contact() {
+    public Contact() {
     }
 
-    public contact(String name, String number) {
+    public Contact(String name, String number) {
         this.name = name;
         this.number = number;
     }

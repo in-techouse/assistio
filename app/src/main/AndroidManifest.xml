@@ -12,28 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SpeechNotes"></activity>
-        <activity android:name=".AutoReply" />
-        <activity android:name=".SmsSchedular" />
-        <activity android:name=".SetCommand" />
+        <activity android:name=".activities.SpeechNotes"></activity>
+        <activity android:name=".activities.AutoReply" />
+        <activity android:name=".activities.SmsSchedular" />
+        <activity android:name=".activities.SetCommand" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".activities.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Dashboard"
+            android:name=".activities.Dashboard"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ForgotPasswordAcitivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activities.ForgotPasswordAcitivity" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.RegistrationActivity" />
     </application>
 
 </manifest>
