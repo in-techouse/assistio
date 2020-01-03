@@ -1,25 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SmsSchedular">
+    tools:context=".activities.SmsSchedular"
+    android:background="@color/white">
 
-    <LinearLayout
+    <EditText
+        android:layout_alignParentTop="true"
+        android:id="@+id/message"
+        android:layout_margin="@dimen/mp_10"
+        android:padding="@dimen/mp_10"
+        android:inputType="textMultiLine"
+        android:gravity="top|start"
+        android:scrollbars="vertical"
+        android:hint="@string/message"
+        android:minLines="2"
+        android:maxLines="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/rrl2"
+        android:layout_below="@id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/date_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_margin="@dimen/mp_8"
+                android:id="@+id/date"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_margin="@dimen/mp_8"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/calendar"
+                android:id="@+id/select_date"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@id/date_main"
+            android:id="@+id/time_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_margin="@dimen/mp_8"
+                android:id="@+id/time"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_margin="@dimen/mp_8"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/clock"
+                android:id="@+id/select_time"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_below="@id/time_main"
+            android:layout_margin="@dimen/mp_8"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/phonebook"
+            android:id="@+id/select_contacts"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </RelativeLayout>
+
+
+    <GridView
+        android:layout_margin="@dimen/mp_8"
+        android:layout_above="@id/save"
+        android:layout_below="@id/rrl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/sms_margin"
-        android:padding="7dp">
+        android:id="@+id/contactsGrid"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="@dimen/mp_8"
+        android:horizontalSpacing="@dimen/mp_8"
+        android:stretchMode="columnWidth"
+        android:gravity="center">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:maxLines="10"
-            android:minLines="10"
-            android:gravity="top|start" />
-    </LinearLayout>
+    </GridView>
 
-</ScrollView>
+    <Button
+        android:id="@+id/save"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/save"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -12,14 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SpeechNotes"></activity>
-        <activity android:name=".activities.AutoReply" />
-        <activity android:name=".activities.SmsSchedular" />
-        <activity android:name=".activities.SetCommand" />
+
         <activity
             android:name=".activities.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activities.Dashboard"/>
         <activity
             android:name=".activities.Dashboard"
             android:label="@string/title_activity_dashboard"
@@ -34,6 +32,10 @@
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegistrationActivity" />
+        <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.AutoReply"  android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.SmsSchedular" android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.SetCommand" android:parentActivityName=".activities.Dashboard"/>
     </application>
 
 </manifest>
