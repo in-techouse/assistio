@@ -17,4 +17,5 @@
     <dimen name="sms_margin">7dp</dimen>
     <dimen name="mp_10">10dp</dimen>
     <dimen name="mp_8">8dp</dimen>
+    <dimen name="height">120dp</dimen>
 </resources>

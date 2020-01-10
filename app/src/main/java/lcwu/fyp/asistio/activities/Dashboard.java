@@ -1,6 +1,8 @@
 package lcwu.fyp.asistio.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.view.MenuItem;
@@ -8,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 
 import com.google.android.material.navigation.NavigationView;
@@ -43,11 +46,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         helpers = new Helpers();
         session = new Session(Dashboard.this);
         user = session.getUser();
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -55,13 +55,33 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
        profile_image = header.findViewById(R.id.profile_image);
        profile_name = header.findViewById(R.id.profile_name);
        profile_email = header.findViewById(R.id.profile_email);
-
        profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
        profile_email.setText(user.getEmail());
+       startServices();
+    }
+
+    private boolean askForPermission(){
+        if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.READ_SMS)!= PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.RECEIVE_SMS)!= PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED
+        ){
+            ActivityCompat.requestPermissions(Dashboard.this, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS}, 10);
+
+            return false;
+        }
+            return true;
+    }
+    public void startServices(){
+        if (askForPermission()){
+
+        }
     }
 
 
