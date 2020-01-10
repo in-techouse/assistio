@@ -22,9 +22,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import lcwu.fyp.asistio.Director.Helpers;
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.model.Contact;
 
 public class SmsSchedular extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,9 +34,9 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
     private EditText message;
     private Button save;
     private ImageView select_contacts, select_date, select_time;
-   // private List<ContactBO> contacts;
+    private List<Contact> contacts;
     private GridView contactsGrid;
-   // private SelectedContactsAdapter adapter;
+//    private SelectedContactsAdapter adapter;
     private TextView date, time;
     private int year, month, day, hour, minute;
     private String str_message;
@@ -55,9 +57,8 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         select_contacts.setOnClickListener(this);
         select_time.setOnClickListener(this);
         select_date.setOnClickListener(this);
-         //   contacts = new ArrayList<>();
-
-         //   adapter = new SelectedContactsAdapter();
+        contacts = new ArrayList<>();
+        //   adapter = new SelectedContactsAdapter();
         contactsGrid = findViewById(R.id.contactsGrid);
 //            contactsGrid.setAdapter(adapter);
 
@@ -82,20 +83,21 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 20 && resultCode == RESULT_OK){
+        if (requestCode == 20 && resultCode == RESULT_OK) {
             Log.e("Result", "Result OK");
-            if(data != null){
+            if (data != null) {
                 Log.e("Result", "Data OK");
                 Bundle bundle = data.getExtras();
-                if(bundle != null){
+                if (bundle != null) {
                     Log.e("Result", "Bundle OK");
-//                    contacts = (List<ContactBO>) bundle.getSerializable("contacts");
-//                    if(contacts == null){
-//                        contacts = new ArrayList<>();
-//                        Log.e("SmsSender", "Reinitialized");
+                    contacts = (List<Contact>) bundle.getSerializable("contacts");
+                    if (contacts == null) {
+                        contacts = new ArrayList<>();
+                        Log.e("SmsSender", "Reinitialized");
+                    }
+//                  adapter.setContacts(contacts);
+                    Log.e("SmsSender", "List OK with size: " + contacts.size());
                 }
-//                    adapter.setContacts(contacts);
-//                    Log.e("SmsSender", "List OK with size: " + contacts.size());
             }
         }
     }

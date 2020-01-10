@@ -40,7 +40,7 @@
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegistrationActivity" />
-        <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>f
         <activity android:name=".activities.AutoReply"  android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.SmsSchedular" android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.SetCommand" android:parentActivityName=".activities.Dashboard"/>
