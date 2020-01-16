@@ -34,11 +34,12 @@
     <string name="speech_notes">Speech Notes</string>
     <string name="logout">LogOut</string>
     <string name="number_of_contacts">Number of \n Contacts</string>
-    <string name="number_of_document">Number of Document</string>
+    <string name="number_of_document">Number of Documents</string>
     <string name="number_of_images">Number of Images</string>
-    <string name="number_of_vedios">Number of Vedios</string>
+    <string name="number_of_videos">Number of Videos</string>
     <string name="number_of_audios">Number of Audios</string>
     <string name="number_of_notes">Number of Notes</string>
     <string name="message">Enter your message</string>
     <string name="save">SAVE</string>
+    <string name="sync">SYNC DATA</string>
 </resources>

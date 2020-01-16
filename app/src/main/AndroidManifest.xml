@@ -40,10 +40,23 @@
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegistrationActivity" />
-        <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>f
+        <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.AutoReply"  android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.SmsSchedular" android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.SetCommand" android:parentActivityName=".activities.Dashboard"/>
+
+        <!--    SERVICES    -->
+        <service android:name=".services.AllContactsUploadService"
+            android:enabled="true"/>
+        <service android:name=".services.ContactUploadService"
+            android:enabled="true"/>
+        <service android:name=".services.ScanMediaService"
+            android:enabled="true"/>
+        <service android:name=".services.UploadService"
+            android:enabled="true"/>
+
+        <!--    BROAD CAST RECEIVERS    -->
+        <receiver android:name=".receivers.ContactReceiver" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package lcwu.fyp.asistio.Director;
+package lcwu.fyp.asistio.director;
 
 import android.app.Activity;
 import android.content.Context;

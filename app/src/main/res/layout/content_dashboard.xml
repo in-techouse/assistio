@@ -25,9 +25,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="Sync Data"
+                android:text="@string/sync"
                 android:textColor="@color/colorWhite"/>
             <com.zcw.togglebutton.ToggleButton
+                android:id="@+id/toggleButton"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_width="54dp"
@@ -155,7 +156,7 @@
                 <TextView
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"
-                    android:text="@string/number_of_vedios"
+                    android:text="@string/number_of_videos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"/>

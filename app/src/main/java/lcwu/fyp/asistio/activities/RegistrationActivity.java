@@ -25,8 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
-import lcwu.fyp.asistio.Director.Helpers;
-import lcwu.fyp.asistio.Director.Session;
+import lcwu.fyp.asistio.director.Helpers;
+import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.User;
 

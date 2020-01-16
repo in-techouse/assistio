@@ -1,4 +1,4 @@
-package lcwu.fyp.asistio.Director;
+package lcwu.fyp.asistio.director;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -51,6 +51,16 @@ public class Session {
         }
         return user;
     }
+
+    public void setSync(boolean flag){
+        editor.putBoolean("sync", flag);
+        editor.commit();
+    }
+
+    public boolean getSync(){
+        return preferences.getBoolean("sync", false);
+    }
+
 
 
 

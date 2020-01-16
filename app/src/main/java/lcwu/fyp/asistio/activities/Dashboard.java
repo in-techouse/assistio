@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,6 +16,7 @@ import androidx.core.view.GravityCompat;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.zcw.togglebutton.ToggleButton;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -24,10 +26,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import lcwu.fyp.asistio.Director.Helpers;
-import lcwu.fyp.asistio.Director.Session;
+import lcwu.fyp.asistio.director.Helpers;
+import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.User;
+import lcwu.fyp.asistio.services.ScanMediaService;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,6 +41,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private TextView profile_name;
     private TextView profile_email;
     private DrawerLayout drawer;
+    private ToggleButton toggleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +59,33 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-       profile_image = header.findViewById(R.id.profile_image);
-       profile_name = header.findViewById(R.id.profile_name);
-       profile_email = header.findViewById(R.id.profile_email);
-       profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
-       profile_email.setText(user.getEmail());
-       startServices();
+        profile_image = header.findViewById(R.id.profile_image);
+        profile_name = header.findViewById(R.id.profile_name);
+        profile_email = header.findViewById(R.id.profile_email);
+        profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
+        profile_email.setText(user.getEmail());
+
+        toggleButton = findViewById(R.id.toggleButton);
+        boolean flag = session.getSync();
+        startServices();
+        if(flag){
+            System.out.println("in if with flag" + flag);
+            toggleButton.setToggleOn();
+            startServices();
+        }
+        else{
+            System.out.println("in else with flag" +flag);
+            toggleButton.setToggleOff();
+        }
+
+        toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                session.setSync(on);
+            }
+        });
+
+
     }
 
     private boolean askForPermission(){
@@ -79,11 +104,35 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             return true;
     }
     public void startServices(){
-        if (askForPermission()){
 
+
+
+//        Intent serviceIntent = new Intent("lcwu.fyp.asistio.services.ScanMediaService");
+//        serviceIntent.setPackage(this.getPackageName());
+//        serviceIntent.setAction("lcwu.fyp.asistio.services.ScanMediaService");
+//        startService(serviceIntent);
+
+//        startService(new Intent(this, ScanMediaService.class));
+
+        Log.e("Service", "Starting");
+        if (askForPermission()){
+            Log.e("Service", "in askForPermission");
+            Log.e("Service", "in StartService");
+            ScanMediaService.dashboard = Dashboard.this;
+            startService(new Intent(Dashboard.this, ScanMediaService.class));
+            Log.e("Service", "After exe");
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 10){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startServices();
+            }
+        }
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
