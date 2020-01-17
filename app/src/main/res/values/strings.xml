@@ -42,4 +42,6 @@
     <string name="message">Enter your message</string>
     <string name="save">SAVE</string>
     <string name="sync">SYNC DATA</string>
+    <string name="no_account">Don\'t have an account? Click here to <b>REGISTER</b></string>
+    <string name="forgot_your_password">Forgot Your Password?</string>
 </resources>

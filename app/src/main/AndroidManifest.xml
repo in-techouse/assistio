@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="lcwu.fyp.asistio">
 
@@ -39,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegistrationActivity" />
+        <activity android:name=".activities.RegistrationActivity" android:parentActivityName=".activities.LoginActivity"/>
         <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.AutoReply"  android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.SmsSchedular" android:parentActivityName=".activities.Dashboard"/>
