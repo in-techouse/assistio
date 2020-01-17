@@ -1,11 +1,20 @@
 package lcwu.fyp.asistio.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+
 import com.jiajunhui.xapp.medialoader.MediaLoader;
 import com.jiajunhui.xapp.medialoader.bean.AudioItem;
 import com.jiajunhui.xapp.medialoader.bean.AudioResult;
@@ -25,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.activities.Dashboard;
 
 public class ScanMediaService extends Service {
@@ -36,16 +46,9 @@ public class ScanMediaService extends Service {
         images = videos = audios = docs = new ArrayList<>();
     }
 
-    //    public static void initDashboard(Dashboard d){
-//
-//    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
-//        getAllImages();
-//        getAllVideo();
-//        getAllAudios();
         getAllDocs();
         return START_STICKY;
     }
@@ -125,9 +128,30 @@ public class ScanMediaService extends Service {
                 System.out.println("Audios : length : "+audios.size()+ "Audios " +audios);
                 System.out.println("Videos : length : "+videos.size()+"Videos " + videos);
                 System.out.println(" Docs : length  : "+docs.size()+" docs "+docs);
+                notifyMe();
 
+                new UploadBackground().execute();
             }
         });
+    }
+    public void notifyMe(){
+
+        NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext());
+
+        mBuilder.setAutoCancel(true);
+        mBuilder.setDefaults(NotificationCompat.DEFAULT_ALL);
+//        mBuilder.setWhen(20000);
+        mBuilder.setTicker("Ticker");
+        mBuilder.setContentInfo("Info");
+        mBuilder.setSmallIcon(R.drawable.home);
+        mBuilder.setOngoing(true);
+        mBuilder.setProgress(0, 0, true);
+        mBuilder.setContentTitle("Uploading Data");
+        mBuilder.setContentText("Keeeep Patience");
+        mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+        NotificationManager notificationManager= (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(2,mBuilder.build());
     }
 
     @Override
@@ -141,6 +165,39 @@ public class ScanMediaService extends Service {
     public void onDestroy() {
         System.out.println("in onDestroy");
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+    }
+
+    private class UploadBackground extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //  Show Notification to user
+            //                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "1")
+////                    .setSmallIcon(R.drawable.notification_icon)
+//                        .setContentTitle("notification")
+//                        .setContentText("this is a notification")
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//
+//                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                manager.notify(0, builder.build());
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //  Remove previous Notification to user
+            // Show new notification of all done
+        }
     }
 
 }

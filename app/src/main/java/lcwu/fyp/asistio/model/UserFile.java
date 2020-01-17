@@ -3,7 +3,7 @@ package lcwu.fyp.asistio.model;
 import java.io.Serializable;
 
 public class UserFile implements Serializable {
-    private String id,name,type,download_url;
+    private String id, name, type, download_url;
 
     public UserFile() {
     }
