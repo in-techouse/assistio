@@ -123,6 +123,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                   user.setLast_Name(strLName);
                                   user.setPhone_no(strphno);
                                   user.setEmail(stremai1);
+                                  user.setDocuments(0);
+                                  user.setAudios(0);
+                                  user.setContacts(0);
+                                  user.setVideos(0);
+                                  user.setImages(0);
+                                  user.setNotes(0);
                                   String id = stremai1.replace("@","-");
                                   id = id.replace(".","_");
                                   user.setId(id);
