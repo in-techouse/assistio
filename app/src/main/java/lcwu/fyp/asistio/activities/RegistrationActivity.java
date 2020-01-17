@@ -129,6 +129,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                   user.setVideos(0);
                                   user.setImages(0);
                                   user.setNotes(0);
+                                  user.setFirst(false);
                                   String id = stremai1.replace("@","-");
                                   id = id.replace(".","_");
                                   user.setId(id);

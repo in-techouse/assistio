@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private String first_Name, last_Name,id,phone_no,email;
-    int contacts, documents, images, videos, audios, notes;
-
+    private int contacts, documents, images, videos, audios, notes;
+    private boolean isFirst;
     public User() {
     }
 
-    public User(String first_Name, String last_Name, String id, String phone_no, String email, int contacts, int documents, int images, int videos, int audios, int notes) {
+    public User(String first_Name, String last_Name, String id, String phone_no, String email, int contacts, int documents, int images, int videos, int audios, int notes, boolean isFirst) {
         this.first_Name = first_Name;
         this.last_Name = last_Name;
         this.id = id;
@@ -21,6 +21,7 @@ public class User implements Serializable {
         this.videos = videos;
         this.audios = audios;
         this.notes = notes;
+        this.isFirst = isFirst;
     }
 
     public String getFirst_Name() {
@@ -109,6 +110,14 @@ public class User implements Serializable {
 
     public void setNotes(int notes) {
         this.notes = notes;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean first) {
+        isFirst = first;
     }
 }
 

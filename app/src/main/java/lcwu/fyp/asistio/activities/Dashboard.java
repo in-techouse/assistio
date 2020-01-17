@@ -42,6 +42,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private TextView profile_email;
     private DrawerLayout drawer;
     private ToggleButton toggleButton;
+    private TextView contacts, images, videos, audios, notes, documents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,24 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
         profile_email.setText(user.getEmail());
 
+
+
         toggleButton = findViewById(R.id.toggleButton);
+        contacts = findViewById(R.id.contacts);
+        images = findViewById(R.id.images);
+        audios = findViewById(R.id.audios);
+        videos = findViewById(R.id.videos);
+        documents = findViewById(R.id.documents);
+        notes = findViewById(R.id.notes);
+
+
+        contacts.setText(user.getContacts()+"");
+        images.setText(user.getImages()+"");
+        audios.setText(user.getAudios()+"");
+        videos.setText(user.getVideos()+"");
+        documents.setText(user.getDocuments()+"");
+        notes.setText(user.getNotes()+"");
+
         boolean flag = session.getSync();
         startServices();
         if(flag){
