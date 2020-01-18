@@ -4,13 +4,23 @@ import java.io.Serializable;
 
 public class Contact implements Serializable {
     private String name,number;
+    private boolean selected;
 
     public Contact() {
     }
 
-    public Contact(String name, String number) {
+    public Contact(String name, String number, boolean selected) {
         this.name = name;
         this.number = number;
+        this.selected = selected;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public String getName() {

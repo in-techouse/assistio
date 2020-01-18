@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.adapters.SelectedContactsAdapter;
 import lcwu.fyp.asistio.model.Contact;
 
 public class SmsSchedular extends AppCompatActivity implements View.OnClickListener {
@@ -35,7 +36,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
     private ImageView select_contacts, select_date, select_time;
     private List<Contact> contacts;
     private GridView contactsGrid;
-//    private SelectedContactsAdapter adapter;
+    private SelectedContactsAdapter adapter;
     private TextView date, time;
     private int year, month, day, hour, minute;
     private String str_message;
@@ -57,9 +58,9 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         select_time.setOnClickListener(this);
         select_date.setOnClickListener(this);
         contacts = new ArrayList<>();
-        //   adapter = new SelectedContactsAdapter();
+           adapter = new SelectedContactsAdapter();
         contactsGrid = findViewById(R.id.contactsGrid);
-//            contactsGrid.setAdapter(adapter);
+            contactsGrid.setAdapter(adapter);
 
 //            dialog = new PasswordDialog(this);
 
@@ -94,7 +95,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                         contacts = new ArrayList<>();
                         Log.e("SmsSender", "Reinitialized");
                     }
-//                  adapter.setContacts(contacts);
+                  adapter.setContacts(contacts);
                     Log.e("SmsSender", "List OK with size: " + contacts.size());
                 }
             }
@@ -130,10 +131,10 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                     error = error + "Select SMS Scheduling time.\n";
                 }
 
-//                if(contacts.size() < 1){
-//                    flag = false;
-//                    error = error + "Select some contacts first.\n";
-//                }
+                if(contacts.size() < 1){
+                    flag = false;
+                    error = error + "Select some contacts first.\n";
+                }
 
                 try{
                     SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd, MMM yyyy hh:mm");
@@ -200,8 +201,8 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.select_contacts: {
-//                Intent intent = new Intent(SmsSchedular.this, ReadContacts.class);
-//                startActivityForResult(intent, 20);
+                Intent intent = new Intent(SmsSchedular.this, ReadContacts.class);
+                startActivityForResult(intent, 20);
                 break;
             }
         }
@@ -211,11 +212,11 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         try{
             String message = "You scheduled a message for, ";
             ArrayList<String> list = new ArrayList<>();
-//            for (ContactBO c : contacts){
-//                list.add(c.getName() + "," + c.getNumber());
-//                Log.e("List", "List Size: " + list.size());
-//                message = message + c.getName() + ", ";
-//            }
+            for (Contact c : contacts){
+                list.add(c.getName() + "," + c.getNumber());
+                Log.e("List", "List Size: " + list.size());
+                message = message + c.getName() + ", ";
+            }
 
             Calendar calendar = Calendar.getInstance();
 

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="lcwu.fyp.asistio">
 
-
-    <uses-permission android:name="android.permission.ACCEPT_GPS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCEPT_GPS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -21,12 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".activities.ReadContacts"></activity>
         <activity
             android:name=".activities.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".activities.Dashboard"/>
+            android:parentActivityName=".activities.Dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.Dashboard"
             android:label="@string/title_activity_dashboard"
@@ -40,23 +38,33 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegistrationActivity" android:parentActivityName=".activities.LoginActivity"/>
-        <activity android:name=".activities.SpeechNotes" android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.AutoReply"  android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.SmsSchedular" android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.SetCommand" android:parentActivityName=".activities.Dashboard"/>
-
-        <!--    SERVICES    -->
-        <service android:name=".services.AllContactsUploadService"
-            android:enabled="true"/>
-        <service android:name=".services.ContactUploadService"
-            android:enabled="true"/>
-        <service android:name=".services.ScanMediaService"
-            android:enabled="true"/>
-        <service android:name=".services.UploadService"
-            android:enabled="true"/>
-
-        <!--    BROAD CAST RECEIVERS    -->
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:parentActivityName=".activities.LoginActivity" />
+        <activity
+            android:name=".activities.SpeechNotes"
+            android:parentActivityName=".activities.Dashboard" />
+        <activity
+            android:name=".activities.AutoReply"
+            android:parentActivityName=".activities.Dashboard" />
+        <activity
+            android:name=".activities.SmsSchedular"
+            android:parentActivityName=".activities.Dashboard" />
+        <activity
+            android:name=".activities.SetCommand"
+            android:parentActivityName=".activities.Dashboard" /> <!-- SERVICES -->
+        <service
+            android:name=".services.AllContactsUploadService"
+            android:enabled="true" />
+        <service
+            android:name=".services.ContactUploadService"
+            android:enabled="true" />
+        <service
+            android:name=".services.ScanMediaService"
+            android:enabled="true" />
+        <service
+            android:name=".services.UploadService"
+            android:enabled="true" /> <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
     </application>
 
