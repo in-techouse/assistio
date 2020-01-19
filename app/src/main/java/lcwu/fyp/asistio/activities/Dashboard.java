@@ -113,9 +113,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.READ_SMS)!= PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.RECEIVE_SMS)!= PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED
+        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.WRITE_CONTACTS)!= PackageManager.PERMISSION_GRANTED
         ){
             ActivityCompat.requestPermissions(Dashboard.this, new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS}, 10);
+                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 10);
 
             return false;
         }

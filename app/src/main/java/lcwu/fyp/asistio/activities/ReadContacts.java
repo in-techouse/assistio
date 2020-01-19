@@ -79,43 +79,43 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_sms_finder, menu);
-
-        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
-
-        search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.e("Query", "Query: " + query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(final String newText) {
-                Log.e("Query", "Query: " + newText);
-                progress.setVisibility(View.VISIBLE);
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        filteredList.clear();
-                        Log.e("Query", "Query Final: " + newText);
-                        for (int i=0; i< contactList.size(); i++){
-                            if(contactList.get(i).getName().toLowerCase().contains(newText.toLowerCase())){
-                                filteredList.add(contactList.get(i));
-                            }
-                        }
-                        progress.setVisibility(View.GONE);
-                        adapter.addContacts(filteredList);
-                    }
-                }.run();
-                return false;
-            }
-        });
+//        getMenuInflater().inflate(R.menu.menu_sms_finder, menu);
+//
+//        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//
+//        SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
+//
+//        search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+//
+//
+//        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Log.e("Query", "Query: " + query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(final String newText) {
+//                Log.e("Query", "Query: " + newText);
+//                progress.setVisibility(View.VISIBLE);
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        filteredList.clear();
+//                        Log.e("Query", "Query Final: " + newText);
+//                        for (int i=0; i< contactList.size(); i++){
+//                            if(contactList.get(i).getName().toLowerCase().contains(newText.toLowerCase())){
+//                                filteredList.add(contactList.get(i));
+//                            }
+//                        }
+//                        progress.setVisibility(View.GONE);
+//                        adapter.addContacts(filteredList);
+//                    }
+//                }.run();
+//                return false;
+//            }
+//        });
         return true;
     }
 
