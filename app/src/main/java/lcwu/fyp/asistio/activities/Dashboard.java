@@ -23,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,7 +33,7 @@ import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.services.ScanMediaService;
 
-public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private Helpers helpers;
     private User user;
@@ -42,7 +43,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private TextView profile_email;
     private DrawerLayout drawer;
     private ToggleButton toggleButton;
-    private TextView contacts, images, videos, audios, notes, documents;
+    private TextView contacts;
+    private TextView images, videos, audios, notes, documents;
+    private LinearLayout contactsUpper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +69,23 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
         profile_email.setText(user.getEmail());
 
+        contactsUpper = findViewById(R.id.contactsUpper);
 
+//        contactsUpper.setOnClickListener(this);
 
         toggleButton = findViewById(R.id.toggleButton);
-        contacts = findViewById(R.id.contacts);
+        contacts =   findViewById(R.id.contacts);
         images = findViewById(R.id.images);
         audios = findViewById(R.id.audios);
         videos = findViewById(R.id.videos);
         documents = findViewById(R.id.documents);
         notes = findViewById(R.id.notes);
+
+//        contacts.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                startActivity(new Intent(Dashboard.this, ));
+//            }
+//        });
 
 
         contacts.setText(user.getContacts()+"");
@@ -83,6 +94,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         videos.setText(user.getVideos()+"");
         documents.setText(user.getDocuments()+"");
         notes.setText(user.getNotes()+"");
+
+
+
+
+
+
 
         boolean flag = session.getSync();
         startServices();
@@ -95,7 +112,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             System.out.println("in else with flag" +flag);
             toggleButton.setToggleOff();
         }
-
         toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
@@ -104,7 +120,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
 
 
+
     }
+
 
     private boolean askForPermission(){
         if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED

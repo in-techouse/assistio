@@ -51,6 +51,7 @@
             android:orientation="horizontal"
             android:weightSum="2">
             <LinearLayout
+                android:id="@+id/contactsUpper"
                 android:background="@color/colorPrimaryDark"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
@@ -72,7 +73,8 @@
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"
-                    android:id="@+id/contacts"
+                    android:id="@+id/contactsbtn"
+                    android:clickable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"/>

@@ -79,7 +79,7 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_sms_finder, menu);
+////        getMenuInflater().inflate(R.menu.menu_sms_finder, menu);
 //
 //        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 //
@@ -119,7 +119,7 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    @Override
+//    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id){
