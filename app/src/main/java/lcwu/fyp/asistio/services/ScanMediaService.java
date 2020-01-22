@@ -143,7 +143,6 @@ public class ScanMediaService extends Service {
         NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext(), "1");
         mBuilder.setAutoCancel(false);
         mBuilder.setDefaults(NotificationCompat.DEFAULT_ALL);
-//        mBuilder.setWhen(20000);
         mBuilder.setTicker("Ticker");
         mBuilder.setContentInfo("Info");
         mBuilder.setSmallIcon(R.drawable.home);
@@ -153,7 +152,9 @@ public class ScanMediaService extends Service {
         mBuilder.setContentText("Keeeep Patience");
         mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         NotificationManager notificationManager= (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(2, mBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(2, mBuilder.build());
+        }
     }
 
     public void saveDocs(){
@@ -299,55 +300,110 @@ public class ScanMediaService extends Service {
 
     }
 
-    public void saveImages(){
-        List<FileItem> fileItems = new ArrayList<>();
+    public void saveImages(final int index){
+        final FileItem fileItem = images.get(index);
+        final File file = new File(fileItem.getPath());
+        Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
+        Uri u = Uri.fromFile(file);
+        final StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("Users").child(user.getId()).child("Images");
+        imageRef.child(file.getName()).putFile(u).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                if(taskSnapshot.getMetadata() != null){
+                    if(taskSnapshot.getMetadata().getReference() != null){
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                saveObjectToList(uri.toString(), fileItem.getDisplayName(), "Image");
+                                if(index != 20){
+                                    saveImages(index+1);
+                                }
+                                else{
+                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
+                                    for(UserFile userFile : userFiles){
+                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
+                                    }
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                if(index != 20){
+                                    saveImages(index+1);
+                                }
+                                else{
+                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
+                                    for(UserFile userFile : userFiles){
+                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if(index != 20){
+                    saveImages(index+1);
+                }
+                else{
+                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
+                    for(UserFile userFile : userFiles){
+                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
+                    }
+                }
+            }
+        });
+//        List<FileItem> fileItems = new ArrayList<>();
 //        fileItems.add(images.get(0));
 //        fileItems.add(images.get(1));
 //        fileItems.add(images.get(2));
 //        fileItems.add(images.get(3));
 //        fileItems.add(images.get(4));
 //        fileItems.add(images.get(5));
-        for (final FileItem f : fileItems){
-            File file = new File(f.getPath());
-            Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
-            Uri u = Uri.fromFile(file);
-
-
-//                //data Insertion
-            final StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("images");
-//                imageRef.f
-            imageRef.child(file.getName()).putFile(u)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //To get Download URI
-                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                               task.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String url = uri.toString();
-                                    saveObjectToList(url, f.getDisplayName(), "Images");
-                                    Log.e("msg" , "Image URL is "+url);
-                                }
-                            });
-                            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "As Usual " + e.getMessage() , Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-//                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-        }
+//        for (final FileItem f : fileItems){
+//            File file = new File(f.getPath());
+//            Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
+//            Uri u = Uri.fromFile(file);
+//
+//
+////                //data Insertion
+//            final StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("images");
+////                imageRef.f
+//            imageRef.child(file.getName()).putFile(u)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            //To get Download URI
+//                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+//                               task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    String url = uri.toString();
+//                                    saveObjectToList(url, f.getDisplayName(), "Images");
+//                                    Log.e("msg" , "Image URL is "+url);
+//                                }
+//                            });
+//                            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(getApplicationContext(), "As Usual " + e.getMessage() , Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+//                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+//                                    .getTotalByteCount());
+////                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
+//                        }
+//                    });
+//        }
     }
 
     @Override
@@ -371,9 +427,9 @@ public class ScanMediaService extends Service {
         userFile.setName(name);
         userFile.setType(type);
         userFiles.add(userFile);
-        Log.e("Save Object" , "UserFile name ; "+userFile.getName());
-        Log.e("Save Object" , "UserFile URL ; "+userFile.getDownload_url());
-        Log.e("Save Object" , "UserFile type ; "+userFile.getType());
+        Log.e("Save Object" , "UserFile name: "+userFile.getName());
+        Log.e("Save Object" , "UserFile URL: "+userFile.getDownload_url());
+        Log.e("Save Object" , "UserFile type: "+userFile.getType());
     }
 
     private void saveURLs(){
@@ -406,16 +462,15 @@ public class ScanMediaService extends Service {
             super.onPreExecute();
             //  Show Notification to user
             notifyMe();
-
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            saveImages();
-            saveVideos();
-            saveAudios();
-            saveDocs();
-            saveURLs();
+            saveImages(0);
+//            saveVideos();
+//            saveAudios();
+//            saveDocs();
+//            saveURLs();
 
             return null;
         }

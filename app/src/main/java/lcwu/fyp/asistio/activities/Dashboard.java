@@ -26,9 +26,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -103,31 +100,31 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
         documentsBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent in = new Intent(Dashboard.this , show_documents.class);
+                Intent in = new Intent(Dashboard.this , ShowDocuments.class);
                 startActivity(in);
             }
         });
         imagesBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent in = new Intent(Dashboard.this , show_images.class);
+                Intent in = new Intent(Dashboard.this , ShowImages.class);
                 startActivity(in);
             }
         });
         videosBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent in = new Intent(Dashboard.this , show_videos.class);
+                Intent in = new Intent(Dashboard.this , ShowVideos.class);
                 startActivity(in);
             }
         });
         audiosBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent in = new Intent(Dashboard.this , show_audios.class);
+                Intent in = new Intent(Dashboard.this , ShowAudios.class);
                 startActivity(in);
             }
         });
         notesBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent in = new Intent(Dashboard.this , show_notes.class);
+                Intent in = new Intent(Dashboard.this , ShowNotes.class);
                 startActivity(in);
             }
         });

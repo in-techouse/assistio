@@ -21,15 +21,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.show_notes"
+        <activity android:name=".activities.ShowNotes"
          android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.show_audios"
+        <activity android:name=".activities.ShowAudios"
          android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.show_videos"
+        <activity android:name=".activities.ShowVideos"
          android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.show_images"
+        <activity android:name=".activities.ShowImages"
          android:parentActivityName=".activities.Dashboard"/>
-        <activity android:name=".activities.show_documents"
+        <activity android:name=".activities.ShowDocuments"
          android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.ShowContacts"
          android:parentActivityName=".activities.Dashboard"/>
@@ -43,7 +43,9 @@
             android:name=".activities.Dashboard"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ForgotPasswordAcitivity" />
+        <activity
+            android:name=".activities.ForgotPasswordAcitivity"
+            android:parentActivityName=".activities.LoginActivity"/>
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

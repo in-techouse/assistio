@@ -7,13 +7,14 @@ import android.view.MenuItem;
 
 import lcwu.fyp.asistio.R;
 
-public class ShowContacts extends AppCompatActivity {
+public class ShowAudios extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_contacts);
+        setContentView(R.layout.activity_show_audios);
     }
+
     @Override
     public void onBackPressed() {
         finish();
