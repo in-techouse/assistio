@@ -6,7 +6,11 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
+import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
+import lcwu.fyp.asistio.model.UserFile;
 
 public class Session {
 
@@ -28,13 +32,19 @@ public class Session {
         editor.commit();
     }
 
+    public void setFiles(ListUserFile userFiles){
+        String value = gson.toJson(userFiles);
+        editor.putString("userFiles", value);
+        editor.commit();
+    }
+
     public void destroySession(){
         editor.remove("user");
         editor.commit();
     }
 
     public User getUser(){
-        User user = new User();
+        User user;
         try{
 
             String value = preferences.getString("user", "*");
@@ -50,6 +60,25 @@ public class Session {
             user = null;
         }
         return user;
+    }
+
+    public ListUserFile getUserFiles(){
+        ListUserFile userFiles;
+        try{
+
+            String value = preferences.getString("userFiles", "*");
+
+            if(value == null || value.equals("*")){
+                userFiles = null;
+            }
+            else{
+                userFiles = gson.fromJson(value, ListUserFile.class);
+            }
+        }
+        catch (Exception e){
+            userFiles = null;
+        }
+        return userFiles;
     }
 
     public void setSync(boolean flag){

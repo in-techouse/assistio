@@ -21,7 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.ShowContacts"></activity>
+        <activity android:name=".activities.show_notes"
+         android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.show_audios"
+         android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.show_videos"
+         android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.show_images"
+         android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.show_documents"
+         android:parentActivityName=".activities.Dashboard"/>
+        <activity android:name=".activities.ShowContacts"
+         android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.ReadContacts" />
         <activity
             android:name=".activities.UserProfileActivity"

@@ -26,11 +26,18 @@ import androidx.appcompat.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
+import lcwu.fyp.asistio.model.UserFile;
 import lcwu.fyp.asistio.services.ScanMediaService;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -45,7 +52,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private ToggleButton toggleButton;
     private TextView contacts;
     private TextView images, videos, audios, notes, documents;
-    private LinearLayout contactsUpper;
+    private LinearLayout contactsBox , documentsBox , imagesBox , videosBox , audiosBox , notesBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +76,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
         profile_email.setText(user.getEmail());
 
-        contactsUpper = findViewById(R.id.contactsUpper);
 
-//        contactsUpper.setOnClickListener(this);
+        contactsBox =  findViewById(R.id.contactsBox);
+        documentsBox = findViewById(R.id.documentsBox);
+        imagesBox = findViewById(R.id.imagesBox);
+        videosBox = findViewById(R.id.videosBox);
+        audiosBox = findViewById(R.id.audiosBox);
+        notesBox = findViewById(R.id.notesBox);
 
         toggleButton = findViewById(R.id.toggleButton);
         contacts =   findViewById(R.id.contacts);
@@ -81,11 +92,47 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         documents = findViewById(R.id.documents);
         notes = findViewById(R.id.notes);
 
-//        contacts.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                startActivity(new Intent(Dashboard.this, ));
-//            }
-//        });
+
+
+        contactsBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                loadFiles();
+                Intent in = new Intent(Dashboard.this , ShowContacts.class);
+                startActivity(in);
+            }
+        });
+        documentsBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent in = new Intent(Dashboard.this , show_documents.class);
+                startActivity(in);
+            }
+        });
+        imagesBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent in = new Intent(Dashboard.this , show_images.class);
+                startActivity(in);
+            }
+        });
+        videosBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent in = new Intent(Dashboard.this , show_videos.class);
+                startActivity(in);
+            }
+        });
+        audiosBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent in = new Intent(Dashboard.this , show_audios.class);
+                startActivity(in);
+            }
+        });
+        notesBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent in = new Intent(Dashboard.this , show_notes.class);
+                startActivity(in);
+            }
+        });
+
+
 
 
         contacts.setText(user.getContacts()+"");
@@ -94,7 +141,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         videos.setText(user.getVideos()+"");
         documents.setText(user.getDocuments()+"");
         notes.setText(user.getNotes()+"");
-
+//
 
 
 
@@ -203,5 +250,16 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         }
         drawer.closeDrawer(GravityCompat.START);
         return false;
+    }
+
+    private void loadFiles(){
+        Log.e("in " , "in loadfiles");
+        ListUserFile listUserFile = session.getUserFiles();
+        List<UserFile> userFiles = listUserFile.getUserFiles();
+        Log.e("size" , "file size : "+userFiles.size());
+        Log.e("in " , "going to lop");
+        for(UserFile file: userFiles){
+            Log.e("here" , "session with data : "+file.getName());
+        }
     }
 }

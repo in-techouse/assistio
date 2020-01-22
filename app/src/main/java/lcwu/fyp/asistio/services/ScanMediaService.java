@@ -55,6 +55,7 @@ import java.util.Set;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.activities.Dashboard;
 import lcwu.fyp.asistio.director.Session;
+import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
 
@@ -383,6 +384,10 @@ public class ScanMediaService extends Service {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        ListUserFile listUserFile = ListUserFile.getInstance();
+                        listUserFile.setUserFiles(userFiles);
+                        session.setFiles(listUserFile);
+                        Log.e("session" , "in Session : "+session.getUserFiles());
                         Toast.makeText(getApplicationContext(), "Links Saved", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -406,23 +411,11 @@ public class ScanMediaService extends Service {
 
         @Override
         protected Void doInBackground(Void... voids) {
-//            saveImages();
+            saveImages();
             saveVideos();
-//            Toast.makeText(getApplicationContext(), "All Videos Uploaded", Toast.LENGTH_SHORT).show();
-//            saveAudios();
+            saveAudios();
             saveDocs();
             saveURLs();
-//            Toast.makeText(getApplicationContext(), "All Docs Uploaded calling save URL", Toast.LENGTH_SHORT).show();
-
-
-            //To save URLs
-//
-
-//            filePath.putFile().continueWithTask(new Continuation<UploadTask.TaskSnapshot , Task<>>()){
-//                @Override
-//                 public Task<>
-//            }
-
 
             return null;
         }
