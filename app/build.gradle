@@ -43,5 +43,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.zcw:togglebutton-library:1.0.0'
     implementation 'com.jiajunhui.xapp.medialoader:medialoader:1.2.1'
+    compile 'com.github.mzelzoghbi:zgallery:0.3'
 }
 apply plugin: 'com.google.gms.google-services'

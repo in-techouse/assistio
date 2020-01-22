@@ -3,6 +3,7 @@ package lcwu.fyp.asistio.director;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -33,6 +34,7 @@ public class Session {
     }
 
     public void setFiles(ListUserFile userFiles){
+        Log.e("ListUserFile", "List Size from JSON: " + userFiles.getUserFiles().size());
         String value = gson.toJson(userFiles);
         editor.putString("userFiles", value);
         editor.commit();
@@ -65,17 +67,21 @@ public class Session {
     public ListUserFile getUserFiles(){
         ListUserFile userFiles;
         try{
-
             String value = preferences.getString("userFiles", "*");
+            Log.e("ListUserFile", "List Size from Session inside try");
 
             if(value == null || value.equals("*")){
+                Log.e("ListUserFile", "Value is null");
                 userFiles = null;
             }
             else{
+                Log.e("ListUserFile", "InSide If");
                 userFiles = gson.fromJson(value, ListUserFile.class);
+                Log.e("ListUserFile", "List Size from JSON: " + userFiles.getUserFiles().size());
             }
         }
         catch (Exception e){
+            Log.e("ListUserFile", "Exception occur: " + e.getMessage());
             userFiles = null;
         }
         return userFiles;

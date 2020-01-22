@@ -16,6 +16,11 @@ import androidx.core.view.GravityCompat;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.zcw.togglebutton.ToggleButton;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,7 +30,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,7 +57,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private TextView contacts;
     private TextView images, videos, audios, notes, documents;
     private LinearLayout contactsBox , documentsBox , imagesBox , videosBox , audiosBox , notesBox;
-
+    private List<UserFile> userFile = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +100,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         contactsBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                loadFiles();
                 Intent in = new Intent(Dashboard.this , ShowContacts.class);
                 startActivity(in);
             }
@@ -107,6 +113,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         imagesBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent in = new Intent(Dashboard.this , ShowImages.class);
+                Log.e("intent" , "goint to images : "+userFile);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(userFile);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
                 startActivity(in);
             }
         });
@@ -145,17 +157,17 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-        boolean flag = session.getSync();
-        startServices();
-        if(flag){
-            System.out.println("in if with flag" + flag);
-            toggleButton.setToggleOn();
-            startServices();
-        }
-        else{
-            System.out.println("in else with flag" +flag);
-            toggleButton.setToggleOff();
-        }
+//        boolean flag = session.getSync();
+//        startServices();
+//        if(flag){
+//            System.out.println("in if with flag" + flag);
+//            toggleButton.setToggleOn();
+//            startServices();
+//        }
+//        else{
+//            System.out.println("in else with flag" +flag);
+//            toggleButton.setToggleOff();
+//        }
         toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
@@ -163,8 +175,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
         });
 
-
-
+        loadFiles();
     }
 
 
@@ -193,7 +204,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //        serviceIntent.setPackage(this.getPackageName());
 //        serviceIntent.setAction("lcwu.fyp.asistio.services.ScanMediaService");
 //        startService(serviceIntent);
-
+//
 //        startService(new Intent(this, ScanMediaService.class));
 
         Log.e("Service", "Starting");
@@ -250,13 +261,37 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
     private void loadFiles(){
-        Log.e("in " , "in loadfiles");
-        ListUserFile listUserFile = session.getUserFiles();
-        List<UserFile> userFiles = listUserFile.getUserFiles();
-        Log.e("size" , "file size : "+userFiles.size());
-        Log.e("in " , "going to lop");
-        for(UserFile file: userFiles){
-            Log.e("here" , "session with data : "+file.getName());
-        }
+        Log.e("get URL" , "inside function");
+        DatabaseReference dataref = FirebaseDatabase.getInstance().getReference();
+        dataref.child("UserFiles").child(user.getId())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Log.e("get URL" , "inside if");
+                            for (DataSnapshot ds   :  dataSnapshot.getChildren()){
+                                UserFile uFiles = ds.getValue(UserFile.class);
+//                                indashboard.add(uFiles);
+                                userFile.add(uFiles);
+                            }
+                            Log.e("get URL" , "Recieved : "+userFile.size());
+                            Log.e("get URL" , "Recieved : "+userFile);
+                            Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
+                        }
+                  }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("get URL" , "in cancelled");
+                    }
+                });
+//        Log.e("ListUserFile" , "in loadfiles");
+//        ListUserFile listUserFile = session.getUserFiles();
+//        List<UserFile> userFiles = listUserFile.getUserFiles();
+//        Log.e("ListUserFile" , "file size : " + session.getUserFiles().getUserFiles().size());
+//        Log.e("ListUserFile" , "going to lop");
+//        for(UserFile file: userFiles){
+//            Log.e("ListUserFile" , "session with data : " + file.getName());
+//        }
     }
 }

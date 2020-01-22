@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -205,102 +206,284 @@ public class ScanMediaService extends Service {
 
     }
 
-    public void saveAudios(){
-        List<FileItem> fileItems = new ArrayList<>();
-        fileItems.add(audios.get(0));
-        fileItems.add(audios.get(1));
-        fileItems.add(audios.get(2));
-        for (final FileItem f : fileItems){
-            File file = new File(f.getPath());
-            Uri u = Uri.fromFile(file);
+//    public void saveAudios(){
+//        List<FileItem> fileItems = new ArrayList<>();
+//        fileItems.add(audios.get(0));
+//        fileItems.add(audios.get(1));
+//        fileItems.add(audios.get(2));
+//        for (final FileItem f : fileItems){
+//            File file = new File(f.getPath());
+//            Uri u = Uri.fromFile(file);
+//
+//            //Data Insertion
+//            final StorageReference audioRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("audios");
+//            audioRef.child(file.getName()).putFile(u)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            //To get Download URI
+//                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+//                            task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    String url = uri.toString();
+//                                    saveObjectToList(url, f.getDisplayName(), "Audios");
+////                                    Log.e("msg" , "Audio URL is "+url);
+//                                }
+//                            });
+//                            Toast.makeText(getApplicationContext(), "Audios Uploaded", Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+//                            Toast.makeText(getApplicationContext(), "Audios Underway", Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(getApplicationContext(), "Audios Failed", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//
+//        }
+//
+//    }
 
-            //Data Insertion
-            final StorageReference audioRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("audios");
-            audioRef.child(file.getName()).putFile(u)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //To get Download URI
-                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                            task.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String url = uri.toString();
-                                    saveObjectToList(url, f.getDisplayName(), "Audios");
-//                                    Log.e("msg" , "Audio URL is "+url);
-                                }
-                            });
-                            Toast.makeText(getApplicationContext(), "Audios Uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(getApplicationContext(), "Audios Underway", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Audios Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+//    public void saveVideos(){
+//
+////        for(FileItem f : videos){
+////            Log.e("Video data" , "Video data: "+f.getDisplayName());
+////        }
+//        List<FileItem> fileItems = new ArrayList<>();
+//        fileItems.add(videos.get(0));
+//        fileItems.add(videos.get(1));
+//        fileItems.add(videos.get(2));
+//        for (final FileItem f : fileItems){
+//            File file = new File(f.getPath());
+//            Uri u = Uri.fromFile(file);
+//
+//            //data Insertion
+//            final  StorageReference videoRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("videos");
+//            videoRef.child(file.getName()).putFile(u)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            //To get Download URI
+//                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+//                            task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    String url = uri.toString();
+//                                    saveObjectToList(url, f.getDisplayName(), "Videos");
+////                                    Log.e("msg" , "Video URL is "+url);
+//                                }
+//                            });
+//                            Toast.makeText(getApplicationContext(), "Videos Uploaded", Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    })
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+////                            Toast.makeText(getApplicationContext(), "Videos Getting Uploaded", Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(getApplicationContext(), "Videos Uploaded Failed", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//        }
+//
+//    }
+//
 
-        }
+    public void saveDocuments(final int index){
+        final FileItem fileItem = docs.get(index);
+        final File file = new File(fileItem.getPath());
+        Log.e("ScanMediaService" , "Name: "+file.getName() + " Exists : "+file.exists());
+        Uri u = Uri.fromFile(file);
+        final StorageReference docRef = FirebaseStorage.getInstance().getReference().child("Users").child(user.getId()).child("Documents");
+        docRef.child(file.getName()).putFile(u)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        if(taskSnapshot.getMetadata()!=null){
+                            if(taskSnapshot.getMetadata().getReference()!=null){
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Documents");
+                                                if(index!=2){
+                                                    saveDocuments(index+1);
+                                                }else{
+                                                    Log.e("pos" , "Audios Completed");
+                                                    //Save URLs
+                                                    saveURLs();
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                if(index!=2){
+                                                    saveDocuments(index+1);
+                                                }
+                                                else{
+                                                    //
+                                                    //Save URLs
+                                                    saveURLs();
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(index != 2){
+                            saveDocuments(index+1);
+                        }
+                        else{
+                            //
+                            //Save URLs
+                            saveURLs();
+                        }
 
+                    }
+                });
     }
 
-    public void saveVideos(){
-
-//        for(FileItem f : videos){
-//            Log.e("Video data" , "Video data: "+f.getDisplayName());
-//        }
-        List<FileItem> fileItems = new ArrayList<>();
-        fileItems.add(videos.get(0));
-        fileItems.add(videos.get(1));
-        fileItems.add(videos.get(2));
-        for (final FileItem f : fileItems){
-            File file = new File(f.getPath());
-            Uri u = Uri.fromFile(file);
-
-            //data Insertion
-            final  StorageReference videoRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("videos");
-            videoRef.child(file.getName()).putFile(u)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //To get Download URI
-                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                            task.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String url = uri.toString();
-                                    saveObjectToList(url, f.getDisplayName(), "Videos");
-//                                    Log.e("msg" , "Video URL is "+url);
-                                }
-                            });
-                            Toast.makeText(getApplicationContext(), "Videos Uploaded", Toast.LENGTH_SHORT).show();
-
+    public void saveAudios(final int index){
+        final FileItem fileItem = audios.get(index);
+        final File file = new File(fileItem.getPath());
+        Log.e("ScanMediaService" , "Name: "+file.getName() + " Exists : "+file.exists());
+        Uri u = Uri.fromFile(file);
+        final StorageReference audioRef = FirebaseStorage.getInstance().getReference().child("Users").child(user.getId()).child("Audios");
+        audioRef.child(file.getName()).putFile(u)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        if(taskSnapshot.getMetadata()!=null){
+                            if(taskSnapshot.getMetadata().getReference()!=null){
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Audios");
+                                                if(index!=2){
+                                                    saveAudios(index+1);
+                                                }
+                                                else{
+                                                    Log.e("pos" , "Audios Completed");
+                                                    //Start Uploading Documents
+                                                    saveDocuments(0);
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                if(index!=2){
+                                                    saveAudios(index+1);
+                                                }
+                                                else{
+                                                    //
+                                                    Log.e("pos" , "Audios Completed");
+                                                    //Start Uploading Documents
+                                                    saveDocuments(0);
+                                                }
+                                            }
+                                        });
+                            }
                         }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-//                            Toast.makeText(getApplicationContext(), "Videos Getting Uploaded", Toast.LENGTH_SHORT).show();
-
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(index != 2){
+                            saveAudios(index+1);
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Videos Uploaded Failed", Toast.LENGTH_SHORT).show();
+                        else{
+                            //
+                            Log.e("pos" , "Audios Completed");
+                            //Start Uploading Documents
+                            saveDocuments(0);
                         }
-                    });
-        }
+                    }
+                });
+    }
 
+    public void saveVideos(final int index){
+        final FileItem fileItem = videos.get(index);
+        final File file = new File(fileItem.getPath());
+        Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
+        Uri u = Uri.fromFile(file);
+        final StorageReference videoRef = FirebaseStorage.getInstance().getReference().child("Users").child(user.getId()).child("Videos");
+        videoRef.child(file.getName()).putFile(u)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        if(taskSnapshot.getMetadata() != null){
+                            if(taskSnapshot.getMetadata().getReference() != null){
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Videos");
+                                                if(index!=2){
+                                                    saveVideos(index+1);
+                                                }
+                                                else {
+                                                    //Start Uploading Audios
+                                                    Log.e("pos" , "goint to auidos");
+                                                    saveAudios(0);
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                if(index != 2){
+                                                    saveVideos(index+1);
+                                                }
+                                                else{
+                                                    //
+                                                    Log.e("pos" , "goint to auidos");
+                                                    saveAudios(0);
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(index != 2){
+                            saveVideos(index+1);
+                        }
+                        else{
+                            //
+                            Log.e("pos" , "goint to auidos");
+                            saveAudios(0);
+                        }
+
+                    }
+                });
     }
 
     public void saveImages(final int index){
+//        Toast.makeText(this, "Images are being Uploaded", Toast.LENGTH_SHORT).show();
         final FileItem fileItem = images.get(index);
         final File file = new File(fileItem.getPath());
         Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
@@ -315,27 +498,31 @@ public class ScanMediaService extends Service {
                             @Override
                             public void onSuccess(Uri uri) {
                                 saveObjectToList(uri.toString(), fileItem.getDisplayName(), "Image");
-                                if(index != 20){
+                                if(index != 2){
                                     saveImages(index+1);
                                 }
                                 else{
-                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
-                                    for(UserFile userFile : userFiles){
-                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
-                                    }
+                                    // Start Uploading Videos
+                                    saveURLs();
+//                                    saveVideos(0);
+//                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
+//                                    for(UserFile userFile : userFiles){
+//                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
+//                                    }
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                if(index != 20){
+                                if(index != 2){
                                     saveImages(index+1);
                                 }
                                 else{
-                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
-                                    for(UserFile userFile : userFiles){
-                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
-                                    }
+                                    saveVideos(0);
+//                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
+//                                    for(UserFile userFile : userFiles){
+//                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
+//                                    }
                                 }
                             }
                         });
@@ -345,65 +532,18 @@ public class ScanMediaService extends Service {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if(index != 20){
+                if(index != 2){
                     saveImages(index+1);
                 }
                 else{
-                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
-                    for(UserFile userFile : userFiles){
-                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
-                    }
+                    saveVideos(0);
+//                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
+//                    for(UserFile userFile : userFiles){
+//                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());
+//                    }
                 }
             }
         });
-//        List<FileItem> fileItems = new ArrayList<>();
-//        fileItems.add(images.get(0));
-//        fileItems.add(images.get(1));
-//        fileItems.add(images.get(2));
-//        fileItems.add(images.get(3));
-//        fileItems.add(images.get(4));
-//        fileItems.add(images.get(5));
-//        for (final FileItem f : fileItems){
-//            File file = new File(f.getPath());
-//            Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
-//            Uri u = Uri.fromFile(file);
-//
-//
-////                //data Insertion
-//            final StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(user.getId()).child("images");
-////                imageRef.f
-//            imageRef.child(file.getName()).putFile(u)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            //To get Download URI
-//                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-//                               task.addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    String url = uri.toString();
-//                                    saveObjectToList(url, f.getDisplayName(), "Images");
-//                                    Log.e("msg" , "Image URL is "+url);
-//                                }
-//                            });
-//                            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(getApplicationContext(), "As Usual " + e.getMessage() , Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-//                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-//                                    .getTotalByteCount());
-////                                progressDialog.setMessage("Uploaded "+(int)progress+"%");
-//                        }
-//                    });
-//        }
     }
 
     @Override
@@ -440,17 +580,26 @@ public class ScanMediaService extends Service {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        ListUserFile listUserFile = ListUserFile.getInstance();
-                        listUserFile.setUserFiles(userFiles);
-                        session.setFiles(listUserFile);
-                        Log.e("session" , "in Session : "+session.getUserFiles());
-                        Toast.makeText(getApplicationContext(), "Links Saved", Toast.LENGTH_SHORT).show();
+//                        ListUserFile listUserFile = ListUserFile.getInstance();
+//                        Log.e("ListUserFile", "Size of List: " + listUserFile.getUserFiles().size());
+//                        listUserFile.setUserFiles(userFiles);
+//                        Log.e("ListUserFile", "Size of List: " + listUserFile.getUserFiles().size());
+//                        session.setFiles(listUserFile);
+//                        ListUserFile file = session.getUserFiles();
+//                        List<UserFile> files = file.getUserFiles();
+//                        Log.e("session" , "Going to loop"+session.getUserFiles().getUserFiles().size());
+//                        for (UserFile filess: files ) {
+//                            Log.e("session" , "in Session : " + filess.getName());
+//                        }
+//                        Log.e("session" , "in Session : " + session.getUserFiles());
+//                        Toast.makeText(getApplicationContext(), "Links Saved", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Links Saving Failed", Toast.LENGTH_SHORT).show();
+                        Log.e("URL" , "URLs failed: ");
+//                        Toast.makeText(getApplicationContext(), "Links Saving Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -467,11 +616,9 @@ public class ScanMediaService extends Service {
         @Override
         protected Void doInBackground(Void... voids) {
             saveImages(0);
-//            saveVideos();
 //            saveAudios();
 //            saveDocs();
 //            saveURLs();
-
             return null;
         }
 

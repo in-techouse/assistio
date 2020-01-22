@@ -1,20 +1,12 @@
 package lcwu.fyp.asistio.model;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListUserFile {
-    private static List<UserFile> userFiles;
-    private static final ListUserFile ourInstance = new ListUserFile();
+public class ListUserFile implements Serializable {
+    private List<UserFile> userFiles;
 
-    public static ListUserFile getInstance() {
-        if(userFiles == null){
-            userFiles = new ArrayList<>();
-        }
-        return ourInstance;
-    }
-
-    private ListUserFile() {
+    public ListUserFile() {
         userFiles = new ArrayList<>();
     }
 
