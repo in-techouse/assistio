@@ -423,6 +423,7 @@ public class ScanMediaService extends Service {
     }
 
     public void saveVideos(final int index){
+        Log.e("pos" , "in saveVideos");
         final FileItem fileItem = videos.get(index);
         final File file = new File(fileItem.getPath());
         Log.e("ScanMediaService", "Name: " + file.getName() + " Exists: " + file.exists());
@@ -441,11 +442,14 @@ public class ScanMediaService extends Service {
                                                 saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Videos");
                                                 if(index!=2){
                                                     saveVideos(index+1);
+                                                    Log.e("pos" , "Uploading "+index);
                                                 }
                                                 else {
+                                                    Log.e("pos" , "goint to saveURLs");
+                                                    saveURLs();
                                                     //Start Uploading Audios
                                                     Log.e("pos" , "goint to auidos");
-                                                    saveAudios(0);
+//                                                    saveAudios(0);
                                                 }
                                             }
                                         })
@@ -458,7 +462,7 @@ public class ScanMediaService extends Service {
                                                 else{
                                                     //
                                                     Log.e("pos" , "goint to auidos");
-                                                    saveAudios(0);
+//                                                    saveAudios(0);
                                                 }
                                             }
                                         });
@@ -475,7 +479,7 @@ public class ScanMediaService extends Service {
                         else{
                             //
                             Log.e("pos" , "goint to auidos");
-                            saveAudios(0);
+//                            saveAudios(0);
                         }
 
                     }
@@ -503,8 +507,8 @@ public class ScanMediaService extends Service {
                                 }
                                 else{
                                     // Start Uploading Videos
-                                    saveURLs();
-//                                    saveVideos(0);
+//                                    saveURLs();
+                                    saveVideos(0);
 //                                    Log.e("UserFile", "User Files List Size: " + userFiles.size());
 //                                    for(UserFile userFile : userFiles){
 //                                        Log.e("UserFile", "Name: " + userFile.getName() + " URl: " + userFile.getDownload_url());

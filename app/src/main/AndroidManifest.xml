@@ -21,6 +21,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name="com.mzelzoghbi.zgallery.activities.ZGridActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".activities.ShowImages"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ShowImages" />
+        </activity>
+
+        <activity
+            android:name="com.mzelzoghbi.zgallery.activities.ZGalleryActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".activities.ShowImages"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ShowImages" />
+        </activity>
+
         <activity android:name=".activities.ShowNotes"
          android:parentActivityName=".activities.Dashboard"/>
         <activity android:name=".activities.ShowAudios"

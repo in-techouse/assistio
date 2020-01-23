@@ -125,6 +125,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         videosBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent in = new Intent(Dashboard.this , ShowVideos.class);
+                Log.e("intent" , "goint to Videos : "+userFile);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(userFile);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
                 startActivity(in);
             }
         });
@@ -153,21 +159,21 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //
 
 
-
-
-
-
-//        boolean flag = session.getSync();
-//        startServices();
-//        if(flag){
-//            System.out.println("in if with flag" + flag);
-//            toggleButton.setToggleOn();
-//            startServices();
-//        }
-//        else{
-//            System.out.println("in else with flag" +flag);
-//            toggleButton.setToggleOff();
-//        }
+        //Service calling
+        if(true){
+            boolean flag = session.getSync();
+        startServices();
+        if(flag){
+            System.out.println("in if with flag" + flag);
+            toggleButton.setToggleOn();
+            startServices();
+        }
+        else{
+            System.out.println("in else with flag" +flag);
+            toggleButton.setToggleOff();
+        }
+     }
+//
         toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
