@@ -6,6 +6,7 @@ buildscript {
         jcenter()
         maven { url 'https://dl.bintray.com/roman-voronoy/maven/'}
         maven { url "https://jitpack.io" }
+        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'

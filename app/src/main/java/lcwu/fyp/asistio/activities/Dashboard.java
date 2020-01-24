@@ -160,7 +160,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
         //Service calling
-        if(true){
+        if(false){
             boolean flag = session.getSync();
         startServices();
         if(flag){

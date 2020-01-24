@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
+    //new Added
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -9,6 +14,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -44,5 +50,12 @@ dependencies {
     implementation 'com.zcw:togglebutton-library:1.0.0'
     implementation 'com.jiajunhui.xapp.medialoader:medialoader:1.2.1'
     implementation 'com.github.mzelzoghbi:zgallery:0.3'
+    implementation "im.ene.toro3:toro:3.7.0.2905-A1"
+    implementation "im.ene.toro3:toro-ext-exoplayer:3.7.0.2905-A1"
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.waynell:VideoListPlayer:1.4'
+    implementation 'androidx.media2:media2:1.0.0-alpha04'
+//    implementation 'video_thumbnail: ^0.2.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
