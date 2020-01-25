@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.core.view.View;
 import java.net.Inet4Address;
 import java.util.ArrayList;
@@ -78,76 +79,13 @@ public class ShowVideosAdapter extends BaseAdapter {
         TextView textHeading =  convertView.findViewById(R.id.txt);
         ImageView thumbnailImage =  convertView.findViewById(R.id.flag);
         textHeading.setText("Id: " + userFile.getName());
-
-//        Bitmap bm = ThumbnailUtils.createVideoThumbnail(String.valueOf(videos.get(0)),MediaStore.Video.Thumbnails.MINI_KIND);
-
-//        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-//        //give YourVideoUrl below
-//        retriever.setDataSource(userFile.getDownload_url(), new HashMap<String, String>());
-//        // this gets frame at 2nd second
-//        Bitmap image = retriever.getFrameAtTime(2000000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-
-
-//        Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(userFile.getDownload_url(), MediaStore.Video.Thumbnails.MICRO_KIND);
-//        thumbnailImage.setImageBitmap(retriveVideoFrameFromVideo(userFile.getDownload_url()));
-//        Log.e("Bitmap" , "Bitmap"+image);
-
-//        long thumb = getLayoutPosition()*1000;
-//        RequestOptions options = new RequestOptions().frame(thumb);
-//        Bitmap bm;
-
-        Glide
-                .with(context)
-                .load(userFile.getDownload_url())
-                .thumbnail(0.1f)
-                .into(thumbnailImage);
-//
-//        Glide.with(context).load(userFile.getDownload_url())
-////                .apply(options)
-//                .into(thumbnailImage);
-
-//        thumbnailImage.setImageBitmap();
-//        thumbnailImage.setImageDrawable();
-//        thumbnailImage.setImageDrawable(context.getResources().getDrawable(R.drawable.logo));
-
-        //
-//
-//            thumbnailImage.setImageResource( myimges[position] );
+        Log.e("text" , "hText :"+textHeading);
+        //Glide method
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.isMemoryCacheable();
+        Glide.with(context).setDefaultRequestOptions(requestOptions).load(userFile.getDownload_url()).into(thumbnailImage);
         return convertView;
     }
-
-
-    private Bitmap retriveVideoFrameFromVideo(String videoPath)
-    {
-        Bitmap bitmap = null;
-        MediaMetadataRetriever mediaMetadataRetriever = null;
-        Log.e("BitMap", "Video Path: " + videoPath);
-
-        try
-        {
-            mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(videoPath);
-            //   mediaMetadataRetriever.setDataSource(videoPath);
-            bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Log.e("BitMap", "Exception Occur: " + e.getMessage());
-        }
-        finally
-        {
-            if (mediaMetadataRetriever != null)
-            {
-                mediaMetadataRetriever.release();
-            }
-            else{
-                Log.e("BitMap", "Media meta data is null");
-            }
-        }
-        return bitmap;
-    }
-
 
 }
 
