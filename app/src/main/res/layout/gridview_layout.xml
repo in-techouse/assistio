@@ -19,13 +19,13 @@
         android:src="@drawable/play"
         android:layout_centerInParent="true" />
 
-    <TextView
-        android:textColor="@color/colorPrimary"
-        android:text="Hello..................."
-        android:id="@+id/txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:gravity="center_horizontal" />
+<!--    <TextView-->
+<!--        android:textColor="@color/colorPrimary"-->
+<!--        android:text="Hello..................."-->
+<!--        android:id="@+id/txt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="15sp"-->
+<!--        android:gravity="center_horizontal" />-->
 
 </RelativeLayout>

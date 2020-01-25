@@ -28,18 +28,7 @@ import lcwu.fyp.asistio.model.UserFile;
 public class ShowVideosAdapter extends BaseAdapter {
     private List<UserFile> videos;
     private Context context;
-//    Bitmap bm1 , bm2;
-//    private Bitmap[] myimges = {
-//            bm1,
-//            bm2
-////            retriveVideoFrameFromVideo(videos.get(0)),
-////            R.string.enter_last_name,
-////            R.string.enable_random_adaptation,
-////            R.string.error_drm_unknown,
-////            R.string.app_name,
-////            R.string.app_name,
-////            R.string.app_name,
-//    };
+
     private LayoutInflater thisInflater;
 
     public  ShowVideosAdapter(Context context , List<UserFile> videos )  {
@@ -48,8 +37,6 @@ public class ShowVideosAdapter extends BaseAdapter {
         this.context = context;
         this.thisInflater = LayoutInflater.from(context);
         this.videos = videos;
-//        bm1 = retriveVideoFrameFromVideo(videos.get(0));
-//        bm2 = retriveVideoFrameFromVideo(videos.get(1));
     }
 
 

@@ -125,7 +125,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         videosBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent in = new Intent(Dashboard.this , ShowVideos.class);
-                Log.e("intent" , "goint to Videos : "+userFile);
+                Log.e("intent" , "going to Videos : "+userFile);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(userFile);
                 Bundle bundle = new Bundle();
@@ -137,6 +137,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         audiosBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent in = new Intent(Dashboard.this , ShowAudios.class);
+                Log.e("intent" , "going to Audios : "+userFile);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(userFile);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
                 startActivity(in);
             }
         });

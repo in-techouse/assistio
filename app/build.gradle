@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.github.khizar1556.MKVideoPlayer:mkvideoplayer:0.1.5'
+    implementation 'com.android.support:recyclerview-v7:+'
 
 }
 apply plugin: 'com.google.gms.google-services'

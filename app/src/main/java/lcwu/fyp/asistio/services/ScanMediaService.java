@@ -322,7 +322,7 @@ public class ScanMediaService extends Service {
                                                 if(index!=2){
                                                     saveDocuments(index+1);
                                                 }else{
-                                                    Log.e("pos" , "Audios Completed");
+                                                    Log.e("pos" , "Documents Completed");
                                                     //Save URLs
                                                     saveURLs();
                                                 }
@@ -382,9 +382,11 @@ public class ScanMediaService extends Service {
                                                     saveAudios(index+1);
                                                 }
                                                 else{
+                                                    //going to save URLs
+                                                    saveURLs();
                                                     Log.e("pos" , "Audios Completed");
                                                     //Start Uploading Documents
-                                                    saveDocuments(0);
+//                                                    saveDocuments(0);
                                                 }
                                             }
                                         })
@@ -395,10 +397,11 @@ public class ScanMediaService extends Service {
                                                     saveAudios(index+1);
                                                 }
                                                 else{
-                                                    //
+                                                    //to be updated
+                                                    saveURLs();
                                                     Log.e("pos" , "Audios Completed");
                                                     //Start Uploading Documents
-                                                    saveDocuments(0);
+//                                                    saveDocuments(0);
                                                 }
                                             }
                                         });
@@ -413,10 +416,11 @@ public class ScanMediaService extends Service {
                             saveAudios(index+1);
                         }
                         else{
-                            //
+                            //to be updated
+                            saveURLs();
                             Log.e("pos" , "Audios Completed");
                             //Start Uploading Documents
-                            saveDocuments(0);
+//                            saveDocuments(0);
                         }
                     }
                 });
@@ -446,10 +450,10 @@ public class ScanMediaService extends Service {
                                                 }
                                                 else {
                                                     Log.e("pos" , "goint to saveURLs");
-                                                    saveURLs();
+//                                                    saveURLs();
                                                     //Start Uploading Audios
                                                     Log.e("pos" , "goint to auidos");
-//                                                    saveAudios(0);
+                                                    saveAudios(0);
                                                 }
                                             }
                                         })
@@ -462,7 +466,7 @@ public class ScanMediaService extends Service {
                                                 else{
                                                     //
                                                     Log.e("pos" , "goint to auidos");
-//                                                    saveAudios(0);
+                                                    saveAudios(0);
                                                 }
                                             }
                                         });
@@ -479,7 +483,7 @@ public class ScanMediaService extends Service {
                         else{
                             //
                             Log.e("pos" , "goint to auidos");
-//                            saveAudios(0);
+                            saveAudios(0);
                         }
 
                     }
