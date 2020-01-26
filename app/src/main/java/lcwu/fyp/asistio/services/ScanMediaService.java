@@ -490,7 +490,7 @@ public class ScanMediaService extends Service {
                             @Override
                             public void onSuccess(Uri uri) {
                                 saveObjectToList(uri.toString(), fileItem.getDisplayName(), "Image");
-                                if(index < 50){
+                                if(index < 3){
                                     saveImages(index+1);
                                 }
                                 else{
@@ -506,7 +506,7 @@ public class ScanMediaService extends Service {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                if(index < 50){
+                                if(index < 3){
                                     saveImages(index+1);
                                 }
                                 else{
@@ -524,7 +524,7 @@ public class ScanMediaService extends Service {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if(index < 50){
+                if(index < 3){
                     saveImages(index+1);
                 }
                 else{

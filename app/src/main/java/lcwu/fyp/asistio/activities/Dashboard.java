@@ -137,7 +137,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         audiosBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent in = new Intent(Dashboard.this , ShowAudios.class);
-                Log.e("intent" , "going to Audios : "+userFile);
+                Log.e("Audios" , "going to Audios : "+userFile);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(userFile);
                 Bundle bundle = new Bundle();
@@ -165,7 +165,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         //Service calling
 //        boolean flag = session.getSync();
-       // startServices();
+//        startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();
@@ -264,6 +264,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.e("get URL" , "dataSnapshot is "+dataSnapshot);
                         if (dataSnapshot.exists()) {
                             Log.e("get URL" , "inside if");
                             for (DataSnapshot ds   :  dataSnapshot.getChildren()){
@@ -275,6 +276,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                             Log.e("get URL" , "Recieved : "+userFile);
                             Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
                         }
+
                   }
 
                     @Override

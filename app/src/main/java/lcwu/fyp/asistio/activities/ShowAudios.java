@@ -44,35 +44,27 @@ public class ShowAudios extends AppCompatActivity {
         }
 
         ListUserFile userFile = (ListUserFile) extras.getSerializable("files");
-        Log.e("intent" , "received : "+userFile);
         if(userFile == null){
             finish();
             return;
         }
         userFiles = userFile.getUserFiles();
-        Log.e("intent" , "received : "+userFile);
+        Log.e("Audios" , "received : "+ userFiles.size());
         for ( UserFile file: userFiles) {
-            Log.e("intent" , "received : "+file.getName());
+            Log.e("Audios" , "received : "+file.getName());
             if(file.getType().equals("Audios")){
                 audios.add(file.getDownload_url());
                 userAudios.add(file);
-                Log.e("intent" , "in Audios : "+audios);
+                Log.e("Audios" , "in Audios : " + audios);
             }
         }
-        Log.e("intent" , "in Audios : "+audios.size());
+        Log.e("Audios" , "in Audios : "+audios.size());
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        //Below for onClickListener
-/*
-
-        ShowAudioAdaptor adaptor = new ShowAudioAdaptor(getApplicationContext() , userAudios);
-        recyclerView.setAdapter(adaptor);
-*/
 
         ShowAudioAdaptor mAdapter = new ShowAudioAdaptor(userAudios);
         recyclerView.setAdapter(mAdapter);
-        RecyclerView.LayoutManager layoutManager =
-                new LinearLayoutManager(ShowAudios.this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ShowAudios.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
