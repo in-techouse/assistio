@@ -22,14 +22,13 @@ import lcwu.fyp.asistio.model.UserFile;
 public class ShowAudios extends AppCompatActivity {
 
     List<UserFile> userFiles = new ArrayList<>();
-    ArrayList<String> audios = new ArrayList<>();
+    List<String> audios = new ArrayList<>();
     List<UserFile> userAudios = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_audios);
-        Context context = getApplicationContext();
 
 
         Intent it = getIntent();
@@ -70,12 +69,12 @@ public class ShowAudios extends AppCompatActivity {
         recyclerView.setAdapter(adaptor);
 */
 
-        ShowAudioAdaptor mAdapter = new ShowAudioAdaptor(context, audios);
+        ShowAudioAdaptor mAdapter = new ShowAudioAdaptor(userAudios);
         recyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(ShowAudios.this);
-        RecyclerView.setLayoutManager(layoutManager);
-        RecyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
 
     }
 

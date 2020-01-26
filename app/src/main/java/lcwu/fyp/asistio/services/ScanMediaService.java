@@ -1,32 +1,20 @@
 package lcwu.fyp.asistio.services;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.os.IBinder;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
-
-import com.google.android.gms.common.internal.Constants;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,40 +22,22 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jiajunhui.xapp.medialoader.MediaLoader;
-import com.jiajunhui.xapp.medialoader.bean.AudioItem;
-import com.jiajunhui.xapp.medialoader.bean.AudioResult;
 import com.jiajunhui.xapp.medialoader.bean.FileItem;
 import com.jiajunhui.xapp.medialoader.bean.FileResult;
-import com.jiajunhui.xapp.medialoader.bean.PhotoItem;
-import com.jiajunhui.xapp.medialoader.bean.PhotoResult;
-import com.jiajunhui.xapp.medialoader.bean.VideoItem;
-import com.jiajunhui.xapp.medialoader.bean.VideoResult;
-import com.jiajunhui.xapp.medialoader.callback.OnAudioLoaderCallBack;
 import com.jiajunhui.xapp.medialoader.callback.OnFileLoaderCallBack;
-import com.jiajunhui.xapp.medialoader.callback.OnPhotoLoaderCallBack;
-import com.jiajunhui.xapp.medialoader.callback.OnVideoLoaderCallBack;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.activities.Dashboard;
 import lcwu.fyp.asistio.director.Session;
-import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ScanMediaService extends Service {
     private DatabaseReference reference;
     public static Dashboard dashboard;
     private List<FileItem> images, videos, audios, docs;
-    private List<String> docsUri;
-    private Session session;
     private User user;
     private List<UserFile> userFiles;
 
@@ -76,13 +46,12 @@ public class ScanMediaService extends Service {
         audios = new ArrayList<>();
         docs  = new ArrayList<>();
         images = new ArrayList<>();
-        docsUri = new ArrayList<>();
         userFiles = new ArrayList<>();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        session = new Session(this);
+        Session session = new Session(this);
         user = session.getUser();
         reference  = FirebaseDatabase.getInstance().getReference().child("UserFiles").child(user.getId());
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
@@ -624,9 +593,6 @@ public class ScanMediaService extends Service {
         @Override
         protected Void doInBackground(Void... voids) {
             saveImages(0);
-//            saveAudios();
-//            saveDocs();
-//            saveURLs();
             return null;
         }
 
@@ -639,61 +605,3 @@ public class ScanMediaService extends Service {
     }
 
 }
-
-//    private void getAllImages(){
-//        MediaLoader.getLoader().loadPhotos(dashboard, new OnPhotoLoaderCallBack() {
-//            @Override
-//            public void onResult(PhotoResult result) {
-//                Log.e("ScanMediaService", "Photo Items Size: " +result.getItems().size());
-//                for (PhotoItem photo : result.getItems()){
-//                    Log.e("ScanMediaService", "Photo Display Name: " + photo.getDisplayName() + " Path: " + photo.getPath());
-//                }
-//            }
-//
-//        });
-//    }
-//
-//    private void getAllAudios(){
-//        MediaLoader.getLoader().loadAudios(dashboard, new OnAudioLoaderCallBack() {
-//            @Override
-//            public void onResult(AudioResult result) {
-//                Log.e("ScanMediaService", "Audios Items Size: " +result.getItems().size());
-//                for (AudioItem audio : result.getItems()){
-//                    Log.e("ScanMediaService", "Audio Display Name: " + audio.getDisplayName() + " Path: " + audio.getPath());
-//
-//                }
-//
-//            }
-//        });
-//    }
-//
-//    private void getAllVideo(){
-//        MediaLoader.getLoader().loadVideos(dashboard, new OnVideoLoaderCallBack() {
-//            @Override
-//            public void onResult(VideoResult result) {
-//                Log.e("ScanMediaService", "Videos Items Size: " +result.getItems().size());
-//                for(VideoItem video : result.getItems()){
-//                    Log.e("ScanMediaService", "Video Display Name: " + video.getDisplayName() + " Path: " + video.getPath());
-//                }
-//            }
-//        });
-//    }
-
-
-
-//                for (int i = 0; i < docs.size(); i++) {
-//                    Uri uri = Uri.fromFile(docs.get(i));
-//                    uploadMethod(uri, i);
-//                }
-
-//                filePath.putFile(docs).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                            @Override
-//                            public void onSuccess(Uri uri) {
-//                                Log.d(TAG, "onSuccess: uri= "+ uri.toString());
-//                            }
-//                        });
-//                    }
-//                });

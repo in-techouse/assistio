@@ -61,11 +61,10 @@ public class ShowVideosAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = thisInflater.inflate( R.layout.gridview_layout, parent, false );
         }
-
         final UserFile userFile = videos.get(position);
         TextView textHeading =  convertView.findViewById(R.id.txt);
         ImageView thumbnailImage =  convertView.findViewById(R.id.flag);
-        textHeading.setText("Id: " + userFile.getName());
+        textHeading.setText(userFile.getName());
         Log.e("text" , "hText :"+textHeading);
         //Glide method
         RequestOptions requestOptions = new RequestOptions();

@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,25 +15,8 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
-import android.widget.VideoView;
-
-import com.google.firebase.database.core.view.View;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
-
-import im.ene.toro.PlayerSelector;
-import im.ene.toro.ToroPlayer;
-import im.ene.toro.ToroUtil;
-import im.ene.toro.exoplayer.ExoPlayerViewHelper;
-import im.ene.toro.media.PlaybackInfo;
-import im.ene.toro.widget.Container;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.ShowVideosAdapter;
 import lcwu.fyp.asistio.model.ListUserFile;

@@ -1,20 +1,12 @@
 package lcwu.fyp.asistio.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ViewParent;
-
-
 import com.khizar1556.mkvideoplayer.MKPlayer;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;

@@ -162,24 +162,20 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         videos.setText(user.getVideos()+"");
         documents.setText(user.getDocuments()+"");
         notes.setText(user.getNotes()+"");
-//
-
 
         //Service calling
-        if(false){
-            boolean flag = session.getSync();
-        startServices();
-        if(flag){
-            System.out.println("in if with flag" + flag);
-            toggleButton.setToggleOn();
-            startServices();
-        }
-        else{
-            System.out.println("in else with flag" +flag);
-            toggleButton.setToggleOff();
-        }
-     }
-//
+//        boolean flag = session.getSync();
+//        startServices();
+//        if(flag){
+//            System.out.println("in if with flag" + flag);
+//            toggleButton.setToggleOn();
+//            startServices();
+//        }
+//        else{
+//            System.out.println("in else with flag" +flag);
+//            toggleButton.setToggleOff();
+//        }
+
         toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
@@ -209,23 +205,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             return true;
     }
     public void startServices(){
-
-
-
-//        Intent serviceIntent = new Intent("lcwu.fyp.asistio.services.ScanMediaService");
-//        serviceIntent.setPackage(this.getPackageName());
-//        serviceIntent.setAction("lcwu.fyp.asistio.services.ScanMediaService");
-//        startService(serviceIntent);
-//
-//        startService(new Intent(this, ScanMediaService.class));
-
-        Log.e("Service", "Starting");
+        Log.e("Service", "in StartService");
         if (askForPermission()){
             Log.e("Service", "in askForPermission");
-            Log.e("Service", "in StartService");
             ScanMediaService.dashboard = Dashboard.this;
             startService(new Intent(Dashboard.this, ScanMediaService.class));
-            Log.e("Service", "After exe");
+            Log.e("Service", "After Execution");
         }
     }
 
