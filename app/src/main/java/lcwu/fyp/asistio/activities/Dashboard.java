@@ -165,7 +165,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         //Service calling
 //        boolean flag = session.getSync();
-//        startServices();
+       // startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();

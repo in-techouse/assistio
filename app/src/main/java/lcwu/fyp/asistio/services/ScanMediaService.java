@@ -109,17 +109,32 @@ public class ScanMediaService extends Service {
         });
     }
     public void notifyMe(){
-
         NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext(), "1");
         mBuilder.setAutoCancel(false);
         mBuilder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        mBuilder.setTicker("Ticker");
-        mBuilder.setContentInfo("Info");
+        mBuilder.setTicker("Asissito");
+        mBuilder.setContentInfo("Syncing Data");
         mBuilder.setSmallIcon(R.drawable.home);
         mBuilder.setOngoing(true);
         mBuilder.setProgress(0, 0, true);
-        mBuilder.setContentTitle("Uploading Data");
-        mBuilder.setContentText("Keeeep Patience");
+        mBuilder.setContentTitle("Syncing Data");
+        mBuilder.setContentText("Keep Patience");
+        mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        NotificationManager notificationManager= (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(2, mBuilder.build());
+        }
+    }
+
+    public void notifyAfterSync(){
+        NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext(), "1");
+        mBuilder.setAutoCancel(true);
+        mBuilder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        mBuilder.setTicker("Asissito");
+        mBuilder.setContentInfo("Data Synced");
+        mBuilder.setSmallIcon(R.drawable.home);
+        mBuilder.setContentTitle("Data Synced");
+        mBuilder.setContentText("Your data is synced with Asisstio.");
         mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         NotificationManager notificationManager= (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
@@ -475,7 +490,7 @@ public class ScanMediaService extends Service {
                             @Override
                             public void onSuccess(Uri uri) {
                                 saveObjectToList(uri.toString(), fileItem.getDisplayName(), "Image");
-                                if(index != 2){
+                                if(index < 50){
                                     saveImages(index+1);
                                 }
                                 else{
@@ -491,7 +506,7 @@ public class ScanMediaService extends Service {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                if(index != 2){
+                                if(index < 50){
                                     saveImages(index+1);
                                 }
                                 else{
@@ -509,7 +524,7 @@ public class ScanMediaService extends Service {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                if(index != 2){
+                if(index < 50){
                     saveImages(index+1);
                 }
                 else{
@@ -557,6 +572,7 @@ public class ScanMediaService extends Service {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        notifyAfterSync();
 //                        ListUserFile listUserFile = ListUserFile.getInstance();
 //                        Log.e("ListUserFile", "Size of List: " + listUserFile.getUserFiles().size());
 //                        listUserFile.setUserFiles(userFiles);
