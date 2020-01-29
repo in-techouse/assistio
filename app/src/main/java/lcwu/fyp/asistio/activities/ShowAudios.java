@@ -62,7 +62,7 @@ public class ShowAudios extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        ShowAudioAdaptor mAdapter = new ShowAudioAdaptor(userAudios);
+        ShowAudioAdaptor mAdapter = new ShowAudioAdaptor(userAudios , getApplicationContext());
         recyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ShowAudios.this);
         recyclerView.setLayoutManager(layoutManager);

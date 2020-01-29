@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+
 import com.khizar1556.mkvideoplayer.MKPlayer;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class ShowSingleVideo extends AppCompatActivity {
 //    ArrayList<String> videos = new ArrayList<>();
     private ListUserFile listUserFile;
     private int index;
+    private MKPlayer mkplayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +63,9 @@ public class ShowSingleVideo extends AppCompatActivity {
         userVideos = listUserFile.getUserFiles();
 //        Log.e("intent", "received in new : " + userFile.getId());
 
-        MKPlayer mkplayer = new  MKPlayer(ShowSingleVideo.this);
-//        Log.e("intent", "received in new : " + userFile.getDownload_url());
+        mkplayer = new  MKPlayer(ShowSingleVideo.this);
         mkplayer.play(userVideos.get(index).getDownload_url());
-//
+        mkplayer.setTitle(userVideos.get(index).getName());
         mkplayer.setPlayerCallbacks(new MKPlayer.playerCallbacks() {
             @Override
             public void onNextClick() {
@@ -86,13 +88,15 @@ public class ShowSingleVideo extends AppCompatActivity {
             }
         });
 
+
         // Once it's prepared, the progress indicator goes away and the controls become enabled for the user to begin playback.
     }
 
 
-
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
+        this.mkplayer.pause();
         finish();
         return;
     }

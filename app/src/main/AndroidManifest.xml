@@ -105,7 +105,10 @@
             android:enabled="true" />
         <service
             android:name=".services.UploadService"
-            android:enabled="true" /> <!-- BROAD CAST RECEIVERS -->
+            android:enabled="true" />
+        <service android:name=".services.DownloadService"
+            android:enabled="true"/>
+        <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
     </application>
 

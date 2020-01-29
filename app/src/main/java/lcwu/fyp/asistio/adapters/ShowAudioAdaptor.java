@@ -1,5 +1,8 @@
 package lcwu.fyp.asistio.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +16,20 @@ import java.util.List;
 import javax.security.auth.login.LoginException;
 
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.activities.ShowSingleVideo;
+import lcwu.fyp.asistio.activities.ShowVideos;
+import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.AudioViewHolder> {
 
     private List<UserFile> audios;
     private TextView textView;
+    private Context mcontext;
 
-    public ShowAudioAdaptor(List<UserFile> audios) {
+    public ShowAudioAdaptor(List<UserFile> audios , Context context) {
         this.audios = audios;
+        this.mcontext = context;
       for(UserFile file : audios){
         Log.e("Data" , "audios in adaptor : "+file.getName());
 
@@ -55,6 +63,18 @@ public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.Audi
             @Override
             public void onClick(View v) {
                 Log.e("Click" , "Onclick "+position);
+
+                //Data Sending
+                Intent in  = new Intent(mcontext , ShowSingleVideo.class);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(audios);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                bundle.putInt("index", position);
+                in.putExtras(bundle);
+                in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mcontext.startActivity(in);
+
 //                onClick.onItemClick(position);
             }
         });

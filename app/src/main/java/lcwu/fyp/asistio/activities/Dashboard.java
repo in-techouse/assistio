@@ -107,6 +107,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         documentsBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent in = new Intent(Dashboard.this , ShowDocuments.class);
+                Log.e("intent" , "goint to Documents : "+userFile);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(userFile);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
                 startActivity(in);
             }
         });
@@ -175,13 +181,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //            System.out.println("in else with flag" +flag);
 //            toggleButton.setToggleOff();
 //        }
-
-        toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-            @Override
-            public void onToggle(boolean on) {
-                session.setSync(on);
-            }
-        });
+//
+//        toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+//            @Override
+//            public void onToggle(boolean on) {
+//                session.setSync(on);
+//            }
+//        });
 
         loadFiles();
     }
@@ -204,6 +210,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         }
             return true;
     }
+
     public void startServices(){
         Log.e("Service", "in StartService");
         if (askForPermission()){

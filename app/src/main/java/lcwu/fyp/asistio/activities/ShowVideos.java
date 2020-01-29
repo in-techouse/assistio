@@ -100,7 +100,9 @@ public class ShowVideos extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
         finish();
+
     }
 
     @Override

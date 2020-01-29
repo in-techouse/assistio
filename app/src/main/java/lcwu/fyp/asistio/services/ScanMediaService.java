@@ -303,7 +303,7 @@ public class ScanMediaService extends Service {
                                             @Override
                                             public void onSuccess(Uri uri) {
                                                 saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Documents");
-                                                if(index!=2){
+                                                if(index!=5){
                                                     saveDocuments(index+1);
                                                 }else{
                                                     Log.e("pos" , "Documents Completed");
@@ -315,7 +315,7 @@ public class ScanMediaService extends Service {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                if(index!=2){
+                                                if(index!=5){
                                                     saveDocuments(index+1);
                                                 }
                                                 else{
@@ -362,30 +362,30 @@ public class ScanMediaService extends Service {
                                             @Override
                                             public void onSuccess(Uri uri) {
                                                 saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Audios");
-                                                if(index!=2){
+                                                if(index!=5){
                                                     saveAudios(index+1);
                                                 }
                                                 else{
                                                     //going to save URLs
-                                                    saveURLs();
+//                                                    saveURLs();
                                                     Log.e("pos" , "Audios Completed");
                                                     //Start Uploading Documents
-//                                                    saveDocuments(0);
+                                                    saveDocuments(0);
                                                 }
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                if(index!=2){
+                                                if(index!=5){
                                                     saveAudios(index+1);
                                                 }
                                                 else{
                                                     //to be updated
-                                                    saveURLs();
+//                                                    saveURLs();
                                                     Log.e("pos" , "Audios Completed");
                                                     //Start Uploading Documents
-//                                                    saveDocuments(0);
+                                                    saveDocuments(0);
                                                 }
                                             }
                                         });
@@ -396,15 +396,15 @@ public class ScanMediaService extends Service {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        if(index != 2){
+                        if(index != 5){
                             saveAudios(index+1);
                         }
                         else{
                             //to be updated
-                            saveURLs();
+//                            saveURLs();
                             Log.e("pos" , "Audios Completed");
                             //Start Uploading Documents
-//                            saveDocuments(0);
+                            saveDocuments(0);
                         }
                     }
                 });
@@ -428,7 +428,7 @@ public class ScanMediaService extends Service {
                                             @Override
                                             public void onSuccess(Uri uri) {
                                                 saveObjectToList(uri.toString() , fileItem.getDisplayName() , "Videos");
-                                                if(index!=2){
+                                                if(index!=5){
                                                     saveVideos(index+1);
                                                     Log.e("pos" , "Uploading "+index);
                                                 }
@@ -444,7 +444,7 @@ public class ScanMediaService extends Service {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                if(index != 2){
+                                                if(index != 5){
                                                     saveVideos(index+1);
                                                 }
                                                 else{
@@ -461,7 +461,7 @@ public class ScanMediaService extends Service {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        if(index != 2){
+                        if(index != 5){
                             saveVideos(index+1);
                         }
                         else{
@@ -490,7 +490,7 @@ public class ScanMediaService extends Service {
                             @Override
                             public void onSuccess(Uri uri) {
                                 saveObjectToList(uri.toString(), fileItem.getDisplayName(), "Image");
-                                if(index < 3){
+                                if(index < 5){
                                     saveImages(index+1);
                                 }
                                 else{
@@ -506,7 +506,7 @@ public class ScanMediaService extends Service {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                if(index < 3){
+                                if(index < 5){
                                     saveImages(index+1);
                                 }
                                 else{
@@ -619,5 +619,4 @@ public class ScanMediaService extends Service {
             // Show new notification of all done
         }
     }
-
 }
