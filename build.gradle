@@ -2,11 +2,14 @@
 
 buildscript {
     repositories {
+        mavenCentral()
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/roman-voronoy/maven/'}
         maven { url "https://jitpack.io" }
         maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
+        //testing
+//        maven { url 'https://maven.google.com' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
@@ -22,6 +25,7 @@ buildscript {
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }
+        mavenCentral()
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/roman-voronoy/maven/' }

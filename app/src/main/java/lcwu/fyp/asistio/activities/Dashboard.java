@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mzelzoghbi.zgallery.ZGrid;
+import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -58,6 +60,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private TextView images, videos, audios, notes, documents;
     private LinearLayout contactsBox , documentsBox , imagesBox , videosBox , audiosBox , notesBox;
     private List<UserFile> userFile = new ArrayList<>();
+    ArrayList<String> imagesList = new ArrayList<>();
+    List<UserFile> userImages = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,14 +124,32 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
         imagesBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent in = new Intent(Dashboard.this , ShowImages.class);
-                Log.e("intent" , "goint to images : "+userFile);
-                ListUserFile listUserFile = new ListUserFile();
-                listUserFile.setUserFiles(userFile);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("files", listUserFile);
-                in.putExtras(bundle);
-                startActivity(in);
+
+                userImages.clear();
+                imagesList.clear();
+                for ( UserFile file: userFile) {
+                    Log.e("intent" , "received : "+file.getName());
+                    if(file.getType().equals("Image")){
+                        imagesList.add(file.getDownload_url());
+                        userImages.add(file);
+                    }
+                }
+                ZGrid.with(Dashboard.this, imagesList)
+                        .setToolbarColorResId(R.color.colorPrimary)
+                        .setTitle("Assistio")
+                        .setToolbarTitleColor(ZColor.WHITE)
+                        .setSpanCount(3)
+                        .setGridImgPlaceHolder(R.color.colorPrimary)
+                        .show();
+//                Intent in = new Intent(Dashboard.this , ShowImages.class);
+//                Log.e("intent" , "goint to images : "+userFile);
+//                ListUserFile listUserFile = new ListUserFile();
+//                listUserFile.setUserFiles(userFile);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("files", listUserFile);
+//                in.putExtras(bundle);
+//                startActivity(in);
+
             }
         });
         videosBox.setOnClickListener(new View.OnClickListener() {

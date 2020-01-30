@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -12,11 +13,16 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
+
+//import com.bumptech.glide.Glide;
+//import com.bumptech.glide.request.RequestOptions;
+//import com.google.firebase.database.core.view.View;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.firebase.database.core.view.View;
+
 import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,17 +67,77 @@ public class ShowVideosAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = thisInflater.inflate( R.layout.gridview_layout, parent, false );
         }
+        MediaController ctlr;
         final UserFile userFile = videos.get(position);
         TextView textHeading =  convertView.findViewById(R.id.txt);
+        //Native Video Player
+//        VideoView videoView = convertView.findViewById(R.id.VideoView);
+////        videoView.setVideoPath(userFile.getDownload_url());
+//        Uri uri = Uri.parse(userFile.getDownload_url());
+//        videoView.setVideoURI(uri);
+//        videoView.seekTo( 1 );
+//        ctlr = new MediaController(context);
+//        ctlr.setMediaPlayer(videoView);
+//        videoView.setMediaController(ctlr);
+//        videoView.requestFocus();
+//        ctlr.setAnchorView(videoView);
+
         ImageView thumbnailImage =  convertView.findViewById(R.id.flag);
         textHeading.setText(userFile.getName());
         Log.e("text" , "hText :"+textHeading);
         //Glide method
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.isMemoryCacheable();
-        Glide.with(context).setDefaultRequestOptions(requestOptions).load(userFile.getDownload_url()).into(thumbnailImage);
+//        RequestOptions requestOptions = new RequestOptions();
+//        requestOptions.isMemoryCacheable();
+//        Glide.with(context).load(userFile.getDownload_url()).into(thumbnailImage);
+//        Glide.with(context).setDefaultRequestOptions(requestOptions).load(userFile.getDownload_url()).into(thumbnailImage);
+
+        //Suzi method
+//        Glide.with(context).load(userFile.getDownload_url()).into(thumbnailImage);
+//        SuziLoader loader = new SuziLoader(); //Create it for once
+//        loader.with(context)//Context
+//                .load(userFile.getDownload_url()) //Video path
+//                .into(thumbnailImage) // imageview to load the thumbnail
+//                .type("mini") // mini or micro
+//                .show();
+//        Log.e("thumbnail" , "thumbnail " + thumbnailImage);
+
+        //Picaso
+//        thumbnailImage.setImageResource(R.drawable.calendar);
+
+//        Picasso.get()
+//                .load(userFile.getDownload_url().toString())
+//                .resize(50, 50)
+//                .centerCrop()
+//                .into(thumbnailImage);
+
+
+        //Very Slow
+//        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+//        //give YourVideoUrl below
+//        retriever.setDataSource(userFile.getDownload_url(), new HashMap<String, String>());
+//        // this gets frame at 2nd second
+//        Bitmap image = retriever.getFrameAtTime(500000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+//        thumbnailImage.setImageBitmap(image);
+//        //use this bitmap image
+
+//        Bitmap bmThumbnail;
+//        bmThumbnail = ThumbnailUtils.createVideoThumbnail(userFile.getDownload_url(),
+//                MediaStore.Video.Thumbnails.MINI_KIND);
+//
+//        if (bmThumbnail != null) {
+//            Log.d("VideoAdapter","video thumbnail found");
+//            thumbnailImage.setImageBitmap(bmThumbnail);
+//        } else {
+//            Log.d("VideoAdapter","video thumbnail not found");
+//        }
+
+
+
+
         return convertView;
     }
+
+
 
 }
 
