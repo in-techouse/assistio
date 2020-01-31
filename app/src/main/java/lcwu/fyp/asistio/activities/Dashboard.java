@@ -193,9 +193,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         documents.setText(user.getDocuments()+"");
         notes.setText(user.getNotes()+"");
 
-        //Service calling
+        // Service calling
 //        boolean flag = session.getSync();
-//        startServices();
+           startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();
