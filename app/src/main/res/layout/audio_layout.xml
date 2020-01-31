@@ -1,55 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipToPadding="false">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="11dp"
+    app:cardElevation="11dp"
+    android:layout_margin="7dp">
 
     <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
 
     <ImageView
-    android:id="@+id/imageView1"
-        android:layout_alignParentLeft="true"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-        android:maxWidth="42dp"
+        android:layout_marginStart="2dp"
+        android:id="@+id/imageView1"
+        android:layout_alignParentStart="true"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_centerVertical="true"
-        android:maxHeight="42dp"
-        android:layout_weight="2"
-    android:src="@drawable/playaudio" />
+        android:src="@drawable/playaudio" />
+
+    <ImageView
+        android:id="@+id/audio_download"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/doc_download" />
 
     <TextView
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/audioTextView"
-        android:textSize="20dp"
-        android:layout_toRightOf="@id/imageView1"
-        android:layout_toLeftOf="@id/audio_download"
-        android:layout_weight="4"
-        android:text="haallo!" />
-
-
-        <ImageView
-            android:id="@+id/audio_download"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/doc_download" />
+        android:layout_toEndOf="@id/imageView1"
+        android:layout_toStartOf="@id/audio_download"/>
 
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#c0c0c0"/>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>
 

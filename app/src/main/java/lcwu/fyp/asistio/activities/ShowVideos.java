@@ -1,29 +1,11 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-//import com.bumptech.glide.annotation.GlideModule;
-//import com.bumptech.glide.module.AppGlideModule;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import lcwu.fyp.asistio.R;
@@ -44,7 +26,6 @@ public class ShowVideos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_videos);
-//        container = findViewById(R.id.my_fancy_videos);
         Intent it = getIntent();
         if (it == null){
             finish();
@@ -80,11 +61,7 @@ public class ShowVideos extends AppCompatActivity {
 
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.acitvity_show_videos, menu);
-        return true;
-    }
+
     @Override
     public void onBackPressed() {
 

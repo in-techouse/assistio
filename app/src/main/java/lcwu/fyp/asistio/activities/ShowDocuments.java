@@ -3,15 +3,12 @@ package lcwu.fyp.asistio.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.ShowDocsAdapter;
 import lcwu.fyp.asistio.model.ListUserFile;

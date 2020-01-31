@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-
 import com.khizar1556.mkvideoplayer.MKPlayer;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +13,7 @@ import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowSingleVideo extends AppCompatActivity {
 
-
-//    List<UserFile> userFiles = new ArrayList<>();
     private List<UserFile> userVideos = new ArrayList<>();
-//    ArrayList<String> videos = new ArrayList<>();
     private ListUserFile listUserFile;
     private int index;
     private MKPlayer mkplayer;
@@ -40,13 +35,7 @@ public class ShowSingleVideo extends AppCompatActivity {
             return;
         }
 
-//        UserFile userFile = (UserFile) extras.getSerializable("selectedVideo");
         listUserFile = (ListUserFile) extras.getSerializable("files");
-//        int i  = (Integer) extras.getSerializable("index");
-//        Log.e("intent", "received in new : " + userFile);
-
-
-
         if (listUserFile == null) {
             finish();
             return;
@@ -61,7 +50,6 @@ public class ShowSingleVideo extends AppCompatActivity {
         Log.e("intent", "files received in new : " + listUserFile);
         Log.e("intent", "received in new : " + index);
         userVideos = listUserFile.getUserFiles();
-//        Log.e("intent", "received in new : " + userFile.getId());
 
         mkplayer = new  MKPlayer(ShowSingleVideo.this);
         mkplayer.play(userVideos.get(index).getDownload_url());
