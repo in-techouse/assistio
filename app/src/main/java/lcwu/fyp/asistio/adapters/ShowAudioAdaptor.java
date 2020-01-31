@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import lcwu.fyp.asistio.activities.ShowSingleVideo;
 import lcwu.fyp.asistio.activities.ShowVideos;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
+import lcwu.fyp.asistio.services.DownloadService;
 
 public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.AudioViewHolder> {
 
@@ -57,6 +59,26 @@ public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.Audi
     @Override
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
 
+
+
+        holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Click" , "ItemClicked"+audios.get(position).getName());
+                String url , name , type;
+                url = audios.get(position).getDownload_url();
+                name = audios.get(position).getName();
+                type = audios.get(position).getType();
+                Log.e("Service" , "Going to intent");
+
+                Intent service = new Intent(mcontext, DownloadService.class);
+                service.putExtra("DocURL" , url);
+                service.putExtra("DocName" , name);
+                service.putExtra("DocType" , type);
+                Log.e("Service" , "Going to service");
+                mcontext.startService(service);
+            }
+        });
         holder.textView.setText(audios.get(position).getName());
 
         holder.textView.setOnClickListener(new View.OnClickListener() {
@@ -95,11 +117,13 @@ public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.Audi
     class AudioViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView;
+        ImageView downloadBtn;
 
         public AudioViewHolder(View itemView) {
             super(itemView);
 //            Log.e("position" , "in new  : " +position);
             textView = itemView.findViewById(R.id.audioTextView);
+            downloadBtn = itemView.findViewById(R.id.audio_download);
 //            Log.e("pos" , "position : "+position);
 //            textView.setText(audios.get(1).getName());
         }

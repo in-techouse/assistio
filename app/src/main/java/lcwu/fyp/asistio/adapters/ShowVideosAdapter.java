@@ -7,9 +7,11 @@ import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -29,11 +31,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.activities.ShowSingleVideo;
+import lcwu.fyp.asistio.activities.ShowVideos;
+import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
+import lcwu.fyp.asistio.services.DownloadService;
 
 public class ShowVideosAdapter extends BaseAdapter {
     private List<UserFile> videos;
     private Context context;
+    private ImageView playBtn , downloadBtn;
 
     private LayoutInflater thisInflater;
 
@@ -69,6 +76,43 @@ public class ShowVideosAdapter extends BaseAdapter {
         }
         MediaController ctlr;
         final UserFile userFile = videos.get(position);
+        playBtn = convertView.findViewById(R.id.playBtn);
+        downloadBtn = convertView.findViewById(R.id.downloadBtn);
+        playBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("play" , "button captured "+videos.get(position));
+                Log.e("play" , "button captured "+videos.get(position).getName());
+
+                Intent in  = new Intent(context , ShowSingleVideo.class);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(videos);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                bundle.putInt("index", position);
+
+                in.putExtras(bundle);
+                in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(in);
+
+            }
+        });
+
+        downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url , name , type;
+                url = videos.get(position).getDownload_url();
+                name = videos.get(position).getName();
+                type = videos.get(position).getType();
+                Intent intent = new Intent(context , DownloadService.class);
+                intent.putExtra("DocURL" , url);
+                intent.putExtra("DocName" , name);
+                intent.putExtra("DocType" , type);
+                context.startService(intent);
+
+            }
+        });
         TextView textHeading =  convertView.findViewById(R.id.txt);
         //Native Video Player
 //        VideoView videoView = convertView.findViewById(R.id.VideoView);

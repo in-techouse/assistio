@@ -47,15 +47,18 @@ public class ShowDocsAdapter extends RecyclerView.Adapter<ShowDocsAdapter.DocsVi
             @Override
             public void onClick(View view) {
                 Log.e("Click" , "ItemClicked"+docs.get(position).getName());
-                String url , name;
+                String url , name , type;
                 url = docs.get(position).getDownload_url();
                 name = docs.get(position).getName();
+                type = docs.get(position).getType();
+
                 Log.e("Service" , "Going to intent");
 
 
                 Intent service = new Intent(mcontext, DownloadService.class);
                 service.putExtra("DocURL" , url);
                 service.putExtra("DocName" , name);
+                service.putExtra("DocType" , type);
                 Log.e("Service" , "Going to service");
                 mcontext.startService(service);
             }

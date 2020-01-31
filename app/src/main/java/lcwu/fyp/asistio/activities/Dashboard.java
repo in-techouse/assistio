@@ -21,7 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mzelzoghbi.zgallery.ZGallery;
 import com.mzelzoghbi.zgallery.ZGrid;
+import com.mzelzoghbi.zgallery.activities.ZGridActivity;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
 
@@ -128,15 +130,16 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 userImages.clear();
                 imagesList.clear();
                 for ( UserFile file: userFile) {
-                    Log.e("intent" , "received : "+file.getName());
                     if(file.getType().equals("Image")){
                         imagesList.add(file.getDownload_url());
                         userImages.add(file);
                     }
                 }
+
+
                 ZGrid.with(Dashboard.this, imagesList)
-                        .setToolbarColorResId(R.color.colorPrimary)
-                        .setTitle("Assistio")
+                        .setToolbarColorResId(R.color.colorPrimaryDark)
+                        .setTitle("Asistio")
                         .setToolbarTitleColor(ZColor.WHITE)
                         .setSpanCount(3)
                         .setGridImgPlaceHolder(R.color.colorPrimary)
@@ -195,7 +198,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         // Service calling
 //        boolean flag = session.getSync();
-           startServices();
+//           startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();

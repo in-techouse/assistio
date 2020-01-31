@@ -16,9 +16,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import lcwu.fyp.asistio.R;
@@ -70,28 +75,6 @@ public class ShowVideos extends AppCompatActivity {
         }
 
         GridView gridView = findViewById(R.id.gridview);
-        ImageView play = findViewById(R.id.playBtn);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
-                Log.e("play" , "button captured "+videos.get(i));
-                Log.e("play" , "button captured "+userVideos.get(i).getName());
-
-                Intent in  = new Intent(ShowVideos.this , ShowSingleVideo.class);
-                ListUserFile listUserFile = new ListUserFile();
-                listUserFile.setUserFiles(userVideos);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("files", listUserFile);
-                bundle.putInt("index", i);
-
-                in.putExtras(bundle);
-
-
-                startActivity(in);
-
-            }
-
-        });
         ShowVideosAdapter adapter = new ShowVideosAdapter(getApplicationContext() , userVideos);
         gridView.setAdapter(adapter);
 

@@ -33,22 +33,42 @@ import lcwu.fyp.asistio.R;
 
 public class DownloadService extends Service {
 
-    private String url , name =" ";
+    private String url , name =" " , type;
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         PRDownloader.initialize(getApplicationContext());
-
 //          this getter is just for example purpose, can differ
         if (intent !=null && intent.getExtras()!=null){
             url = intent.getExtras().getString("DocURL");
             name = intent.getExtras().getString("DocName");
+            type = intent.getExtras().getString("DocType");
         }
         Log.e("Service" , "am here"+name);
         Toast.makeText(this, ""+name, Toast.LENGTH_SHORT).show();
-        downloadDoc(name , url);
+        Log.e("download" , "before if with type "+type);
+        if(type.equals("Audios")){
+            Log.e("download" , "in Audios if");
+            File dir = new File(Environment.getExternalStorageDirectory() + "/Asistio/Audios/");
+            dir.mkdirs();
+            downloader(name , url , dir.toString());
+
+        }
+        else if(type.equals("Documents")){
+
+             File dir = new File(Environment.getExternalStorageDirectory() + "/Asistio/Documents/");
+             dir.mkdirs();
+             downloader(name , url , dir.toString());
+         }
+        else if(type.equals("Image")){
+        }
+        else if(type.equals("Videos") ){
+            File dir = new File(Environment.getExternalStorageDirectory() + "/Asistio/Videos/");
+            dir.mkdirs();
+            downloader(name , url , dir.toString());
+        }
 
 
 
@@ -76,7 +96,7 @@ public class DownloadService extends Service {
         return null;
     }
 
-    void downloadDoc(String name , String url){
+    void downloader(String name , String url ,  String dir){
         Log.e("download" , "Param Values"+name+" "+url);
 
         // Enabling database for resume support even after the application is killed:
@@ -93,10 +113,10 @@ public class DownloadService extends Service {
         PRDownloader.initialize(getApplicationContext(), configer);
 
 
-        File dir = new File(Environment.getExternalStorageDirectory() + "/Asistio/Documents/");
-        dir.mkdirs();
 
-        int downloadId = PRDownloader.download(url, dir.toString(), name)
+
+
+        int downloadId = PRDownloader.download(url, dir, name)
                 .build()
                 .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                     @Override
