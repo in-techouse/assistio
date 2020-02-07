@@ -20,6 +20,11 @@
             android:id="@+id/nav_speech"
             android:icon="@drawable/speech"
             android:title="@string/speech_notes" />
+
+        <item
+            android:id="@+id/set_command"
+            android:icon="@drawable/settings"
+            android:title="@string/set_command" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"

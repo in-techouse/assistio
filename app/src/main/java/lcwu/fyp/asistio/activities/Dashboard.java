@@ -184,6 +184,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(it);
                 break;
             }
+            case R.id.set_command:{
+                Intent it = new Intent(Dashboard.this,SetCommand.class);
+                startActivity(it);
+                break;
+            }
 
             case R.id.nav_speech:{
                 Intent it= new Intent(Dashboard.this,SpeechNotes.class);

@@ -45,4 +45,7 @@
     <string name="no_account">Don\'t have an account? Click here to <b>REGISTER</b></string>
     <string name="forgot_your_password">Forgot Your Password?</string>
     <string name="done">DONE</string>
+    <string name="set_command">Set Command</string>
+    <string name="set">Set</string>
+    <string name="enter_your_key">Enter your Key</string>
 </resources>
