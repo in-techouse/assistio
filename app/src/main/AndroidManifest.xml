@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="lcwu.fyp.asistio">
 
@@ -24,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.ShowSingleVideo"></activity>
+        <activity android:name=".activities.ShowSingleVideo"/>
         <activity
             android:name="com.mzelzoghbi.zgallery.activities.ZGridActivity"
             android:label="@string/app_name"
@@ -84,7 +85,8 @@
             android:parentActivityName=".activities.Dashboard" />
         <activity
             android:name=".activities.SetCommand"
-            android:parentActivityName=".activities.Dashboard" /> <!-- SERVICES -->
+            android:parentActivityName=".activities.Dashboard" />
+        <!-- SERVICES -->
         <service
             android:name=".services.AllContactsUploadService"
             android:enabled="true" />
@@ -103,10 +105,10 @@
         <receiver android:name=".receivers.ContactReceiver" />
         <receiver
             android:name=".receivers.MessageReceiver"
-            android:enabled="true"
+            android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="99999999">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            <intent-filter android:priority="5822">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 

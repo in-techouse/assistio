@@ -110,7 +110,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         userFiles = new ArrayList<>();
         // Service calling
 //        boolean flag = session.getSync();
-//           startServices();
+        startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();
@@ -154,8 +154,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Log.e("Service", "in StartService");
         if (askForPermission()){
             Log.e("Service", "in askForPermission");
-            ScanMediaService.dashboard = Dashboard.this;
-            startService(new Intent(Dashboard.this, ScanMediaService.class));
+//            ScanMediaService.dashboard = Dashboard.this;
+//            startService(new Intent(Dashboard.this, ScanMediaService.class));
             Log.e("Service", "After Execution");
         }
     }
