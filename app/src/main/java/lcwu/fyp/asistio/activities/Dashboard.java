@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,6 +45,9 @@ import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
 import lcwu.fyp.asistio.services.ScanMediaService;
+
+import static android.os.Environment.getDataDirectory;
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -110,7 +121,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         userFiles = new ArrayList<>();
         // Service calling
 //        boolean flag = session.getSync();
-        startServices();
+//        startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();
@@ -179,6 +190,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(it);
                 break;
             }
+            case R.id.nav_profile:{
+                Intent it= new Intent(Dashboard.this,UserProfileActivity.class);
+                startActivity(it);
+                break;
+            }
             case R.id.nav_smssch:{
                 Intent it= new Intent(Dashboard.this,SmsSchedular.class);
                 startActivity(it);
@@ -226,6 +242,20 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                             Log.e("get URL" , "Recieved : "+userFiles.size());
                             Log.e("get URL" , "Recieved : "+userFiles);
                             Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
+                            //Deletion code form here
+                            File f = new File(Environment.getExternalStoragePublicDirectory("Asistio").getAbsolutePath());
+
+                            if(f.isDirectory()){
+                                Log.e("delete" , "Valid Directory "+f.toString());
+                                try {
+                                    FileUtils.cleanDirectory(f);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                Log.e("delete" , "Invalid Directory");
+                            }
+
                         }
 
                   }

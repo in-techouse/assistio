@@ -59,6 +59,7 @@
         <activity
             android:name=".activities.Dashboard"
             android:label="@string/title_activity_dashboard"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ForgotPasswordAcitivity"
