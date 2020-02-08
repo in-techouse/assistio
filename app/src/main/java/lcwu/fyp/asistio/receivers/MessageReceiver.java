@@ -10,17 +10,24 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import lcwu.fyp.asistio.director.Session;
+import lcwu.fyp.asistio.model.User;
+
 public class MessageReceiver extends BroadcastReceiver {
 
     public static final String pdu_type = "pdus";
     public static final String f = "format";
     private Context c;
     private String number, message;
+    private Session session;
+    private User user;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e("Message", "Message Received");
         c = context;
+        session = new Session(c);
+        user = session.getUser();
         Bundle bundle = intent.getExtras();
 
         SmsMessage[] msgs;
@@ -65,5 +72,12 @@ public class MessageReceiver extends BroadcastReceiver {
     }
 
     private  void checkMessage(String message , String number) {
+        String command = user.getCommand();
+       if(command.equals(message)){
+          Log.e("Message","Command matched with message");
+       }
+        else {
+            Log.e("Message","Command not matched");
+       }
     }
 }
