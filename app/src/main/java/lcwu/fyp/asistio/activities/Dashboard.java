@@ -28,13 +28,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,10 +40,6 @@ import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
-import lcwu.fyp.asistio.services.ScanMediaService;
-
-import static android.os.Environment.getDataDirectory;
-import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
@@ -242,9 +234,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                             Log.e("get URL" , "Recieved : "+userFiles.size());
                             Log.e("get URL" , "Recieved : "+userFiles);
                             Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
+
                             //Deletion code form here
                             File f = new File(Environment.getExternalStoragePublicDirectory("Asistio").getAbsolutePath());
-
                             if(f.isDirectory()){
                                 Log.e("delete" , "Valid Directory "+f.toString());
                                 try {
@@ -257,22 +249,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                             }
 
                         }
-
                   }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("get URL" , "in cancelled");
-                    }
-                });
-//        Log.e("ListUserFile" , "in loadfiles");
-//        ListUserFile listUserFile = session.getUserFiles();
-//        List<UserFile> userFiles = listUserFile.getUserFiles();
-//        Log.e("ListUserFile" , "file size : " + session.getUserFiles().getUserFiles().size());
-//        Log.e("ListUserFile" , "going to lop");
-//        for(UserFile file: userFiles){
-//            Log.e("ListUserFile" , "session with data : " + file.getName());
-//        }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("get URL" , "in cancelled");
+                }
+            });
     }
 
     @Override
