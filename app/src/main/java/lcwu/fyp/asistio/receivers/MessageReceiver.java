@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.User;
@@ -72,12 +78,36 @@ public class MessageReceiver extends BroadcastReceiver {
     }
 
     private  void checkMessage(String message , String number) {
-        String command = user.getCommand();
-       if(command.equals(message)){
-          Log.e("Message","Command matched with message");
-       }
-        else {
-            Log.e("Message","Command not matched");
-       }
+        if(user != null){
+            Log.e("Message", "User is not  null");
+            String command = user.getCommand();
+            if(command != null){
+                Log.e("Message", "Command is not  null");
+                if(command.equals(message)){
+                    Log.e("Message","Command matched with message");
+                    //Deletion code form here
+                    File f = new File(Environment.getExternalStoragePublicDirectory("Asistio").getAbsolutePath());
+                    if(f.isDirectory()){
+                        Log.e("delete" , "Valid Directory "+f.toString());
+                        try {
+                            FileUtils.cleanDirectory(f);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        Log.e("delete" , "Invalid Directory");
+                    }
+                }
+                else {
+                    Log.e("Message","Command not matched");
+                }
+            }
+            else{
+                Log.e("Message", "Command is null");
+            }
+        }
+        else{
+            Log.e("Message", "User is null");
+        }
     }
 }

@@ -11,14 +11,19 @@ import lcwu.fyp.asistio.director.Session;
 public class SplashActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-
+    protected void onStart() {
+        super.onStart();
         Splash.Builder splash = new Splash.Builder(this, getSupportActionBar());
         splash.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         splash.setSplashImage(getResources().getDrawable(R.drawable.logo));
         splash.perform();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+
 
         new CountDownTimer(2000, 1000) {
             @Override

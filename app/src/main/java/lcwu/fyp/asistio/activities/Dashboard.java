@@ -235,18 +235,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                             Log.e("get URL" , "Recieved : "+userFiles);
                             Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
 
-                            //Deletion code form here
-                            File f = new File(Environment.getExternalStoragePublicDirectory("Asistio").getAbsolutePath());
-                            if(f.isDirectory()){
-                                Log.e("delete" , "Valid Directory "+f.toString());
-                                try {
-                                    FileUtils.cleanDirectory(f);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }else {
-                                Log.e("delete" , "Invalid Directory");
-                            }
+
 
                         }
                   }

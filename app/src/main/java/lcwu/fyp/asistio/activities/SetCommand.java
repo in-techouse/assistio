@@ -15,6 +15,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
+
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
@@ -41,6 +44,10 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
         session = new Session(SetCommand.this);
         user = session.getUser();
         btn_key.setOnClickListener(this);
+
+        if(user.getCommand()!= null){
+           edtKey.setText(user.getCommand());
+        }
     }
 
     @Override
@@ -90,8 +97,7 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
                             setkey_progress.setVisibility(View.GONE);
                             btn_key.setVisibility(View.VISIBLE);
                             session.setSession(user);
-                            finish();
-
+                            ShowSuccess();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -99,14 +105,38 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
                             setkey_progress.setVisibility(View.GONE);
                             btn_key.setVisibility(View.VISIBLE);
                             helpers.showError(SetCommand.this,"Error","Something went wrong");
-
                         }
                     });
                 break;
             }
         }
-
     }
+
+    private void ShowSuccess() {
+        new FancyGifDialog.Builder(SetCommand.this)
+                .setTitle("Key set successfully")
+                .setMessage("")
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Ok")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+                .isCancellable(true)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        finish();
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        finish();
+                    }
+                })
+                .build();
+    }
+
 
     // Check Internet Connection
     private boolean isConnected() {
