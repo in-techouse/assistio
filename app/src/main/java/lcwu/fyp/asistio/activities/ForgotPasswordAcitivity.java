@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,12 +21,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.director.Helpers;
 
 public class ForgotPasswordAcitivity extends AppCompatActivity implements View.OnClickListener {
     EditText edtEmail;
     Button NewPassword;
     ProgressBar change_Password;
     String strEmail;
+    Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
 
 
         NewPassword.setOnClickListener(this);
+        helpers = new Helpers();
 
 
     }
@@ -49,7 +53,6 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
         switch (id) {
             case R.id.NewPassword: {
                 strEmail = edtEmail.getText().toString();
-
                 boolean flag = isValid();
                 if (flag) {
                     change_Password.setVisibility(View.VISIBLE);
@@ -62,7 +65,8 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                 public void onSuccess(Void aVoid) {
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
-                                    Log.e("Login", "Success");
+                                    Toast.makeText(ForgotPasswordAcitivity.this,
+                                            "Password send to your email", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -70,7 +74,8 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                 public void onFailure(@NonNull Exception e) {
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
-                                    Log.e("Login", "Fail " + e.getMessage());
+                                    Log.e("reset password", "Failure " + e.getMessage());
+                                    helpers.showError(ForgotPasswordAcitivity.this,"ERROR",e.getMessage());
                                 }
                             });
 
@@ -90,6 +95,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
             flag= false;
         } else {
             edtEmail.setError(null);
+            flag= true;
         }
         return flag;
     }
