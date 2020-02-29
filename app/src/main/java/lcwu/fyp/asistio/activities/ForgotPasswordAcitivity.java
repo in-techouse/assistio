@@ -65,8 +65,8 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                 public void onSuccess(Void aVoid) {
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
-                                    Toast.makeText(ForgotPasswordAcitivity.this,
-                                            "Password send to your email", Toast.LENGTH_SHORT).show();
+                                    helpers.showSuccess(ForgotPasswordAcitivity.this,"Check your email",
+                                            "Email send successfully");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -95,7 +95,6 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
             flag= false;
         } else {
             edtEmail.setError(null);
-            flag= true;
         }
         return flag;
     }

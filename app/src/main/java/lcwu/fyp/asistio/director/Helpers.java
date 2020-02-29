@@ -46,4 +46,28 @@ public class Helpers {
                 })
                 .build();
     }
+
+    public  void showSuccess(Activity a, String title, String message){
+        new FancyGifDialog.Builder(a)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackground("#FF4081")
+                .setPositiveBtnText("Ok")
+                .setNegativeBtnBackground("#FFA9A7A8")
+                .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+                .isCancellable(true)
+                .OnPositiveClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                    }
+                })
+                .OnNegativeClicked(new FancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                    }
+                })
+                .build();
+    }
+
 }
