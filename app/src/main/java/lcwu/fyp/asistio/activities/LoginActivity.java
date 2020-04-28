@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ProgressBar login_process;
     Helpers helpers;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +51,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_process = findViewById(R.id.login_process);
         forgotPassword = findViewById(R.id.fogotPasword);
 
-
         btnLogin.setOnClickListener(this);
         go_to_registration.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -66,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btnLogin: {
-                boolean isConn = isConnected();
+                boolean isConn = helpers.isConnected(getApplicationContext());
                 if (!isConn) {
                     helpers.showError(LoginActivity.this, "ERROR", "Internet Connection Error");
                     return;
@@ -77,7 +73,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 boolean flag = isValid();
                 if (flag) {
-
                     login_process.setVisibility(View.VISIBLE);
                     btnLogin.setVisibility(View.GONE);
 
@@ -123,19 +118,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             login_process.setVisibility(View.GONE);
                                             btnLogin.setVisibility(View.VISIBLE);
                                             helpers.showError(LoginActivity.this, "ERROR", "Something Went Wrong");
-
-
                                         }
                                     });
-//                                        login_process.setVisibility(View.GONE);
-//                                        btnLogin.setVisibility(View.VISIBLE);
-//
-//                                            Intent it=new Intent(LoginActivity.this,Dashboard.class);
-//                                        startActivity(it);
-//                                        finish();
-//
-//                                        Log.e("Login","Success");
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -160,9 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
                 break;
             }
-
         }
-
     }
 
     private boolean isValid() {
@@ -183,17 +165,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public boolean isConnected(Context c) {
-        boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
-                == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-                .getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected = false;
-        return connected;
-    }
 
     // Check Internet Connection
     private boolean isConnected() {

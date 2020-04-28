@@ -3,14 +3,14 @@ package lcwu.fyp.asistio.model;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String first_Name, last_Name, id, phone_no, email, command , image;
+    private String first_Name, last_Name, id, phone_no, email, command, image;
     private int contacts, documents, images, videos, audios, notes;
     private boolean isFirst;
 
     public User() {
     }
 
-    public User(String first_Name, String last_Name, String id, String phone_no, String email, String command, int contacts, int documents, int images, int videos, int audios, int notes, boolean isFirst , String image) {
+    public User(String first_Name, String last_Name, String id, String phone_no, String email, String command, int contacts, int documents, int images, int videos, int audios, int notes, boolean isFirst, String image) {
         this.first_Name = first_Name;
         this.last_Name = last_Name;
         this.id = id;

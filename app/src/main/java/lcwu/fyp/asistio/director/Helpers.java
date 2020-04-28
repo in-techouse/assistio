@@ -11,20 +11,17 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import lcwu.fyp.asistio.R;
 
 public class Helpers {
-    public boolean isConnected( Context c ) {
+    public boolean isConnected(Context c) {
         boolean connected = false;
         ConnectivityManager connectivityManager =
-                (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+                (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+        connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
                 == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
-                (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected = false;
-        return  connected;
+                (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+        return connected;
     }
 
-    public  void showError(Activity a, String title, String message){
+    public void showError(Activity a, String title, String message) {
         new FancyGifDialog.Builder(a)
                 .setTitle(title)
                 .setMessage(message)
@@ -32,7 +29,7 @@ public class Helpers {
                 .setPositiveBtnBackground("#FF4081")
                 .setPositiveBtnText("Ok")
                 .setNegativeBtnBackground("#FFA9A7A8")
-                .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+//                .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
                 .isCancellable(true)
                 .OnPositiveClicked(new FancyGifDialogListener() {
                     @Override
@@ -47,7 +44,7 @@ public class Helpers {
                 .build();
     }
 
-    public  void showSuccess(Activity a, String title, String message){
+    public void showSuccess(Activity a, String title, String message) {
         new FancyGifDialog.Builder(a)
                 .setTitle(title)
                 .setMessage(message)
