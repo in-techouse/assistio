@@ -10,12 +10,13 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_height">230dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">320dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="sms_margin">7dp</dimen>
     <dimen name="mp_10">10dp</dimen>
+    <dimen name="mp_30">30dp</dimen>
     <dimen name="mp_8">8dp</dimen>
     <dimen name="mp_5">5dp</dimen>
     <dimen name="height">120dp</dimen>

@@ -34,13 +34,6 @@
             android:icon="@drawable/logout"
             android:title="@string/logout" />
 
-
-
-
-
-
     </group>
-
-
 
 </menu>
