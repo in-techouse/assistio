@@ -48,6 +48,11 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
 
         switch (id) {
             case R.id.NewPassword: {
+                boolean isConn = helpers.isConnected(getApplicationContext());
+                if (!isConn) {
+                    helpers.showError(ForgotPasswordAcitivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
+                    return;
+                }
                 strEmail = edtEmail.getText().toString();
                 boolean flag = isValid();
                 if (flag) {
@@ -62,7 +67,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
                                     helpers.showSuccess(ForgotPasswordAcitivity.this, "Check your email",
-                                            "Email send successfully");
+                                            "Password reset email send successfully");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

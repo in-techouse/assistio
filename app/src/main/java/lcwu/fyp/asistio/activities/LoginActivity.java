@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnLogin: {
                 boolean isConn = helpers.isConnected(getApplicationContext());
                 if (!isConn) {
-                    helpers.showError(LoginActivity.this, "ERROR", "Internet Connection Error");
+                    helpers.showError(LoginActivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
 

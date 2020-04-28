@@ -206,6 +206,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 Intent it = new Intent(Dashboard.this, LoginActivity.class);
                 startActivity(it);
                 finish();
+                session.destroySession();
                 break;
             }
         }

@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
+
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.activities.ShowSingleVideo;
 import lcwu.fyp.asistio.model.ListUserFile;
@@ -24,14 +27,13 @@ public class ShowVideosAdapter extends BaseAdapter {
 
     private LayoutInflater thisInflater;
 
-    public  ShowVideosAdapter(Context context , List<UserFile> videos )  {
+    public ShowVideosAdapter(Context context, List<UserFile> videos) {
 
-        Log.e("adapter", "constructor : "+videos);
+        Log.e("adapter", "constructor : " + videos);
         this.context = context;
         this.thisInflater = LayoutInflater.from(context);
         this.videos = videos;
     }
-
 
 
     @Override
@@ -52,7 +54,7 @@ public class ShowVideosAdapter extends BaseAdapter {
     @Override
     public android.view.View getView(int position, android.view.View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = thisInflater.inflate( R.layout.gridview_layout, parent, false );
+            convertView = thisInflater.inflate(R.layout.gridview_layout, parent, false);
         }
         final UserFile userFile = videos.get(position);
         ImageView playBtn = convertView.findViewById(R.id.playBtn);
@@ -60,10 +62,10 @@ public class ShowVideosAdapter extends BaseAdapter {
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("play" , "button captured "+videos.get(position));
-                Log.e("play" , "button captured "+videos.get(position).getName());
+                Log.e("play", "button captured " + videos.get(position));
+                Log.e("play", "button captured " + videos.get(position).getName());
 
-                Intent in  = new Intent(context , ShowSingleVideo.class);
+                Intent in = new Intent(context, ShowSingleVideo.class);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(videos);
                 Bundle bundle = new Bundle();
@@ -80,19 +82,19 @@ public class ShowVideosAdapter extends BaseAdapter {
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url , name , type;
+                String url, name, type;
                 url = videos.get(position).getDownload_url();
                 name = videos.get(position).getName();
                 type = videos.get(position).getType();
-                Intent intent = new Intent(context , DownloadService.class);
-                intent.putExtra("DocURL" , url);
-                intent.putExtra("DocName" , name);
-                intent.putExtra("DocType" , type);
+                Intent intent = new Intent(context, DownloadService.class);
+                intent.putExtra("DocURL", url);
+                intent.putExtra("DocName", name);
+                intent.putExtra("DocType", type);
                 context.startService(intent);
 
             }
         });
-        ImageView thumbnailImage =  convertView.findViewById(R.id.flag);
+        ImageView thumbnailImage = convertView.findViewById(R.id.flag);
         //Glide method
         RequestOptions requestOptions = new RequestOptions();
         Glide.with(context).setDefaultRequestOptions(requestOptions).load(userFile.getDownload_url()).into(thumbnailImage);

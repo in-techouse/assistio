@@ -1,9 +1,6 @@
 package lcwu.fyp.asistio.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -12,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
@@ -33,13 +27,11 @@ import lcwu.fyp.asistio.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnRegister;
-
     EditText edtFName, edtLName, edtphno, edtemail1, edtpass, edtpass1;
     String strFName, strLName, strphno, stremai1, strpass, strpass1;
     ProgressBar registrationProgress;
     Helpers helpers;
-
+    Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +49,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         edtpass1 = findViewById(R.id.edtpass1);
         registrationProgress = findViewById(R.id.registrationProgress);
 
-
         btnRegister.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -70,32 +59,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         switch (id) {
             case R.id.btnRegister: {
-                boolean isConn = isConnected();
+                boolean isConn = helpers.isConnected(getApplicationContext());
                 if (!isConn) {
                     //show error message
-                    new FancyGifDialog.Builder(this)
-                            .setTitle("ERROR")
-                            .setMessage("Internet Connection Error")
-                            .setNegativeBtnText("Cancel")
-                            .setPositiveBtnBackground("#FF4081")
-                            .setPositiveBtnText("Ok")
-                            .setNegativeBtnBackground("#FFA9A7A8")
-                            .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
-                            .isCancellable(true)
-                            .OnPositiveClicked(new FancyGifDialogListener() {
-                                @Override
-                                public void OnClick() {
-                                    Toast.makeText(RegistrationActivity.this, "Ok", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .OnNegativeClicked(new FancyGifDialogListener() {
-                                @Override
-                                public void OnClick() {
-                                    Toast.makeText(RegistrationActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .build();
-
+                    helpers.showError(RegistrationActivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
                 strFName = edtFName.getText().toString();
@@ -135,7 +102,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                     id = id.replace(".", "_");
                                     user.setId(id);
 
-
                                     // ya line data save kar da ge
                                     reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -154,47 +120,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                             registrationProgress.setVisibility(View.GONE);
                                             btnRegister.setVisibility(View.VISIBLE);
                                             helpers.showError(RegistrationActivity.this, "ERROR", "Something went wrong");
-
-
                                         }
                                     });
-
-
-//                                  registrationProgress.setVisibility(View.GONE);
-//                                 btnRegister.setVisibility(View.VISIBLE);
-//                                  Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
-//                                 startActivity(it);
-//                                 finish();
-//                                  Log.e("Registration" , "Success");
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             registrationProgress.setVisibility(View.GONE);
                             btnRegister.setVisibility(View.VISIBLE);
-                            new FancyGifDialog.Builder(RegistrationActivity.this)
-                                    .setTitle("ERROR")
-                                    .setMessage(e.getMessage())
-                                    .setNegativeBtnText("Cancel")
-                                    .setPositiveBtnBackground("#FF4081")
-                                    .setPositiveBtnText("Ok")
-                                    .setNegativeBtnBackground("#FFA9A7A8")
-                                    .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
-                                    .isCancellable(true)
-                                    .OnPositiveClicked(new FancyGifDialogListener() {
-                                        @Override
-                                        public void OnClick() {
-                                            Toast.makeText(RegistrationActivity.this, "Ok", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .OnNegativeClicked(new FancyGifDialogListener() {
-                                        @Override
-                                        public void OnClick() {
-                                            Toast.makeText(RegistrationActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .build();
+                            helpers.showError(RegistrationActivity.this, "ERROR", e.getMessage());
                             Log.e("Registration", "Fail " + e.getMessage());
                         }
                     });
@@ -244,17 +178,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         } else {
             edtpass1.setError(null);
         }
+        if (strpass.length() > 5 && strpass1.length() > 5 && !strpass.equals(strpass1)) {
+            edtpass1.setError("Password doesn't match.");
+            flag = false;
+        }
         return flag;
 
-    }
-
-    public boolean isConnected() {
-        boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
-        }
-        return connected;
     }
 
     @Override

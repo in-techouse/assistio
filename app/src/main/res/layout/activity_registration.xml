@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,101 +17,99 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="@dimen/padding"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/HeadingPadding"
             android:text="@string/registration_form"
             android:textAlignment="center"
-            android:textSize="@dimen/txtsize" />
+            android:textColor="#ffffff"
+            android:textSize="@dimen/TextSizeHeading" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_8"
+            android:padding="@dimen/mp_8">
 
             <EditText
                 android:id="@+id/edtFName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding"
-                android:layout_weight="1"
                 android:hint="@string/enter_first_name"
-                android:inputType="textPersonName"
-                android:padding="@dimen/padding" />
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_8"
+            android:padding="@dimen/mp_8">
 
             <EditText
                 android:id="@+id/edtLName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding"
-                android:layout_weight="1"
                 android:hint="@string/enter_last_name"
-                android:inputType="textPersonName"
-                android:padding="@dimen/padding" />
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_8"
+            android:padding="@dimen/mp_8">
 
             <EditText
                 android:id="@+id/edtphno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:layout_weight="1"
                 android:hint="@string/phone_number"
-                android:inputType="phone"
-                android:padding="12dp" />
+                android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_8"
+            android:padding="@dimen/mp_8">
 
             <EditText
                 android:id="@+id/edtemail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding"
-                android:layout_weight="1"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:padding="@dimen/padding" />
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_8"
+            android:padding="@dimen/mp_8"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/edtpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding"
-                android:layout_weight="1"
                 android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="@dimen/padding" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mp_8"
+            android:padding="@dimen/mp_8"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/edtpass1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding"
-                android:layout_weight="1"
                 android:hint="@string/confirm_password"
-                android:inputType="textPassword"
-                android:padding="@dimen/padding" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -129,7 +128,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:visibility="gone" />
-
 
     </LinearLayout>
 
