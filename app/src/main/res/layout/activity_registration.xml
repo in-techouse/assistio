@@ -1,133 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RegistrationActivity"
     android:orientation="vertical"
-    android:weightSum="7">
+    android:weightSum="7"
+    tools:context=".activities.RegistrationActivity">
 
     <LinearLayout
-        android:paddingBottom="@dimen/paddingbottom"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/paddingbottom">
 
         <TextView
-            android:layout_weight="1"
-            android:textSize="@dimen/txtsize"
-            android:textAlignment="center"
-            android:padding="@dimen/padding"
-            android:text="@string/registration_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        
-        <EditText
-            android:id="@+id/edtFName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:layout_weight="1"
-            android:hint="@string/enter_first_name"
             android:padding="@dimen/padding"
-            android:layout_margin="@dimen/padding"/>
+            android:text="@string/registration_form"
+            android:textAlignment="center"
+            android:textSize="@dimen/txtsize" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtFName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding"
+                android:layout_weight="1"
+                android:hint="@string/enter_first_name"
+                android:inputType="textPersonName"
+                android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <EditText
+
+            <EditText
                 android:id="@+id/edtLName"
-                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding"
                 android:layout_weight="1"
                 android:hint="@string/enter_last_name"
-                android:padding="@dimen/padding"
-                android:layout_margin="@dimen/padding"
+                android:inputType="textPersonName"
+                android:padding="@dimen/padding" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtphno"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/edtphno"
-            android:inputType="phone"
-            android:layout_weight="1"
-            android:hint="@string/phone_number"
-            android:padding="12dp"
-            android:layout_margin="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/edtemail1"
-            android:inputType="textEmailAddress"
-            android:layout_weight="1"
-            android:hint="@string/email"
-            android:padding="@dimen/padding"
-            android:layout_margin="@dimen/padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/edtemail1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding"
+                android:layout_weight="1"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edtpass"
-            android:inputType="textPassword"
-            android:layout_weight="1"
-            android:hint="@string/password"
-            android:padding="@dimen/padding"
-            android:layout_margin= "@dimen/padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/edtpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding"
+                android:layout_weight="1"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edtpass1"
-            android:inputType="textPassword"
-            android:layout_weight="1"
-            android:hint="@string/confirm_password"
-            android:padding="@dimen/padding"
-            android:layout_margin="@dimen/padding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/edtpass1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding"
+                android:layout_weight="1"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_margin="@dimen/padding"
-            android:textSize="@dimen/btn_size"
-            android:hint="@string/submit"
-            android:layout_gravity="end"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/padding"
+            android:hint="@string/submit"
+            android:textSize="@dimen/btn_size" />
+
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/registrationProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:visibility="gone" />
 
 
     </LinearLayout>

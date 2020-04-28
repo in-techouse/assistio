@@ -1,12 +1,16 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.khizar1556.mkvideoplayer.MKPlayer;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
@@ -40,7 +44,7 @@ public class ShowSingleVideo extends AppCompatActivity {
             finish();
             return;
         }
-        if(listUserFile.getUserFiles() == null){
+        if (listUserFile.getUserFiles() == null) {
             finish();
             return;
         }
@@ -51,7 +55,7 @@ public class ShowSingleVideo extends AppCompatActivity {
         Log.e("intent", "received in new : " + index);
         userVideos = listUserFile.getUserFiles();
 
-        mkplayer = new  MKPlayer(ShowSingleVideo.this);
+        mkplayer = new MKPlayer(ShowSingleVideo.this);
         mkplayer.play(userVideos.get(index).getDownload_url());
         mkplayer.setTitle(userVideos.get(index).getName());
         mkplayer.setPlayerCallbacks(new MKPlayer.playerCallbacks() {
@@ -59,16 +63,17 @@ public class ShowSingleVideo extends AppCompatActivity {
             public void onNextClick() {
                 //It is the method for next song.It is called when you pressed the next icon
                 //Do according to your requirement
-                if(index < userVideos.size()){
+                if (index < userVideos.size()) {
                     index++;
                     mkplayer.play(userVideos.get(index).getDownload_url());
                 }
             }
+
             @Override
             public void onPreviousClick() {
                 //It is the method for previous song.It is called when you pressed the previous icon
                 //Do according to your requirement
-                if(index > 0){
+                if (index > 0) {
                     index--;
                     mkplayer.play(userVideos.get(index).getDownload_url());
                 }

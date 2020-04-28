@@ -1,14 +1,17 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.ShowDocsAdapter;
 import lcwu.fyp.asistio.model.ListUserFile;
@@ -26,27 +29,27 @@ public class ShowDocuments extends AppCompatActivity {
         setContentView(R.layout.activity_show_documents);
 
         Intent it = getIntent();
-        if (it == null){
+        if (it == null) {
             finish();
             return;
         }
 
         Bundle extras = getIntent().getExtras();
-        if(extras == null){
+        if (extras == null) {
             finish();
             return;
         }
 
         ListUserFile userFile = (ListUserFile) extras.getSerializable("files");
-        Log.e("intent" , "recievec : "+userFile);
-        if(userFile == null){
+        Log.e("intent", "recievec : " + userFile);
+        if (userFile == null) {
             finish();
             return;
         }
         userFiles = userFile.getUserFiles();
-        for ( UserFile file: userFiles) {
-            Log.e("intent" , "received : "+file.getName());
-            if(file.getType().equals("Documents")){
+        for (UserFile file : userFiles) {
+            Log.e("intent", "received : " + file.getName());
+            if (file.getType().equals("Documents")) {
                 documents.add(file.getDownload_url());
                 userDocuments.add(file);
             }
@@ -54,7 +57,7 @@ public class ShowDocuments extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerDocView);
 
-        ShowDocsAdapter adapter= new ShowDocsAdapter(userDocuments , this);
+        ShowDocsAdapter adapter = new ShowDocsAdapter(userDocuments, this);
         recyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ShowDocuments.this);
         recyclerView.setLayoutManager(layoutManager);

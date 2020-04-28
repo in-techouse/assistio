@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="11dp"
-    app:cardElevation="15dp"
     android:layout_margin="7dp"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    app:cardCornerRadius="11dp"
+    app:cardElevation="15dp">
+
     <RelativeLayout
-        android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:background="@color/colorWhite">
 
         <ImageView
-            android:src="@drawable/logo"
-            android:scaleType="fitXY"
             android:id="@+id/flag"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo" />
 
         <ImageView
+            android:id="@+id/playBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/playBtn"
-            android:src="@drawable/play"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:src="@drawable/play" />
 
         <ImageView
-            android:layout_marginBottom="3dp"
-            android:layout_marginEnd="7dp"
+            android:id="@+id/downloadBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/downloadBtn"
-            android:src="@drawable/doc_download"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="3dp"
+            android:src="@drawable/doc_download" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

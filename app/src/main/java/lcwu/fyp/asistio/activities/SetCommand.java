@@ -1,7 +1,5 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -45,8 +47,8 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
         user = session.getUser();
         btn_key.setOnClickListener(this);
 
-        if(user.getCommand()!= null){
-           edtKey.setText(user.getCommand());
+        if (user.getCommand() != null) {
+            edtKey.setText(user.getCommand());
         }
     }
 
@@ -71,42 +73,41 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
         int id = v.getId();
 
         switch (id) {
-                case R.id.btn_key :{
-                    boolean isConn = isConnected();
-                    if (!isConn) {
-                        helpers.showError(SetCommand.this,  "ERROR","Internet Connection Error");
-                        return;
-                    }
-                    strKey = edtKey.getText().toString();
-                    if (strKey.length() < 5) {
-                        edtKey.setError("Key must contain 5 characters");
-                        return;
-                    }
-                    else {
-                        edtKey.setError(null);
-                    }
-                    setkey_progress.setVisibility(View.VISIBLE);
-                    btn_key.setVisibility(View.GONE);
+            case R.id.btn_key: {
+                boolean isConn = isConnected();
+                if (!isConn) {
+                    helpers.showError(SetCommand.this, "ERROR", "Internet Connection Error");
+                    return;
+                }
+                strKey = edtKey.getText().toString();
+                if (strKey.length() < 5) {
+                    edtKey.setError("Key must contain 5 characters");
+                    return;
+                } else {
+                    edtKey.setError(null);
+                }
+                setkey_progress.setVisibility(View.VISIBLE);
+                btn_key.setVisibility(View.GONE);
 
-                    user.setCommand(strKey);
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
-                    reference.child(user.getId()).setValue(user)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            setkey_progress.setVisibility(View.GONE);
-                            btn_key.setVisibility(View.VISIBLE);
-                            session.setSession(user);
-                            ShowSuccess();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            setkey_progress.setVisibility(View.GONE);
-                            btn_key.setVisibility(View.VISIBLE);
-                            helpers.showError(SetCommand.this,"Error","Something went wrong");
-                        }
-                    });
+                user.setCommand(strKey);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+                reference.child(user.getId()).setValue(user)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                setkey_progress.setVisibility(View.GONE);
+                                btn_key.setVisibility(View.VISIBLE);
+                                session.setSession(user);
+                                ShowSuccess();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        setkey_progress.setVisibility(View.GONE);
+                        btn_key.setVisibility(View.VISIBLE);
+                        helpers.showError(SetCommand.this, "Error", "Something went wrong");
+                    }
+                });
                 break;
             }
         }
@@ -142,11 +143,11 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
     private boolean isConnected() {
         boolean connected = false;
         ConnectivityManager connectivityManager =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
                 == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
                 (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
-        return  connected;
+        return connected;
     }
 }
 

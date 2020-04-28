@@ -13,4 +13,5 @@
 .externalNativeBuild
 .cxx
 .idea
+/.idea
 /app/google-services.json

@@ -1,10 +1,13 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.appus.splash.Splash;
+
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Session;
 
@@ -39,12 +42,11 @@ public class SplashActivity extends AppCompatActivity {
 //                finish();
                 // New Code
                 Session session = new Session(SplashActivity.this);
-                if(session.getUser() != null){
+                if (session.getUser() != null) {
                     Intent it = new Intent(SplashActivity.this, Dashboard.class);
                     startActivity(it);
                     finish();
-                }
-                else{
+                } else {
                     Intent it = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(it);
                     finish();

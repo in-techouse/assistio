@@ -1,8 +1,5 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -15,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -25,16 +25,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
-import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     Button btnLogin;
     TextView go_to_registration, forgotPassword;
     EditText edtEmail, edtPassword;
-    String strEmail , strPassword;
+    String strEmail, strPassword;
     ProgressBar login_process;
     Helpers helpers;
 
@@ -68,66 +68,65 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnLogin: {
                 boolean isConn = isConnected();
                 if (!isConn) {
-                    helpers.showError(LoginActivity.this,  "ERROR","Internet Connection Error");
+                    helpers.showError(LoginActivity.this, "ERROR", "Internet Connection Error");
                     return;
                 }
 
-                 strEmail = edtEmail.getText().toString();
-                 strPassword = edtPassword.getText().toString();
+                strEmail = edtEmail.getText().toString();
+                strPassword = edtPassword.getText().toString();
 
-                   boolean flag = isValid();
-                    if (flag) {
+                boolean flag = isValid();
+                if (flag) {
 
-                        login_process.setVisibility(View.VISIBLE);
-                        btnLogin.setVisibility(View.GONE);
+                    login_process.setVisibility(View.VISIBLE);
+                    btnLogin.setVisibility(View.GONE);
 
-                        //Firebase
-                        FirebaseAuth auth = FirebaseAuth.getInstance();
-                        auth.signInWithEmailAndPassword(strEmail,strPassword)
-                                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                    @Override
-                                    public void onSuccess(AuthResult authResult) {
+                    //Firebase
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.signInWithEmailAndPassword(strEmail, strPassword)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
 
-                                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                        String id = strEmail.replace("@","-");
-                                        id = id.replace(".","_");
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                    String id = strEmail.replace("@", "-");
+                                    id = id.replace(".", "_");
 
-                                        reference.child("Users").child(id).addValueEventListener(new ValueEventListener() {
-                                            //reading login data from database
+                                    reference.child("Users").child(id).addValueEventListener(new ValueEventListener() {
+                                        //reading login data from database
 
-                                            @Override
-                                            //if successfully read
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                if(dataSnapshot.getValue() != null){
-                                                    //Data is Valid
-                                                    User u = dataSnapshot.getValue(User.class);
-                                                    Session session = new Session(LoginActivity.this);
-                                                    session.setSession(u);
+                                        @Override
+                                        //if successfully read
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.getValue() != null) {
+                                                //Data is Valid
+                                                User u = dataSnapshot.getValue(User.class);
+                                                Session session = new Session(LoginActivity.this);
+                                                session.setSession(u);
 
-                                                    //Start Dashboard Activity
-                                                    Intent it = new Intent(LoginActivity.this, Dashboard.class);
-                                                    startActivity(it);
-                                                    finish();
+                                                //Start Dashboard Activity
+                                                Intent it = new Intent(LoginActivity.this, Dashboard.class);
+                                                startActivity(it);
+                                                finish();
 
-                                                }
-                                                else{
-                                                    login_process.setVisibility(View.GONE);
-                                                    btnLogin.setVisibility(View.VISIBLE);
-                                                    helpers.showError(LoginActivity.this, "ERROR", "Something Went Wrong");
-                                                }
-
-                                            }
-
-                                            @Override
-                                            //if not successfully read
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            } else {
                                                 login_process.setVisibility(View.GONE);
                                                 btnLogin.setVisibility(View.VISIBLE);
-                                                helpers.showError(LoginActivity.this, "ERROR","Something Went Wrong");
-
-
+                                                helpers.showError(LoginActivity.this, "ERROR", "Something Went Wrong");
                                             }
-                                        });
+
+                                        }
+
+                                        @Override
+                                        //if not successfully read
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            login_process.setVisibility(View.GONE);
+                                            btnLogin.setVisibility(View.VISIBLE);
+                                            helpers.showError(LoginActivity.this, "ERROR", "Something Went Wrong");
+
+
+                                        }
+                                    });
 //                                        login_process.setVisibility(View.GONE);
 //                                        btnLogin.setVisibility(View.VISIBLE);
 //
@@ -137,26 +136,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //
 //                                        Log.e("Login","Success");
 
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                login_process.setVisibility(View.GONE);
-                                btnLogin.setVisibility(View.VISIBLE);
-                                helpers.showError(LoginActivity.this,  "ERROR",e.getMessage());
-                            }
-                        });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            login_process.setVisibility(View.GONE);
+                            btnLogin.setVisibility(View.VISIBLE);
+                            helpers.showError(LoginActivity.this, "ERROR", e.getMessage());
+                        }
+                    });
 
-                    }
-                    break;
+                }
+                break;
             }
-            case R.id.go_to_registration:{
+            case R.id.go_to_registration: {
                 Intent it = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(it);
                 break;
             }
 
-            case R.id.fogotPasword:{
+            case R.id.fogotPasword: {
                 Intent it = new Intent(LoginActivity.this, ForgotPasswordAcitivity.class);
                 startActivity(it);
                 break;
@@ -166,51 +165,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private boolean isValid(){
-        boolean flag =true;
+    private boolean isValid() {
+        boolean flag = true;
         if (strEmail.length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
             edtEmail.setError("Enter a valid Email");
-            flag= false;
+            flag = false;
         } else {
             edtEmail.setError(null);
         }
         if (strPassword.length() < 6) {
             edtPassword.setError("Enter valid password");
-            flag=false;
+            flag = false;
         } else {
             edtPassword.setError(null);
         }
         return flag;
 
     }
+
     public boolean isConnected(Context c) {
         boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
                 == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                 .getState() == NetworkInfo.State.CONNECTED)
             connected = true;
         else
             connected = false;
-        return  connected;
+        return connected;
     }
+
     // Check Internet Connection
     private boolean isConnected() {
         boolean connected = false;
         ConnectivityManager connectivityManager =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
                 == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
                 (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
             connected = true;
         else
             connected = false;
-        return  connected;
+        return connected;
     }
-
-
-
-
 
 
 }

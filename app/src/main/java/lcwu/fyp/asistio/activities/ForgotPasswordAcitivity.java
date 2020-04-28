@@ -1,8 +1,5 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -11,13 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import lcwu.fyp.asistio.R;
@@ -65,7 +61,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                 public void onSuccess(Void aVoid) {
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
-                                    helpers.showSuccess(ForgotPasswordAcitivity.this,"Check your email",
+                                    helpers.showSuccess(ForgotPasswordAcitivity.this, "Check your email",
                                             "Email send successfully");
                                 }
                             })
@@ -75,7 +71,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
                                     Log.e("reset password", "Failure " + e.getMessage());
-                                    helpers.showError(ForgotPasswordAcitivity.this,"ERROR",e.getMessage());
+                                    helpers.showError(ForgotPasswordAcitivity.this, "ERROR", e.getMessage());
                                 }
                             });
 
@@ -88,11 +84,11 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
         }
     }
 
-    private boolean isValid(){
-        boolean flag =true;
+    private boolean isValid() {
+        boolean flag = true;
         if (strEmail.length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
             edtEmail.setError("Enter a valid Email");
-            flag= false;
+            flag = false;
         } else {
             edtEmail.setError(null);
         }

@@ -24,12 +24,12 @@
             app:toolbarId="@+id/toolbar">
 
             <ImageView
+                android:id="@+id/userImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:adjustViewBounds="true"
                 android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:id="@+id/userImage" />
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
 
 
             <androidx.appcompat.widget.Toolbar

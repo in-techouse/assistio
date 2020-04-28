@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SetCommand"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.SetCommand">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/HeadingPadding"
-        android:layout_margin="@dimen/HeadingPadding">
+        android:layout_margin="@dimen/HeadingPadding"
+        android:padding="@dimen/HeadingPadding">
 
         <EditText
             android:id="@+id/edtKey"
@@ -25,18 +23,18 @@
         android:id="@+id/btn_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/set"
-        android:padding="@dimen/HeadingPadding"
         android:layout_margin="@dimen/HeadingPadding"
-        android:hint="@string/enter_your_key"/>
+        android:hint="@string/enter_your_key"
+        android:padding="@dimen/HeadingPadding"
+        android:text="@string/set" />
 
     <ProgressBar
-        android:visibility="gone"
         android:id="@+id/setKey_Progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:visibility="gone" />
 
 
 </LinearLayout>

@@ -1,7 +1,5 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -16,6 +14,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +30,7 @@ import lcwu.fyp.asistio.model.Contact;
 
 public class SmsSchedular extends AppCompatActivity implements View.OnClickListener {
 
-   // private PasswordDialog dialog;
+    // private PasswordDialog dialog;
     private EditText message;
     private Button save;
     private ImageView select_contacts, select_date, select_time;
@@ -56,9 +58,9 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         select_time.setOnClickListener(this);
         select_date.setOnClickListener(this);
         contacts = new ArrayList<>();
-           adapter = new SelectedContactsAdapter();
+        adapter = new SelectedContactsAdapter();
         contactsGrid = findViewById(R.id.contactsGrid);
-            contactsGrid.setAdapter(adapter);
+        contactsGrid.setAdapter(adapter);
 
 //            dialog = new PasswordDialog(this);
 
@@ -93,7 +95,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                         contacts = new ArrayList<>();
                         Log.e("SmsSender", "Reinitialized");
                     }
-                  adapter.setContacts(contacts);
+                    adapter.setContacts(contacts);
                     Log.e("SmsSender", "List OK with size: " + contacts.size());
                 }
             }
@@ -105,47 +107,45 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id){
-            case R.id.save:{
+        switch (id) {
+            case R.id.save: {
                 boolean flag = true;
                 str_message = message.getText().toString();
                 String str_date = date.getText().toString();
                 String str_time = time.getText().toString();
                 String error = "";
-                if(str_message.length() < 2){
+                if (str_message.length() < 2) {
                     message.setError("Enter a valid message");
                     flag = false;
-                }
-                else{
+                } else {
                     message.setError(null);
                 }
 
-                if(str_date.length() < 1){
+                if (str_date.length() < 1) {
                     flag = false;
                     error = error + "Select SMS Scheduling date.\n";
                 }
-                if(str_time.length() < 1){
+                if (str_time.length() < 1) {
                     flag = false;
                     error = error + "Select SMS Scheduling time.\n";
                 }
 
-                if(contacts.size() < 1){
+                if (contacts.size() < 1) {
                     flag = false;
                     error = error + "Select some contacts first.\n";
                 }
 
-                try{
+                try {
                     SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd, MMM yyyy hh:mm");
                     Date date = sdf.parse(str_date + " " + str_time);
                     Date current_time = new Date();
 
                     Log.e("Date", "Message Time: " + date.toString() + " Current Time: " + current_time.toString());
-                    if(date.before(current_time)){
+                    if (date.before(current_time)) {
                         flag = false;
                         error = error + "Select a valid date and time first.\nYou can't select a time which is passed";
                     }
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     flag = false;
                     error = error + "Select a valid date and time first.\nYou can't select a time which is passed";
                 }
@@ -158,12 +158,12 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
 //                }
                 break;
             }
-            case R.id.select_date:{
+            case R.id.select_date: {
                 Calendar newCalendar = Calendar.getInstance();
 
                 DatePickerDialog startTime = new DatePickerDialog(SmsSchedular.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int y, int monthOfYear, int dayOfMonth) {
-                        try{
+                        try {
                             year = y;
                             month = monthOfYear;
                             day = dayOfMonth;
@@ -171,8 +171,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                             newDate.set(y, monthOfYear, dayOfMonth);
                             String d = new SimpleDateFormat("EEEE, dd, MMM yyyy").format(newDate.getTime());
                             date.setText(d);
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             Log.e("Date", "Date parsing exception: " + e.getMessage());
                         }
 
@@ -182,7 +181,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                 startTime.show();
                 break;
             }
-            case R.id.select_time:{
+            case R.id.select_time: {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int h = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int m = mcurrentTime.get(Calendar.MINUTE);
@@ -206,11 +205,11 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void registerSms(){
-        try{
+    private void registerSms() {
+        try {
             String message = "You scheduled a message for, ";
             ArrayList<String> list = new ArrayList<>();
-            for (Contact c : contacts){
+            for (Contact c : contacts) {
                 list.add(c.getName() + "," + c.getNumber());
                 Log.e("List", "List Size: " + list.size());
                 message = message + c.getName() + ", ";
@@ -241,8 +240,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
 //            message = message + "at " + str_date_time + ".\nThe message is: " + str_message;
 //
 //            saveToDatabase(message);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.e("SmsSender", "Time Exception: " + e.getMessage());
         }

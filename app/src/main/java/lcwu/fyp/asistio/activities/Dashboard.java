@@ -4,14 +4,21 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,26 +29,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.mzelzoghbi.zgallery.ZGrid;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import org.apache.commons.io.FileUtils;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
-import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
 
-public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private Helpers helpers;
     private User user;
@@ -73,7 +73,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         profile_image = header.findViewById(R.id.profile_image);
         TextView profile_name = header.findViewById(R.id.profile_name);
         TextView profile_email = header.findViewById(R.id.profile_email);
-        profile_name.setText(user.getFirst_Name()+ " "+ user.getLast_Name());
+        profile_name.setText(user.getFirst_Name() + " " + user.getLast_Name());
         profile_email.setText(user.getEmail());
 
 
@@ -93,7 +93,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         TextView notes = findViewById(R.id.notes);
 
 
-
         contactsBox.setOnClickListener(this);
         documentsBox.setOnClickListener(this);
         imagesBox.setOnClickListener(this);
@@ -102,14 +101,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         notesBox.setOnClickListener(this);
 
 
-
-
-        contacts.setText(user.getContacts()+"");
-        images.setText(user.getImages()+"");
-        audios.setText(user.getAudios()+"");
-        videos.setText(user.getVideos()+"");
-        documents.setText(user.getDocuments()+"");
-        notes.setText(user.getNotes()+"");
+        contacts.setText(user.getContacts() + "");
+        images.setText(user.getImages() + "");
+        audios.setText(user.getAudios() + "");
+        videos.setText(user.getVideos() + "");
+        documents.setText(user.getDocuments() + "");
+        notes.setText(user.getNotes() + "");
         userFiles = new ArrayList<>();
         // Service calling
 //        boolean flag = session.getSync();
@@ -135,27 +132,27 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
 
-    private boolean askForPermission(){
+    private boolean askForPermission() {
         if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.READ_SMS)!= PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.RECEIVE_SMS)!= PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.SEND_SMS)!= PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(Dashboard.this,Manifest.permission.WRITE_CONTACTS)!= PackageManager.PERMISSION_GRANTED
-        ){
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(Dashboard.this, new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 10);
 
             return false;
         }
-            return true;
+        return true;
     }
 
-    public void startServices(){
+    public void startServices() {
         Log.e("Service", "in StartService");
-        if (askForPermission()){
+        if (askForPermission()) {
             Log.e("Service", "in askForPermission");
 //            ScanMediaService.dashboard = Dashboard.this;
 //            startService(new Intent(Dashboard.this, ScanMediaService.class));
@@ -166,7 +163,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 10){
+        if (requestCode == 10) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startServices();
             }
@@ -176,37 +173,37 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
-        switch (id){
-            case R.id.nav_autoreply:{
-                Intent it= new Intent(Dashboard.this,AutoReply.class);
+        switch (id) {
+            case R.id.nav_autoreply: {
+                Intent it = new Intent(Dashboard.this, AutoReply.class);
                 startActivity(it);
                 break;
             }
-            case R.id.nav_profile:{
-                Intent it= new Intent(Dashboard.this,UserProfileActivity.class);
+            case R.id.nav_profile: {
+                Intent it = new Intent(Dashboard.this, UserProfileActivity.class);
                 startActivity(it);
                 break;
             }
-            case R.id.nav_smssch:{
-                Intent it= new Intent(Dashboard.this,SmsSchedular.class);
+            case R.id.nav_smssch: {
+                Intent it = new Intent(Dashboard.this, SmsSchedular.class);
                 startActivity(it);
                 break;
             }
-            case R.id.set_command:{
-                Intent it = new Intent(Dashboard.this,SetCommand.class);
+            case R.id.set_command: {
+                Intent it = new Intent(Dashboard.this, SetCommand.class);
                 startActivity(it);
                 break;
             }
 
-            case R.id.nav_speech:{
-                Intent it= new Intent(Dashboard.this,SpeechNotes.class);
+            case R.id.nav_speech: {
+                Intent it = new Intent(Dashboard.this, SpeechNotes.class);
                 startActivity(it);
                 break;
             }
-            case R.id.nav_logout:{
+            case R.id.nav_logout: {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signOut();
-                Intent it= new Intent(Dashboard.this,LoginActivity.class);
+                Intent it = new Intent(Dashboard.this, LoginActivity.class);
                 startActivity(it);
                 finish();
                 break;
@@ -216,48 +213,48 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         return false;
     }
 
-    private void loadFiles(){
-        Log.e("get URL" , "inside function");
+    private void loadFiles() {
+        Log.e("get URL", "inside function");
         DatabaseReference dataref = FirebaseDatabase.getInstance().getReference();
         dataref.child("UserFiles").child(user.getId())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.e("get URL" , "dataSnapshot is "+dataSnapshot);
+                        Log.e("get URL", "dataSnapshot is " + dataSnapshot);
                         if (dataSnapshot.exists()) {
-                            Log.e("get URL" , "inside if");
-                            for (DataSnapshot ds   :  dataSnapshot.getChildren()){
+                            Log.e("get URL", "inside if");
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 UserFile uFile = ds.getValue(UserFile.class);
-                                if(uFile != null)
+                                if (uFile != null)
                                     userFiles.add(uFile);
                             }
-                            Log.e("get URL" , "Recieved : "+userFiles.size());
-                            Log.e("get URL" , "Recieved : "+userFiles);
+                            Log.e("get URL", "Recieved : " + userFiles.size());
+                            Log.e("get URL", "Recieved : " + userFiles);
                             Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
 
 
-
                         }
-                  }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("get URL" , "in cancelled");
-                }
-            });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("get URL", "in cancelled");
+                    }
+                });
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id){
-            case R.id.contactsBox:{
-                Intent in = new Intent(Dashboard.this , ShowContacts.class);
+        switch (id) {
+            case R.id.contactsBox: {
+                Intent in = new Intent(Dashboard.this, ShowContacts.class);
                 startActivity(in);
                 break;
             }
-            case R.id.documentsBox:{
-                Intent in = new Intent(Dashboard.this , ShowDocuments.class);
+            case R.id.documentsBox: {
+                Intent in = new Intent(Dashboard.this, ShowDocuments.class);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(userFiles);
                 Bundle bundle = new Bundle();
@@ -266,11 +263,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(in);
                 break;
             }
-            case R.id.imagesBox:{
+            case R.id.imagesBox: {
                 userImages.clear();
                 imagesList.clear();
-                for ( UserFile file: userFiles) {
-                    if(file.getType().equals("Image")){
+                for (UserFile file : userFiles) {
+                    if (file.getType().equals("Image")) {
                         imagesList.add(file.getDownload_url());
                         userImages.add(file);
                     }
@@ -285,8 +282,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                         .show();
                 break;
             }
-            case R.id.videosBox:{
-                Intent in = new Intent(Dashboard.this , ShowVideos.class);
+            case R.id.videosBox: {
+                Intent in = new Intent(Dashboard.this, ShowVideos.class);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(userFiles);
                 Bundle bundle = new Bundle();
@@ -295,8 +292,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(in);
                 break;
             }
-            case R.id.audiosBox:{
-                Intent in = new Intent(Dashboard.this , ShowAudios.class);
+            case R.id.audiosBox: {
+                Intent in = new Intent(Dashboard.this, ShowAudios.class);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(userFiles);
                 Bundle bundle = new Bundle();
@@ -305,8 +302,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(in);
                 break;
             }
-            case R.id.notesBox:{
-                Intent in = new Intent(Dashboard.this , ShowNotes.class);
+            case R.id.notesBox: {
+                Intent in = new Intent(Dashboard.this, ShowNotes.class);
                 startActivity(in);
                 break;
             }

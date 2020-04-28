@@ -6,26 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.shreyaspatil.MaterialDialog.MaterialDialog;
-import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-
 import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -36,6 +16,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.File;
 import java.util.Calendar;
 
@@ -44,7 +40,7 @@ import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.User;
 
-public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -52,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     };
 
 
-    String strFstName, strLastName,strPhone, strEmail;
+    String strFstName, strLastName, strPhone, strEmail;
     private TextView profileFirstName, profileLastName, profilePhone, profileEmail;
     private Session session;
     private Button btnUpdate;
@@ -89,14 +85,13 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         profileEmail.setText(user.getEmail());
         btnUpdate.setOnClickListener(this);
         updateProgress = findViewById(R.id.updateProgress);
-        imageView =  findViewById(R.id.userImage);
+        imageView = findViewById(R.id.userImage);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        if(user.getImage() != null && !user.getImage().equalsIgnoreCase("")){
+        if (user.getImage() != null && !user.getImage().equalsIgnoreCase("")) {
             Glide.with(getApplicationContext()).load(user.getImage()).into(imageView);
-        }
-        else {
+        } else {
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.profile));
         }
 
@@ -126,8 +121,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             case R.id.btnUpdate: {
                 //Check Internet
                 boolean isConn = helpers.isConnected(UserProfileActivity.this);
-                if (!isConn){
-                    helpers.showError(UserProfileActivity.this,"Internet Error", "No internet found check your internet connection and try again?");
+                if (!isConn) {
+                    helpers.showError(UserProfileActivity.this, "Internet Error", "No internet found check your internet connection and try again?");
                     return;
                 }
 
@@ -138,13 +133,12 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
 
                 boolean flag = isValid();
-                if(flag){
+                if (flag) {
                     Log.e("Profile", "Validation Successful");
-                    if(isImage){
+                    if (isImage) {
                         Log.e("Profile", "Image Found");
                         uploadImage();
-                    }
-                    else{
+                    } else {
                         Log.e("Profile", "No Image Found");
                         updateProgress.setVisibility(View.VISIBLE);
                         btnUpdate.setVisibility(View.GONE);
@@ -155,12 +149,11 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 break;
             }
 
-            case R.id.fab:{
+            case R.id.fab: {
                 boolean flag = hasPermissions(UserProfileActivity.this, PERMISSIONS);
-                if(!flag){
+                if (!flag) {
                     ActivityCompat.requestPermissions(UserProfileActivity.this, PERMISSIONS, 1);
-                }
-                else{
+                } else {
                     openGallery();
                 }
                 break;
@@ -169,14 +162,14 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void uploadImage(){
+    private void uploadImage() {
         updateProgress.setVisibility(View.VISIBLE);
         btnUpdate.setVisibility(View.GONE);
         final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Users").child(user.getId());
         Uri selectedMediaUri = Uri.parse(imagePath.toString());
 
         File file = new File(selectedMediaUri.getPath());
-        Log.e("file" , "in file object value "+file.toString());
+        Log.e("file", "in file object value " + file.toString());
         Log.e("Profile", "Uri: " + selectedMediaUri.getPath() + " File: " + file.exists());
 //
 //        if(!file.exists()){
@@ -188,13 +181,13 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 //        }
         Calendar calendar = Calendar.getInstance();
 
-        storageReference.child(calendar.getTimeInMillis()+"").putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        storageReference.child(calendar.getTimeInMillis() + "").putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.e("Profile" , "in OnSuccess "+uri.toString());
+                        Log.e("Profile", "in OnSuccess " + uri.toString());
                         user.setImage(uri.toString());
                         updateProgress.setVisibility(View.GONE);
                         btnUpdate.setVisibility(View.VISIBLE);
@@ -217,11 +210,12 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 Log.e("Profile", "Upload Image Url: " + e.getMessage());
                 updateProgress.setVisibility(View.GONE);
                 btnUpdate.setVisibility(View.VISIBLE);
-                helpers.showError(UserProfileActivity.this, "ERROR!", "Something went wrong.\n Please try again later.");            }
+                helpers.showError(UserProfileActivity.this, "ERROR!", "Something went wrong.\n Please try again later.");
+            }
         });
     }
 
-    public void openGallery(){
+    public void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -232,47 +226,45 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == 1){
+        if (requestCode == 1) {
             openGallery();
         }
     }
-    private boolean hasPermissions(Context c, String... permission){
-        for(String p : permission){
-            if(ActivityCompat.checkSelfPermission(c, p) != PackageManager.PERMISSION_GRANTED){
+
+    private boolean hasPermissions(Context c, String... permission) {
+        for (String p : permission) {
+            if (ActivityCompat.checkSelfPermission(c, p) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean isValid(){
+    private boolean isValid() {
         boolean flag = true;
-        if (strFstName.length()<3){
+        if (strFstName.length() < 3) {
             profileFirstName.setError("Enter a valid name");
-        }
-        else{
+        } else {
             profileFirstName.setError(null);
         }
-        if (strLastName.length()<3){
+        if (strLastName.length() < 3) {
             profileLastName.setError("Enter a valid name");
             flag = false;
-        }
-        else{
+        } else {
             profileLastName.setError(null);
         }
-        if (strPhone.length()!=11 || !Patterns.PHONE.matcher(strPhone).matches()){
+        if (strPhone.length() != 11 || !Patterns.PHONE.matcher(strPhone).matches()) {
             profilePhone.setError("Enter a valid phone no");
             flag = false;
-        }
-        else{
+        } else {
             profilePhone.setError(null);
         }
 
-        return  flag;
+        return flag;
 
     }
 
-    private void updateDatabase(){
+    private void updateDatabase() {
         updateProgress.setVisibility(View.VISIBLE);
         btnUpdate.setVisibility(View.GONE);
         user.setEmail(strEmail);
@@ -287,10 +279,10 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 btnUpdate.setVisibility(View.VISIBLE);
                 session.setSession(user);
 
-                Toast toast=Toast.makeText(getApplicationContext(),"Profile Updated",Toast.LENGTH_SHORT);
-                toast.setMargin(50,50);
+                Toast toast = Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT);
+                toast.setMargin(50, 50);
                 toast.show();
-                Intent in  = new Intent(UserProfileActivity.this , Dashboard.class);
+                Intent in = new Intent(UserProfileActivity.this, Dashboard.class);
                 startActivity(in);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -308,10 +300,10 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("Profile", "Gallery Call Back Received in Fragment with Request Code: " + requestCode);
         if (requestCode == 2) {
-            if(resultCode == RESULT_OK){
-                if(data != null){
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
                     Uri image = data.getData();
-                    if(image != null){
+                    if (image != null) {
                         Glide.with(getApplicationContext()).load(image).into(imageView);
                         imagePath = image;
                         isImage = true;
@@ -320,7 +312,4 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             }
         }
     }
-
-
-
 }

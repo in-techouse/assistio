@@ -1,8 +1,5 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -17,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -26,17 +26,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 
+import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
-import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnRegister;
 
-    EditText edtFName,edtLName,edtphno,edtemail1,edtpass,edtpass1;
-    String strFName , strLName ,strphno ,stremai1 , strpass , strpass1;
+    EditText edtFName, edtLName, edtphno, edtemail1, edtpass, edtpass1;
+    String strFName, strLName, strphno, stremai1, strpass, strpass1;
     ProgressBar registrationProgress;
     Helpers helpers;
 
@@ -47,7 +47,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_registration);
 
         btnRegister = findViewById(R.id.btnRegister);
-        helpers= new Helpers();
+        helpers = new Helpers();
 
         edtFName = findViewById(R.id.edtFName);
         edtLName = findViewById(R.id.edtLName);
@@ -68,10 +68,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         int id = v.getId();
 
-        switch(id){
-            case R.id.btnRegister:{
+        switch (id) {
+            case R.id.btnRegister: {
                 boolean isConn = isConnected();
-                if (!isConn){
+                if (!isConn) {
                     //show error message
                     new FancyGifDialog.Builder(this)
                             .setTitle("ERROR")
@@ -85,80 +85,79 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             .OnPositiveClicked(new FancyGifDialogListener() {
                                 @Override
                                 public void OnClick() {
-                                    Toast.makeText(RegistrationActivity.this,"Ok",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegistrationActivity.this, "Ok", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .OnNegativeClicked(new FancyGifDialogListener() {
                                 @Override
                                 public void OnClick() {
-                                    Toast.makeText(RegistrationActivity.this,"Cancel",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegistrationActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .build();
 
                     return;
                 }
-                strFName= edtFName.getText().toString();
-                strLName= edtLName.getText().toString();
+                strFName = edtFName.getText().toString();
+                strLName = edtLName.getText().toString();
                 strphno = edtphno.getText().toString();
                 stremai1 = edtemail1.getText().toString();
                 strpass = edtpass.getText().toString();
                 strpass1 = edtpass1.getText().toString();
 
-              boolean flag = isValid();
-              if (flag){
-                  //Firebase
-                  //to show progress load
-                  registrationProgress.setVisibility(View.VISIBLE);
-                  btnRegister.setVisibility(View.GONE);
+                boolean flag = isValid();
+                if (flag) {
+                    //Firebase
+                    //to show progress load
+                    registrationProgress.setVisibility(View.VISIBLE);
+                    btnRegister.setVisibility(View.GONE);
 
-                  FirebaseAuth auth = FirebaseAuth.getInstance();
-                  auth.createUserWithEmailAndPassword(stremai1,strpass1 )
-                          .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                              @Override
-                              public void onSuccess(AuthResult authResult) {
-                                  DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
-                                  //Save  Registration
-                                  final User user = new User();
-                                  user.setFirst_Name(strFName);
-                                  user.setLast_Name(strLName);
-                                  user.setPhone_no(strphno);
-                                  user.setEmail(stremai1);
-                                  user.setDocuments(0);
-                                  user.setAudios(0);
-                                  user.setContacts(0);
-                                  user.setVideos(0);
-                                  user.setImages(0);
-                                  user.setNotes(0);
-                                  user.setFirst(false);
-                                  String id = stremai1.replace("@","-");
-                                  id = id.replace(".","_");
-                                  user.setId(id);
-
-
-                                  // ya line data save kar da ge
-                                 reference.child("Users").child(id) .setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                     @Override
-                                     public void onSuccess(Void aVoid) {
-                                         Session session=new Session(RegistrationActivity.this);
-                                         session.setSession(user);
-                                         //Start Dashboard Activity
-                                         Intent it=new Intent(RegistrationActivity.this,Dashboard.class);
-                                         startActivity(it);
-                                         finish();
-
-                                     }
-                                 }).addOnFailureListener(new OnFailureListener() {
-                                     @Override
-                                     public void onFailure(@NonNull Exception e) {
-                                         registrationProgress.setVisibility(View.GONE);
-                                         btnRegister.setVisibility(View.VISIBLE);
-                                         helpers.showError(RegistrationActivity.this,"ERROR","Something went wrong");
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.createUserWithEmailAndPassword(stremai1, strpass1)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                    //Save  Registration
+                                    final User user = new User();
+                                    user.setFirst_Name(strFName);
+                                    user.setLast_Name(strLName);
+                                    user.setPhone_no(strphno);
+                                    user.setEmail(stremai1);
+                                    user.setDocuments(0);
+                                    user.setAudios(0);
+                                    user.setContacts(0);
+                                    user.setVideos(0);
+                                    user.setImages(0);
+                                    user.setNotes(0);
+                                    user.setFirst(false);
+                                    String id = stremai1.replace("@", "-");
+                                    id = id.replace(".", "_");
+                                    user.setId(id);
 
 
-                                     }
-                                 });
+                                    // ya line data save kar da ge
+                                    reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Session session = new Session(RegistrationActivity.this);
+                                            session.setSession(user);
+                                            //Start Dashboard Activity
+                                            Intent it = new Intent(RegistrationActivity.this, Dashboard.class);
+                                            startActivity(it);
+                                            finish();
 
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            registrationProgress.setVisibility(View.GONE);
+                                            btnRegister.setVisibility(View.VISIBLE);
+                                            helpers.showError(RegistrationActivity.this, "ERROR", "Something went wrong");
+
+
+                                        }
+                                    });
 
 
 //                                  registrationProgress.setVisibility(View.GONE);
@@ -168,38 +167,38 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 //                                 finish();
 //                                  Log.e("Registration" , "Success");
 
-                              }
-                          }).addOnFailureListener(new OnFailureListener() {
-                              @Override
-                              public void onFailure(@NonNull Exception e) {
-                                  registrationProgress.setVisibility(View.GONE);
-                                  btnRegister.setVisibility(View.VISIBLE);
-                                  new FancyGifDialog.Builder(RegistrationActivity.this)
-                                          .setTitle("ERROR")
-                                          .setMessage(e.getMessage())
-                                          .setNegativeBtnText("Cancel")
-                                          .setPositiveBtnBackground("#FF4081")
-                                          .setPositiveBtnText("Ok")
-                                          .setNegativeBtnBackground("#FFA9A7A8")
-                                          .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
-                                          .isCancellable(true)
-                                          .OnPositiveClicked(new FancyGifDialogListener() {
-                                              @Override
-                                              public void OnClick() {
-                                                  Toast.makeText(RegistrationActivity.this,"Ok",Toast.LENGTH_SHORT).show();
-                                              }
-                                          })
-                                          .OnNegativeClicked(new FancyGifDialogListener() {
-                                              @Override
-                                              public void OnClick() {
-                                                  Toast.makeText(RegistrationActivity.this,"Cancel",Toast.LENGTH_SHORT).show();
-                                              }
-                                          })
-                                          .build();
-                                  Log.e("Registration" , "Fail " + e.getMessage());
-                              }
-                          });
-              }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            registrationProgress.setVisibility(View.GONE);
+                            btnRegister.setVisibility(View.VISIBLE);
+                            new FancyGifDialog.Builder(RegistrationActivity.this)
+                                    .setTitle("ERROR")
+                                    .setMessage(e.getMessage())
+                                    .setNegativeBtnText("Cancel")
+                                    .setPositiveBtnBackground("#FF4081")
+                                    .setPositiveBtnText("Ok")
+                                    .setNegativeBtnBackground("#FFA9A7A8")
+                                    .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+                                    .isCancellable(true)
+                                    .OnPositiveClicked(new FancyGifDialogListener() {
+                                        @Override
+                                        public void OnClick() {
+                                            Toast.makeText(RegistrationActivity.this, "Ok", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .OnNegativeClicked(new FancyGifDialogListener() {
+                                        @Override
+                                        public void OnClick() {
+                                            Toast.makeText(RegistrationActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .build();
+                            Log.e("Registration", "Fail " + e.getMessage());
+                        }
+                    });
+                }
 
                 break;
             }
@@ -207,59 +206,55 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }
 
     }
-    private boolean isValid(){
+
+    private boolean isValid() {
         boolean flag = true;
-        if (strFName.length()<3){
+        if (strFName.length() < 3) {
             edtFName.setError("Enter a valid name");
-        }
-        else{
+        } else {
             edtFName.setError(null);
         }
-        if (strLName.length()<3){
+        if (strLName.length() < 3) {
             edtLName.setError("Enter a valid name");
             flag = false;
-        }
-        else{
+        } else {
             edtLName.setError(null);
         }
-        if (strphno.length()!=11 || !Patterns.PHONE.matcher(strphno).matches()){
+        if (strphno.length() != 11 || !Patterns.PHONE.matcher(strphno).matches()) {
             edtphno.setError("Enter a valid phone no");
             flag = false;
-        }
-        else{
+        } else {
             edtphno.setError(null);
         }
-        if(stremai1.length()<6 || !Patterns.EMAIL_ADDRESS.matcher(stremai1).matches()) {
+        if (stremai1.length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(stremai1).matches()) {
             edtemail1.setError("Enter a valid E-mail");
             flag = false;
-        }
-        else{
+        } else {
             edtemail1.setError(null);
         }
-        if (strpass.length()<6){
+        if (strpass.length() < 6) {
             edtpass.setError("Invalid password");
             flag = false;
-        }
-        else{
+        } else {
             edtpass.setError(null);
         }
-        if (strpass1.length()<6){
+        if (strpass1.length() < 6) {
             edtpass1.setError("Invalid password");
             flag = false;
-        }
-        else{
+        } else {
             edtpass1.setError(null);
         }
-        return  flag;
+        return flag;
 
     }
+
     public boolean isConnected() {
         boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
         }
-        return  connected;
+        return connected;
     }
 
     @Override

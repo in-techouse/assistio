@@ -1,14 +1,7 @@
 package lcwu.fyp.asistio.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -21,6 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +28,9 @@ import java.util.Set;
 
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.ContactAdapter;
-import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.model.Contact;
 
-public class ReadContacts extends AppCompatActivity implements View.OnClickListener{
+public class ReadContacts extends AppCompatActivity implements View.OnClickListener {
 
     private List<Contact> contactList, filteredList;
     private RecyclerView contacts;
@@ -119,29 +115,28 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-//    @Override
+    //    @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
-            case R.id.done:{
+        switch (id) {
+            case R.id.done: {
                 List<Contact> contacts = adapter.getContacts();
                 List<Contact> selected = new ArrayList<>();
 
-                for (Contact c: contacts){
-                    if(c.isSelected()){
+                for (Contact c : contacts) {
+                    if (c.isSelected()) {
                         selected.add(c);
                     }
                 }
 
-                if(selected.size() > 0){
+                if (selected.size() > 0) {
                     Intent resultIntent = new Intent();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("contacts", (Serializable) selected);
                     resultIntent.putExtras(bundle);
                     setResult(Activity.RESULT_OK, resultIntent);
                     finish();
-                }
-                else{
+                } else {
 //                    Helpers.showError(ReadContacts.this, "Contact Error", "Select some contacts first.");
                 }
 
@@ -163,34 +158,29 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
         protected List<Contact> doInBackground(Void... voids) {
             List<Contact> list = new ArrayList<>();
 
-            try{
+            try {
                 ContentResolver cr = getContentResolver(); //Activity/Application android.content.Context
                 Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-                if(cursor != null && cursor.moveToFirst())
-                {
+                if (cursor != null && cursor.moveToFirst()) {
                     list = new ArrayList<>();
                     Set<String> set = new HashSet<>();
-                    do
-                    {
+                    do {
                         String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 
-                        if(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
-                        {
-                            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
-                            if(pCur != null){
-                                while (pCur.moveToNext())
-                                {
+                        if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
+                            if (pCur != null) {
+                                while (pCur.moveToNext()) {
                                     String contactName = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 
                                     String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                                    String str = contactName+","+contactNumber;
+                                    String str = contactName + "," + contactNumber;
                                     set.add(str);
                                     Log.e("Contacts", "Contact Name: " + contactName + " Contact Number: " + contactNumber);
                                     break;
                                 }
                                 pCur.close();
-                            }
-                            else{
+                            } else {
                                 list = null;
                                 Log.e("Contacts", "PCursor is Null");
                             }
@@ -199,7 +189,7 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
 
                     } while (cursor.moveToNext());
                     list = new ArrayList<>();
-                    for (String str: set){
+                    for (String str : set) {
                         String[] s = str.split(",");
                         Contact contact = new Contact(s[0], s[1], false);
                         list.add(contact);
@@ -212,13 +202,11 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
                             return o1.getName().compareToIgnoreCase(o2.getName());
                         }
                     });
-                }
-                else{
+                } else {
                     list = null;
                     Log.e("Contacts", "Cursor is Null");
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 list = null;
                 Log.e("Contacts", "Exception: " + e.getMessage());
             }
@@ -229,7 +217,7 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
         protected void onPostExecute(List<Contact> contactBOS) {
             super.onPostExecute(contactBOS);
 
-            if(contactBOS != null){
+            if (contactBOS != null) {
                 contactList.addAll(contactBOS);
                 filteredList.addAll(contactBOS);
                 adapter.addContacts(filteredList);
