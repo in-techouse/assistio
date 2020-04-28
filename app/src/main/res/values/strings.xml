@@ -53,4 +53,5 @@
     <string name="set_command">Set Command</string>
     <string name="set">Set</string>
     <string name="enter_your_key">Enter your Key</string>
+    <string name="last_location">Last Location</string>
 </resources>

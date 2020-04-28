@@ -10,7 +10,7 @@
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/profile"
+            android:icon="@drawable/account"
             android:title="@string/menu_profile" />
         <item
             android:id="@+id/nav_autoreply"
@@ -29,6 +29,13 @@
             android:id="@+id/set_command"
             android:icon="@drawable/settings"
             android:title="@string/set_command" />
+
+        <item
+            android:id="@+id/last_location"
+            android:icon="@drawable/tracking"
+            android:title="@string/last_location" />
+
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"

@@ -200,6 +200,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(it);
                 break;
             }
+            case R.id.last_location: {
+                Intent it = new Intent(Dashboard.this, ViewLastLocation.class);
+                startActivity(it);
+                break;
+            }
             case R.id.nav_logout: {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 auth.signOut();
