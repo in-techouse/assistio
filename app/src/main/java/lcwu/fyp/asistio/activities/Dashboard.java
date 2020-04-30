@@ -1,24 +1,37 @@
 package lcwu.fyp.asistio.activities;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,29 +39,42 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mzelzoghbi.zgallery.ZGrid;
-import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
-import lcwu.fyp.asistio.model.ListUserFile;
+import lcwu.fyp.asistio.model.LastLocation;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
+import lcwu.fyp.asistio.services.ScanMediaService;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
+    private final String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_SMS,
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS
+    };
     private Helpers helpers;
     private User user;
     private Session session;
     private CircleImageView profile_image;
     private DrawerLayout drawer;
     private ToggleButton toggleButton;
+    private FusedLocationProviderClient locationProviderClient;
     private List<UserFile> userFiles = new ArrayList<>();
     ArrayList<String> imagesList = new ArrayList<>();
     List<UserFile> userImages = new ArrayList<>();
@@ -77,12 +103,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         profile_email.setText(user.getEmail());
 
 
-        LinearLayout contactsBox = findViewById(R.id.contactsBox);
-        LinearLayout documentsBox = findViewById(R.id.documentsBox);
-        LinearLayout imagesBox = findViewById(R.id.imagesBox);
-        LinearLayout videosBox = findViewById(R.id.videosBox);
-        LinearLayout audiosBox = findViewById(R.id.audiosBox);
-        LinearLayout notesBox = findViewById(R.id.notesBox);
+        RelativeLayout contactsBox = findViewById(R.id.contactsBox);
+        RelativeLayout documentsBox = findViewById(R.id.documentsBox);
+        RelativeLayout imagesBox = findViewById(R.id.imagesBox);
+        RelativeLayout videosBox = findViewById(R.id.videosBox);
+        RelativeLayout audiosBox = findViewById(R.id.audiosBox);
+        RelativeLayout notesBox = findViewById(R.id.notesBox);
 
         toggleButton = findViewById(R.id.toggleButton);
         TextView contacts = findViewById(R.id.contacts);
@@ -92,14 +118,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         TextView documents = findViewById(R.id.documents);
         TextView notes = findViewById(R.id.notes);
 
-
         contactsBox.setOnClickListener(this);
         documentsBox.setOnClickListener(this);
         imagesBox.setOnClickListener(this);
         videosBox.setOnClickListener(this);
         audiosBox.setOnClickListener(this);
         notesBox.setOnClickListener(this);
-
 
         contacts.setText(user.getContacts() + "");
         images.setText(user.getImages() + "");
@@ -108,13 +132,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         documents.setText(user.getDocuments() + "");
         notes.setText(user.getNotes() + "");
         userFiles = new ArrayList<>();
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(Dashboard.this);
         // Service calling
 //        boolean flag = session.getSync();
 //        startServices();
 //        if(flag){
 //            System.out.println("in if with flag" + flag);
 //            toggleButton.setToggleOn();
-//            startServices();
+        startServices();
 //        }
 //        else{
 //            System.out.println("in else with flag" +flag);
@@ -131,34 +156,119 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         loadFiles();
     }
 
-
-    private boolean askForPermission() {
-        if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(Dashboard.this, new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 10);
-
-            return false;
+    private boolean hasPermissions(Context c, String... permission) {
+        for (String p : permission) {
+            if (ActivityCompat.checkSelfPermission(c, p) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
         }
         return true;
     }
 
     public void startServices() {
-        Log.e("Service", "in StartService");
-        if (askForPermission()) {
-            Log.e("Service", "in askForPermission");
-//            ScanMediaService.dashboard = Dashboard.this;
+        Log.e("Dashboard", "in StartService");
+        if (hasPermissions(Dashboard.this, PERMISSIONS)) {
+            Log.e("Dashboard", "Permission Granted");
+            ScanMediaService.dashboard = Dashboard.this;
 //            startService(new Intent(Dashboard.this, ScanMediaService.class));
-            Log.e("Service", "After Execution");
+            Log.e("Dashboard", "After Execution");
+            getDeviceLocation();
+        } else {
+            ActivityCompat.requestPermissions(Dashboard.this, PERMISSIONS, 10);
         }
     }
+
+    private void getDeviceLocation() {
+        try {
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            boolean gps_enabled = false;
+            boolean network_enabled = false;
+            try {
+                gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            } catch (Exception ex) {
+                helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later. " + ex.getMessage());
+            }
+            try {
+                network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            } catch (Exception ex) {
+                helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later. " + ex.getMessage());
+            }
+            if (!gps_enabled && !network_enabled) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(Dashboard.this);
+                dialog.setMessage("Oppss.Your Location Service is off.\n Please turn on your Location and Tr again Later");
+                dialog.setPositiveButton("Let me On", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                });
+                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.show();
+                return;
+            }
+            locationProviderClient.getLastLocation()
+                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            if (task.isSuccessful()) {
+                                Location location = task.getResult();
+                                if (location != null) {
+                                    Log.e("Dashboard", "Location is not null");
+                                    Log.e("Dashboard", "Location latitude: " + location.getLatitude());
+                                    Log.e("Dashboard", "Location longitude: " + location.getLongitude());
+
+                                    try {
+                                        Date d = new Date();
+                                        Log.e("Dashboard", "Date Time: " + d.getTime());
+                                        String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss a").format(d);
+                                        Log.e("Dashboard", "Formatted Date Time: " + formattedDate);
+
+                                        Geocoder geocoder = new Geocoder(Dashboard.this);
+                                        List<Address> addresses = null;
+                                        addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                        if (addresses != null && addresses.size() > 0) {
+                                            Address address = addresses.get(0);
+                                            String strAddress = "";
+                                            for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                                                strAddress = strAddress + "" + address.getAddressLine(i);
+                                            }
+                                            Log.e("Dashboard", "Address: " + strAddress);
+                                            LastLocation lastLocation = new LastLocation();
+                                            lastLocation.setAddress(strAddress);
+                                            lastLocation.setDatetime(formattedDate);
+                                            lastLocation.setLatitude(location.getLatitude());
+                                            lastLocation.setLongitude(location.getLongitude());
+                                            lastLocation.setTimeStamps(d.getTime());
+                                            helpers.saveLastLocation(lastLocation, user.getId());
+                                        }
+                                    } catch (Exception e) {
+                                        Log.e("Dashboard", "Exception: " + e.getMessage());
+
+                                    }
+
+                                } else {
+                                    Log.e("Dashboard", "Location is null");
+                                }
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later. " + e.getMessage());
+                        }
+                    });
+        } catch (Exception e) {
+            helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later. " + e.getMessage());
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -253,66 +363,66 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id) {
-            case R.id.contactsBox: {
-                Intent in = new Intent(Dashboard.this, ShowContacts.class);
-                startActivity(in);
-                break;
-            }
-            case R.id.documentsBox: {
-                Intent in = new Intent(Dashboard.this, ShowDocuments.class);
-                ListUserFile listUserFile = new ListUserFile();
-                listUserFile.setUserFiles(userFiles);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("files", listUserFile);
-                in.putExtras(bundle);
-                startActivity(in);
-                break;
-            }
-            case R.id.imagesBox: {
-                userImages.clear();
-                imagesList.clear();
-                for (UserFile file : userFiles) {
-                    if (file.getType().equals("Image")) {
-                        imagesList.add(file.getDownload_url());
-                        userImages.add(file);
-                    }
-                }
-
-                ZGrid.with(Dashboard.this, imagesList)
-                        .setToolbarColorResId(R.color.colorPrimaryDark)
-                        .setTitle("Assistio")
-                        .setToolbarTitleColor(ZColor.WHITE)
-                        .setSpanCount(3)
-                        .setGridImgPlaceHolder(R.color.colorPrimary)
-                        .show();
-                break;
-            }
-            case R.id.videosBox: {
-                Intent in = new Intent(Dashboard.this, ShowVideos.class);
-                ListUserFile listUserFile = new ListUserFile();
-                listUserFile.setUserFiles(userFiles);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("files", listUserFile);
-                in.putExtras(bundle);
-                startActivity(in);
-                break;
-            }
-            case R.id.audiosBox: {
-                Intent in = new Intent(Dashboard.this, ShowAudios.class);
-                ListUserFile listUserFile = new ListUserFile();
-                listUserFile.setUserFiles(userFiles);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("files", listUserFile);
-                in.putExtras(bundle);
-                startActivity(in);
-                break;
-            }
-            case R.id.notesBox: {
-                Intent in = new Intent(Dashboard.this, ShowNotes.class);
-                startActivity(in);
-                break;
-            }
-        }
+//        switch (id) {
+//            case R.id.contactsBox: {
+//                Intent in = new Intent(Dashboard.this, ShowContacts.class);
+//                startActivity(in);
+//                break;
+//            }
+//            case R.id.documentsBox: {
+//                Intent in = new Intent(Dashboard.this, ShowDocuments.class);
+//                ListUserFile listUserFile = new ListUserFile();
+//                listUserFile.setUserFiles(userFiles);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("files", listUserFile);
+//                in.putExtras(bundle);
+//                startActivity(in);
+//                break;
+//            }
+//            case R.id.imagesBox: {
+//                userImages.clear();
+//                imagesList.clear();
+//                for (UserFile file : userFiles) {
+//                    if (file.getType().equals("Image")) {
+//                        imagesList.add(file.getDownload_url());
+//                        userImages.add(file);
+//                    }
+//                }
+//
+//                ZGrid.with(Dashboard.this, imagesList)
+//                        .setToolbarColorResId(R.color.colorPrimaryDark)
+//                        .setTitle("Assistio")
+//                        .setToolbarTitleColor(ZColor.WHITE)
+//                        .setSpanCount(3)
+//                        .setGridImgPlaceHolder(R.color.colorPrimary)
+//                        .show();
+//                break;
+//            }
+//            case R.id.videosBox: {
+//                Intent in = new Intent(Dashboard.this, ShowVideos.class);
+//                ListUserFile listUserFile = new ListUserFile();
+//                listUserFile.setUserFiles(userFiles);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("files", listUserFile);
+//                in.putExtras(bundle);
+//                startActivity(in);
+//                break;
+//            }
+//            case R.id.audiosBox: {
+//                Intent in = new Intent(Dashboard.this, ShowAudios.class);
+//                ListUserFile listUserFile = new ListUserFile();
+//                listUserFile.setUserFiles(userFiles);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("files", listUserFile);
+//                in.putExtras(bundle);
+//                startActivity(in);
+//                break;
+//            }
+//            case R.id.notesBox: {
+//                Intent in = new Intent(Dashboard.this, ShowNotes.class);
+//                startActivity(in);
+//                break;
+//            }
+//        }
     }
 }
