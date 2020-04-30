@@ -38,26 +38,18 @@ public class ViewLastLocation extends AppCompatActivity {
                 @Override
                 public void onMapReady(GoogleMap gM) {
                     Log.e("Maps", "Call back received");
-
-                    View locationButton = ((View) map.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
-                    RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-                    // position on right bottom
-                    rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-                    rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                    rlp.setMargins(0, 350, 100, 0);
-
                     googleMap = gM;
-                    LatLng defaultPosition = new LatLng(31.5204, 74.3487);
+                    LatLng defaultPosition = new LatLng(31.5204, 74.3487); // Lahore coordinates
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(defaultPosition).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
             });
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             helpers.showError(ViewLastLocation.this, "ERROR", "Something went wrong.\nPlease try again later.");
         }
     }
-
 
     @Override
     protected void onDestroy() {

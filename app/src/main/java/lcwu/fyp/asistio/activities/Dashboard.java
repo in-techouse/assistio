@@ -195,7 +195,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
             if (!gps_enabled && !network_enabled) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Dashboard.this);
-                dialog.setMessage("Oppss.Your Location Service is off.\n Please turn on your Location and Tr again Later");
+                dialog.setMessage("Oppss.Your Location Service is off.\nPlease turn on your Location and Tr again Later");
                 dialog.setPositiveButton("Let me On", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -212,6 +212,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 dialog.show();
                 return;
             }
+
             locationProviderClient.getLastLocation()
                     .addOnCompleteListener(new OnCompleteListener<Location>() {
                         @Override
@@ -219,15 +220,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                             if (task.isSuccessful()) {
                                 Location location = task.getResult();
                                 if (location != null) {
-                                    Log.e("Dashboard", "Location is not null");
-                                    Log.e("Dashboard", "Location latitude: " + location.getLatitude());
-                                    Log.e("Dashboard", "Location longitude: " + location.getLongitude());
-
                                     try {
                                         Date d = new Date();
-                                        Log.e("Dashboard", "Date Time: " + d.getTime());
                                         String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss a").format(d);
-                                        Log.e("Dashboard", "Formatted Date Time: " + formattedDate);
 
                                         Geocoder geocoder = new Geocoder(Dashboard.this);
                                         List<Address> addresses = null;
@@ -239,6 +234,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                                 strAddress = strAddress + "" + address.getAddressLine(i);
                                             }
                                             Log.e("Dashboard", "Address: " + strAddress);
+
                                             LastLocation lastLocation = new LastLocation();
                                             lastLocation.setAddress(strAddress);
                                             lastLocation.setDatetime(formattedDate);
@@ -249,11 +245,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                         }
                                     } catch (Exception e) {
                                         Log.e("Dashboard", "Exception: " + e.getMessage());
-
                                     }
-
-                                } else {
-                                    Log.e("Dashboard", "Location is null");
                                 }
                             }
                         }
@@ -261,7 +253,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later. " + e.getMessage());
+                            helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                         }
                     });
         } catch (Exception e) {
