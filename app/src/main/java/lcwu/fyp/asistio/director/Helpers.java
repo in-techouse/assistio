@@ -112,12 +112,6 @@ public class Helpers {
                 } else {
                     reference.setValue(locations);
                 }
-//                Collections.reverse(locations);
-//                List<LastLocation> updatedList = locations;
-//
-//                if (locations.size() > 5) {
-//                    updatedList = locations.subList(0, 4);
-//                }
             }
 
             @Override
