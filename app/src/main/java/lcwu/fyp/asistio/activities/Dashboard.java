@@ -222,7 +222,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                 if (location != null) {
                                     try {
                                         Date d = new Date();
-                                        String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss a").format(d);
+                                        String formattedDate = new SimpleDateFormat("EEE, d MMM yyyy hh:mm:ss a").format(d);
 
                                         Geocoder geocoder = new Geocoder(Dashboard.this);
                                         List<Address> addresses = null;
@@ -245,6 +245,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                         }
                                     } catch (Exception e) {
                                         Log.e("Dashboard", "Exception: " + e.getMessage());
+                                        helpers.showError(Dashboard.this, "ERROR!", "Something went wrong.\nPlease try again later.");
                                     }
                                 }
                             }

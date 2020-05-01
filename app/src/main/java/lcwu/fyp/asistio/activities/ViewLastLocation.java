@@ -83,7 +83,7 @@ public class ViewLastLocation extends AppCompatActivity {
                         LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
                         Marker marker = googleMap.addMarker(new MarkerOptions().position(latlng).title(location.getDatetime() + "\n" + location.getAddress())
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 11));
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16));
                         marker.showInfoWindow();
                     }
                 }
