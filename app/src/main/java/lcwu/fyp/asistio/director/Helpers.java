@@ -117,6 +117,7 @@ public class Helpers {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("SaveLastLocation", "Database Error: " + databaseError.getMessage());
+
                 if (listener != null)
                     reference.removeEventListener(listener);
             }
