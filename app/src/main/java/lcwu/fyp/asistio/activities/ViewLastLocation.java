@@ -124,7 +124,7 @@ public class ViewLastLocation extends AppCompatActivity implements View.OnClickL
                     if (location != null) {
                         locations.add(location);
                         LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-                        Marker marker = googleMap.addMarker(new MarkerOptions().position(latlng).title(location.getDatetime() + "\n" + location.getAddress())
+                        Marker marker = googleMap.addMarker(new MarkerOptions().position(latlng).title(location.getDatetime())
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 16));
                         marker.showInfoWindow();
