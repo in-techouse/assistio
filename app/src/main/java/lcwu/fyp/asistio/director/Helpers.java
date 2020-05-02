@@ -102,9 +102,9 @@ public class Helpers {
                         locations.add(location);
                 }
                 locations.add(lastLocation);
-                if (locations.size() > 5) {
+                if (locations.size() > 15) {
                     List<LastLocation> updatedList = new ArrayList<>();
-                    for (int i = locations.size() - 1; i >= locations.size() - 5; i--) {
+                    for (int i = locations.size() - 1; i >= locations.size() - 15; i--) {
                         updatedList.add(locations.get(i));
                     }
                     Collections.reverse(updatedList);

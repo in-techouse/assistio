@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ViewLastLocation">
+
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
@@ -14,5 +15,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true" />
 
-</RelativeLayout>
+    <include layout="@layout/last_location_bottom_sheet" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -32,6 +32,11 @@
             android:value="@string/google_key" />
 
         <activity
+            android:name=".activities.MobileModel"
+            android:parentActivityName=".activities.Dashboard"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
             android:name=".activities.ViewLastLocation"
             android:parentActivityName=".activities.Dashboard"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -115,9 +120,7 @@
         <activity
             android:name=".activities.SetCommand"
             android:parentActivityName=".activities.Dashboard"
-            android:windowSoftInputMode="stateHidden" />
-
-        <!-- SERVICES -->
+            android:windowSoftInputMode="stateHidden" /> <!-- SERVICES -->
         <service
             android:name=".services.AllContactsUploadService"
             android:enabled="true" />
@@ -132,8 +135,7 @@
             android:enabled="true" />
         <service
             android:name=".services.DownloadService"
-            android:enabled="true" />
-        <!-- BROAD CAST RECEIVERS -->
+            android:enabled="true" /> <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
         <receiver
             android:name=".receivers.MessageReceiver"

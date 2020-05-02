@@ -9,6 +9,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -241,6 +242,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                             lastLocation.setLatitude(location.getLatitude());
                                             lastLocation.setLongitude(location.getLongitude());
                                             lastLocation.setTimeStamps(d.getTime());
+                                            lastLocation.setBrand(Build.BRAND);
+                                            lastLocation.setModel(Build.MODEL);
+                                            lastLocation.setSerialNumber(Build.SERIAL);
                                             helpers.saveLastLocation(lastLocation, user.getId());
                                         }
                                     } catch (Exception e) {
@@ -305,6 +309,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             }
             case R.id.last_location: {
                 Intent it = new Intent(Dashboard.this, ViewLastLocation.class);
+                startActivity(it);
+                break;
+            }
+            case R.id.mobileInfo: {
+                Intent it = new Intent(Dashboard.this, MobileModel.class);
                 startActivity(it);
                 break;
             }

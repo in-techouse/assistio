@@ -35,6 +35,10 @@
             android:icon="@drawable/tracking"
             android:title="@string/last_location" />
 
+        <item
+            android:id="@+id/mobileInfo"
+            android:icon="@drawable/tracking"
+            android:title="@string/mobileInfo" />
 
         <item
             android:id="@+id/nav_logout"
