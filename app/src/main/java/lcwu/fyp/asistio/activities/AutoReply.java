@@ -2,6 +2,7 @@ package lcwu.fyp.asistio.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +11,14 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
+import lcwu.fyp.asistio.adapters.SelectedContactsAdapter;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.Contact;
@@ -31,6 +34,7 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
     private Session session;
     private ImageView select_contacts;
     private GridView contactsGrid;
+    private SelectedContactsAdapter adapter;
     private String strMessage, strReplyMessage;
     private List<Contact> contacts;
     private ProgressBar progressBar;
@@ -54,6 +58,8 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
         select_contacts.setOnClickListener(this);
 
         contacts = new ArrayList<>();
+        adapter = new SelectedContactsAdapter();
+        contactsGrid.setAdapter(adapter);
     }
 
     @Override
@@ -61,7 +67,7 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
         int id = v.getId();
         switch (id) {
             case R.id.save: {
-                if (helpers.isConnected(getApplicationContext())) {
+                if (!helpers.isConnected(getApplicationContext())) {
                     helpers.showError(AutoReply.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
@@ -106,6 +112,28 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
         }
 
         return flag;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 20 && resultCode == RESULT_OK) {
+            Log.e("Result", "Result OK");
+            if (data != null) {
+                Log.e("Result", "Data OK");
+                Bundle bundle = data.getExtras();
+                if (bundle != null) {
+                    Log.e("Result", "Bundle OK");
+                    contacts = (List<Contact>) bundle.getSerializable("contacts");
+                    if (contacts == null) {
+                        contacts = new ArrayList<>();
+                        Log.e("SmsSender", "Reinitialized");
+                    }
+                    adapter.setContacts(contacts);
+                    Log.e("SmsSender", "List OK with size: " + contacts.size());
+                }
+            }
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/mp_10"
+        android:layout_margin="@dimen/mp_5"
         android:gravity="top|start"
         android:hint="@string/enter_your_text_here"
         android:inputType="textMultiLine"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/message"
-        android:layout_margin="@dimen/mp_10"
+        android:layout_margin="@dimen/mp_5"
         android:gravity="top"
         android:hint="@string/enter_your_reply_here"
         android:inputType="textMultiLine"
@@ -38,8 +38,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/reply_message"
-        android:layout_margin="@dimen/mp_10"
-        android:padding="@dimen/mp_10">
+        android:layout_marginStart="@dimen/mp_5"
+        android:layout_marginTop="@dimen/mp_5"
+        android:layout_marginEnd="@dimen/mp_5"
+        android:paddingStart="@dimen/mp_10"
+        android:paddingEnd="@dimen/mp_10">
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,10 +84,11 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/save"
         android:layout_below="@id/selectContactsLayout"
-        android:layout_margin="@dimen/mp_8"
         android:gravity="center"
         android:horizontalSpacing="@dimen/mp_8"
         android:numColumns="auto_fit"
+        android:paddingStart="@dimen/mp_10"
+        android:paddingEnd="@dimen/mp_10"
         android:stretchMode="columnWidth"
         android:verticalSpacing="@dimen/mp_8" />
 

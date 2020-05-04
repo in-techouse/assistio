@@ -30,8 +30,6 @@ import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.model.Contact;
 
 public class SmsSchedular extends AppCompatActivity implements View.OnClickListener {
-
-    // private PasswordDialog dialog;
     private EditText message;
     private Button save;
     private ImageView select_contacts, select_date, select_time;
@@ -65,23 +63,6 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         adapter = new SelectedContactsAdapter();
         contactsGrid = findViewById(R.id.contactsGrid);
         contactsGrid.setAdapter(adapter);
-
-//            dialog = new PasswordDialog(this);
-
-
-//            dialog.setDialogResult(new PasswordDialog.DialogResult() {
-//                @Override
-//                public void finish(boolean result) {
-//                    Log.e("Password", "Result: " + result);
-//                    if(result){
-//                        registerSms();
-//                    }
-//                    else{
-//                        Helpers.showError(SmsScheduler.this, "SMS SCHEDULER", "Your SMS is not scheduled.\nYour password might be incorrect or You cancelled the operation.");
-//                    }
-//                }
-//            });
-
     }
 
     @Override
