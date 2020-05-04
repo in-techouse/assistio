@@ -55,4 +55,9 @@
     <string name="enter_your_key">Enter your Key</string>
     <string name="last_location">Last Location</string>
     <string name="mobileInfo">Mobile Detail</string>
+    <string name="enter_your_text_here">Enter your text here</string>
+    <string name="reply_message">Reply Message</string>
+    <string name="try_saying">Try Saying....</string>
+    <string name="enter_your_reply_here">Enter your reply here</string>
+
 </resources>

@@ -37,7 +37,7 @@
 
         <item
             android:id="@+id/mobileInfo"
-            android:icon="@drawable/tracking"
+            android:icon="@drawable/mobile"
             android:title="@string/mobileInfo" />
 
         <item
