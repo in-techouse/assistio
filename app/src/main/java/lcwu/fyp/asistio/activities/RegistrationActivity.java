@@ -145,6 +145,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         boolean flag = true;
         if (strFName.length() < 3) {
             edtFName.setError("Enter a valid name");
+            flag = false;
         } else {
             edtFName.setError(null);
         }
@@ -183,7 +184,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             flag = false;
         }
         return flag;
-
     }
 
     @Override

@@ -26,6 +26,7 @@ import java.util.List;
 
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.SelectedContactsAdapter;
+import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.model.Contact;
 
 public class SmsSchedular extends AppCompatActivity implements View.OnClickListener {
@@ -40,11 +41,14 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
     private TextView date, time;
     private int year, month, day, hour, minute;
     private String str_message;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_schedular);
+
+        helpers = new Helpers();
 
         message = findViewById(R.id.message);
         save = findViewById(R.id.save);
@@ -109,6 +113,11 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.save: {
+                if (helpers.isConnected(getApplicationContext())) {
+                    helpers.showError(SmsSchedular.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
+                    return;
+                }
+
                 boolean flag = true;
                 str_message = message.getText().toString();
                 String str_date = date.getText().toString();

@@ -11,36 +11,61 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/mp_10"
-        android:gravity="top"
+        android:gravity="top|start"
         android:hint="@string/enter_your_text_here"
         android:inputType="textMultiLine"
         android:maxLines="5"
         android:minLines="2"
         android:padding="@dimen/mp_10"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 
-    <RelativeLayout
-        android:id="@+id/reply-txt"
+    <EditText
+        android:id="@+id/reply_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/message">
+        android:layout_below="@id/message"
+        android:layout_margin="@dimen/mp_10"
+        android:gravity="top"
+        android:hint="@string/enter_your_reply_here"
+        android:inputType="textMultiLine"
+        android:maxLines="5"
+        android:minLines="2"
+        android:padding="@dimen/mp_10"
+        android:scrollbars="vertical" />
 
-        <EditText
-            android:id="@+id/reply_message"
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/selectContactsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reply_message"
+        android:layout_margin="@dimen/mp_10"
+        android:padding="@dimen/mp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/mp_10"
-            android:gravity="top"
-            android:hint="@string/enter_your_reply_here"
-            android:inputType="textMultiLine"
-            android:maxLines="5"
-            android:minLines="2"
-            android:padding="@dimen/mp_10"
-            android:scrollbars="vertical"/>
+            android:layout_centerVertical="true"
+            android:text="Select Contacts" />
+
+        <ImageView
+            android:id="@+id/select_contacts"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/mp_8"
+            android:src="@drawable/phonebook" />
     </RelativeLayout>
 
-        <Button
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+    <Button
         android:id="@+id/save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,4 +75,17 @@
         android:textColor="@color/white"
         android:textStyle="bold" />
 
-    </RelativeLayout>
+    <GridView
+        android:id="@+id/contactsGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/save"
+        android:layout_below="@id/selectContactsLayout"
+        android:layout_margin="@dimen/mp_8"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/mp_8"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/mp_8" />
+
+</RelativeLayout>

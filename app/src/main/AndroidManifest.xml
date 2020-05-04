@@ -48,7 +48,8 @@
             android:name="com.mzelzoghbi.zgallery.activities.ZGridActivity"
             android:label="@string/app_name"
             android:parentActivityName=".activities.Dashboard"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.Dashboard" />
@@ -71,9 +72,11 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.ShowContacts"
-            android:parentActivityName=".activities.Dashboard" />
+            android:parentActivityName=".activities.Dashboard"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.ReadContacts"
+            android:parentActivityName=".activities.SmsSchedular"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.UserProfileActivity"
@@ -109,10 +112,12 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SpeechNotes"
-            android:parentActivityName=".activities.Dashboard" />
+            android:parentActivityName=".activities.Dashboard"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.AutoReply"
-            android:parentActivityName=".activities.Dashboard" />
+            android:parentActivityName=".activities.Dashboard"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SmsSchedular"
             android:parentActivityName=".activities.Dashboard"
@@ -120,7 +125,8 @@
         <activity
             android:name=".activities.SetCommand"
             android:parentActivityName=".activities.Dashboard"
-            android:windowSoftInputMode="stateHidden" /> <!-- SERVICES -->
+            android:windowSoftInputMode="stateHidden" />
+        <!-- SERVICES -->
         <service
             android:name=".services.AllContactsUploadService"
             android:enabled="true" />
@@ -135,7 +141,8 @@
             android:enabled="true" />
         <service
             android:name=".services.DownloadService"
-            android:enabled="true" /> <!-- BROAD CAST RECEIVERS -->
+            android:enabled="true" />
+        <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
         <receiver
             android:name=".receivers.MessageReceiver"
