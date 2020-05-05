@@ -83,14 +83,14 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
                     // Save to database
                     progressBar.setVisibility(View.VISIBLE);
                     save.setVisibility(View.GONE);
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("AutoSmsReply");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("AutoReply");
                     String autoReplyId = reference.child(user.getId()).push().getKey(); // Will return a unique id.
                     AutoSmsReply autoReply = new AutoSmsReply();
                     autoReply.setId(autoReplyId);
                     autoReply.setMessage(strMessage);
                     autoReply.setReplyMessage(strReplyMessage);
                     autoReply.setContactList(contacts);
-                    reference.child(autoReplyId).setValue(autoReply)
+                    reference.child(user.getId()).child(autoReplyId).setValue(autoReply)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
