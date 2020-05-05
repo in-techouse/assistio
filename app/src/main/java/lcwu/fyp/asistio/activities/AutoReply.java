@@ -11,8 +11,14 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +27,7 @@ import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.SelectedContactsAdapter;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
+import lcwu.fyp.asistio.model.AutoSmsReply;
 import lcwu.fyp.asistio.model.Contact;
 import lcwu.fyp.asistio.model.User;
 
@@ -76,6 +83,31 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
                     // Save to database
                     progressBar.setVisibility(View.VISIBLE);
                     save.setVisibility(View.GONE);
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("AutoSmsReply");
+                    String autoReplyId = reference.child(user.getId()).push().getKey(); // Will return a unique id.
+                    AutoSmsReply autoReply = new AutoSmsReply();
+                    autoReply.setId(autoReplyId);
+                    autoReply.setMessage(strMessage);
+                    autoReply.setReplyMessage(strReplyMessage);
+                    autoReply.setContactList(contacts);
+                    reference.child(autoReplyId).setValue(autoReply)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressBar.setVisibility(View.GONE);
+                                    save.setVisibility(View.VISIBLE);
+                                    helpers.showSuccess(AutoReply.this, "", "Auto reply preferences have been saved successfully.");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    progressBar.setVisibility(View.GONE);
+                                    save.setVisibility(View.VISIBLE);
+                                    helpers.showError(AutoReply.this, "ERROR", "Something went wrong.\nPlease try again later.");
+
+                                }
+                            });
                 }
                 break;
             }
@@ -89,7 +121,7 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
 
     private boolean isValid() {
         boolean flag = true;
-
+        String error = "";
         strMessage = message.getText().toString();
         strReplyMessage = reply_message.getText().toString();
 
@@ -108,8 +140,11 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
         }
 
         if (contacts.size() < 1) {
+            error = "Please select some contacts first.";
+            helpers.showError(AutoReply.this, "ERROR!", error);
             flag = false;
         }
+
 
         return flag;
     }

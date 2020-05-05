@@ -72,11 +72,13 @@ public class Helpers {
                 .OnPositiveClicked(new FancyGifDialogListener() {
                     @Override
                     public void OnClick() {
+                        a.finish();
                     }
                 })
                 .OnNegativeClicked(new FancyGifDialogListener() {
                     @Override
                     public void OnClick() {
+                        a.finish();
                     }
                 })
                 .build();

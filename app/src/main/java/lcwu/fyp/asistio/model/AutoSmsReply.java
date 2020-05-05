@@ -3,16 +3,17 @@ package lcwu.fyp.asistio.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class SmartReply implements Serializable {
-    private String id,message;
-    private List<Contact>contactList;
+public class AutoSmsReply implements Serializable {
+    private String id, message, replyMessage;
+    private List<Contact> contactList;
 
-    public SmartReply() {
+    public AutoSmsReply() {
     }
 
-    public SmartReply(String id, String message, List<Contact> contactList) {
+    public AutoSmsReply(String id, String message, String replyMessage, List<Contact> contactList) {
         this.id = id;
         this.message = message;
+        this.replyMessage = replyMessage;
         this.contactList = contactList;
     }
 
@@ -30,6 +31,14 @@ public class SmartReply implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getReplyMessage() {
+        return replyMessage;
+    }
+
+    public void setReplyMessage(String replyMessage) {
+        this.replyMessage = replyMessage;
     }
 
     public List<Contact> getContactList() {
