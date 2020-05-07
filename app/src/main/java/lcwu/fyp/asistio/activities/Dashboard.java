@@ -65,6 +65,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             Manifest.permission.CAMERA,
             Manifest.permission.READ_SMS,
             Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.RECEIVE_MMS,
             Manifest.permission.SEND_SMS,
             Manifest.permission.READ_CONTACTS,
             Manifest.permission.WRITE_CONTACTS

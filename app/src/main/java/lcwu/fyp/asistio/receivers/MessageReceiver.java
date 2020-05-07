@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -72,6 +74,7 @@ public class MessageReceiver extends BroadcastReceiver {
                     // Build the message to show.
                     from = msgs[i].getOriginatingAddress();
                     strMessage = msgs[i].getMessageBody();
+                    Toast.makeText(context, "Message Received: " + strMessage + "\nFrom: " + from, Toast.LENGTH_LONG).show();
 
                     // Log and display the SMS message.
                     Log.e("Message", "Message: " + strMessage);
@@ -163,7 +166,6 @@ public class MessageReceiver extends BroadcastReceiver {
             List<Contact> contacts = autoSmsReply.getContactList();
 
             for (Contact c : contacts) {
-
                 if (number.equals(c.getNumber()) || number.contains(c.getNumber())) {
                     smsSender = c.getNumber();
                     break;
@@ -174,6 +176,14 @@ public class MessageReceiver extends BroadcastReceiver {
         if (!smsSender.equals("") && message.equals(receivedMessage)) {
             // We found the number, message, reply text
             // Send reply to number
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(smsSender, null, replyMessage, null, null);
+                Toast.makeText(c, "Message Sent Successfully", Toast.LENGTH_LONG).show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Toast.makeText(c, "Exception Occur: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
 
     }
