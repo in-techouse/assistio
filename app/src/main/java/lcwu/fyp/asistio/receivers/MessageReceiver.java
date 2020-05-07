@@ -72,7 +72,6 @@ public class MessageReceiver extends BroadcastReceiver {
                     // Build the message to show.
                     from = msgs[i].getOriginatingAddress();
                     strMessage = msgs[i].getMessageBody();
-                    Toast.makeText(context, "Message Received: " + strMessage + "\nFrom: " + from, Toast.LENGTH_LONG).show();
 
                     // Log and display the SMS message.
                     Log.e("Message", "Message: " + strMessage);
@@ -164,7 +163,9 @@ public class MessageReceiver extends BroadcastReceiver {
             List<Contact> contacts = autoSmsReply.getContactList();
 
             for (Contact c : contacts) {
-                if (number.equals(c.getNumber()) || number.contains(c.getNumber())) {
+                String n = c.getNumber().substring(1);
+                Log.e("Message", "Contact SubString is: " + n);
+                if (number.equals(n) || number.contains(n)) {
                     smsSender = c.getNumber();
                     break;
                 }
