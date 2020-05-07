@@ -163,7 +163,8 @@ public class MessageReceiver extends BroadcastReceiver {
             List<Contact> contacts = autoSmsReply.getContactList();
 
             for (Contact c : contacts) {
-                String n = c.getNumber().substring(1);
+                String n = c.getNumber().replace(" ", "");
+                n = n.substring(1);
                 Log.e("Message", "Contact SubString is: " + n);
                 if (number.equals(n) || number.contains(n)) {
                     smsSender = c.getNumber();
