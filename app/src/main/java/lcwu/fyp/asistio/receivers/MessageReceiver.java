@@ -37,8 +37,6 @@ public class MessageReceiver extends BroadcastReceiver {
     public static final String pdu_type = "pdus";
     public static final String f = "format";
     private Context c;
-    private String number, message;
-    private Session session;
     private User user;
     private ValueEventListener listener;
 
@@ -47,7 +45,7 @@ public class MessageReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.e("Message", "Message Received");
         c = context;
-        session = new Session(c);
+        Session session = new Session(c);
         user = session.getUser();
         Bundle bundle = intent.getExtras();
 
@@ -79,8 +77,8 @@ public class MessageReceiver extends BroadcastReceiver {
                     // Log and display the SMS message.
                     Log.e("Message", "Message: " + strMessage);
                     Log.e("Message", "From: " + from);
-                    number = from;
-                    message = strMessage;
+                    String number = from;
+                    String message = strMessage;
                     checkMessage(strMessage, from);
                 }
             } else {
@@ -173,8 +171,8 @@ public class MessageReceiver extends BroadcastReceiver {
             }
         }
 
-        if (!smsSender.equals("") && message.equals(receivedMessage)) {
-            // We found the number, message, reply text
+        if (!smsSender.equals("") && message.toLowerCase().equals(receivedMessage.toLowerCase())) {
+            // We found the number, and message, reply text
             // Send reply to number
             try {
                 SmsManager smsManager = SmsManager.getDefault();
@@ -184,7 +182,8 @@ public class MessageReceiver extends BroadcastReceiver {
                 ex.printStackTrace();
                 Toast.makeText(c, "Exception Occur: " + ex.getMessage(), Toast.LENGTH_LONG).show();
             }
+        } else {
+            Toast.makeText(c, "Contact Not matched, Number is: " + number, Toast.LENGTH_LONG).show();
         }
-
     }
 }
