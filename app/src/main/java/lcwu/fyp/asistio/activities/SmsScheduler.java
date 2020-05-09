@@ -1,10 +1,14 @@
 package lcwu.fyp.asistio.activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,18 +32,17 @@ import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.SelectedContactsAdapter;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.model.Contact;
+import lcwu.fyp.asistio.model.MesssageScheduler;
+import lcwu.fyp.asistio.receivers.SmsSenderReceiver;
 
-public class SmsSchedular extends AppCompatActivity implements View.OnClickListener {
+public class SmsScheduler extends AppCompatActivity implements View.OnClickListener {
     private EditText message;
-    private Button save;
-    private ImageView select_contacts, select_date, select_time;
     private List<Contact> contacts;
-    private GridView contactsGrid;
     private SelectedContactsAdapter adapter;
     private TextView date, time;
     private int year, month, day, hour, minute;
-    private String str_message;
     private Helpers helpers;
+    private String str_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,10 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         helpers = new Helpers();
 
         message = findViewById(R.id.message);
-        save = findViewById(R.id.save);
-        select_contacts = findViewById(R.id.select_contacts);
-        select_date = findViewById(R.id.select_date);
-        select_time = findViewById(R.id.select_time);
+        Button save = findViewById(R.id.save);
+        ImageView select_contacts = findViewById(R.id.select_contacts);
+        ImageView select_date = findViewById(R.id.select_date);
+        ImageView select_time = findViewById(R.id.select_time);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
         save.setOnClickListener(this);
@@ -61,7 +64,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
         select_date.setOnClickListener(this);
         contacts = new ArrayList<>();
         adapter = new SelectedContactsAdapter();
-        contactsGrid = findViewById(R.id.contactsGrid);
+        GridView contactsGrid = findViewById(R.id.contactsGrid);
         contactsGrid.setAdapter(adapter);
     }
 
@@ -78,10 +81,10 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                     contacts = (List<Contact>) bundle.getSerializable("contacts");
                     if (contacts == null) {
                         contacts = new ArrayList<>();
-                        Log.e("SmsSender", "Reinitialized");
+                        Log.e("Scheduler", "Reinitialized");
                     }
                     adapter.setContacts(contacts);
-                    Log.e("SmsSender", "List OK with size: " + contacts.size());
+                    Log.e("Scheduler", "List OK with size: " + contacts.size());
                 }
             }
         }
@@ -94,8 +97,8 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.save: {
-                if (helpers.isConnected(getApplicationContext())) {
-                    helpers.showError(SmsSchedular.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
+                if (!helpers.isConnected(getApplicationContext())) {
+                    helpers.showError(SmsScheduler.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
 
@@ -139,19 +142,17 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                     flag = false;
                     error = error + "Select a valid date and time first.\nYou can't select a time which is passed";
                 }
-//
-//                if(flag){
-//                    dialog.show();
-//                }
-//                else if(error.length() > 1){
-//                    Helpers.showError(SmsScheduler.this, "SMS Scheduling Error", error);
-//                }
+                if (flag) {
+                    registerSms();
+                } else if (error.length() > 1) {
+                    helpers.showError(SmsScheduler.this, "SMS Scheduling Error", error);
+                }
                 break;
             }
             case R.id.select_date: {
                 Calendar newCalendar = Calendar.getInstance();
 
-                DatePickerDialog startTime = new DatePickerDialog(SmsSchedular.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog startTime = new DatePickerDialog(SmsScheduler.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int y, int monthOfYear, int dayOfMonth) {
                         try {
                             year = y;
@@ -175,7 +176,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                 Calendar mcurrentTime = Calendar.getInstance();
                 int h = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int m = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker = new TimePickerDialog(SmsSchedular.this, new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog mTimePicker = new TimePickerDialog(SmsScheduler.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         hour = selectedHour;
@@ -188,7 +189,7 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.select_contacts: {
-                Intent intent = new Intent(SmsSchedular.this, ReadContacts.class);
+                Intent intent = new Intent(SmsScheduler.this, ReadContacts.class);
                 startActivityForResult(intent, 20);
                 break;
             }
@@ -197,13 +198,15 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
 
     private void registerSms() {
         try {
-            String message = "You scheduled a message for, ";
             ArrayList<String> list = new ArrayList<>();
             for (Contact c : contacts) {
                 list.add(c.getName() + "," + c.getNumber());
                 Log.e("List", "List Size: " + list.size());
-                message = message + c.getName() + ", ";
             }
+
+            MesssageScheduler messsageScheduler = new MesssageScheduler();
+            messsageScheduler.setMessage(str_message);
+            messsageScheduler.setContactList(contacts);
 
             Calendar calendar = Calendar.getInstance();
 
@@ -216,34 +219,35 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
 
             String str_date_time = new SimpleDateFormat("EEEE, dd, MMM yyyy HH:mm").format(calendar.getTime());
 
-//            Intent intent = new Intent(SmsScheduler.this, SmsSenderReceiver.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("message", str_message);
-//            bundle.putStringArrayList("contacts", list);
-//            intent.putExtras(bundle);
-//            String number = (year+month)+""+(day+hour)+minute+"";
-//            int num = Integer.parseInt(number);
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(SmsScheduler.this, num, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-//
-//            message = message + "at " + str_date_time + ".\nThe message is: " + str_message;
-//
-//            saveToDatabase(message);
+            messsageScheduler.setTime(str_date_time);
+
+            Intent intent = new Intent(SmsScheduler.this, SmsSenderReceiver.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("message", str_message);
+            bundle.putStringArrayList("contacts", list);
+            intent.putExtras(bundle);
+            String number = (year + month) + "" + (day + hour) + minute + "";
+            int num = Integer.parseInt(number);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(SmsScheduler.this, num, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Log.e("Scheduler", "Message: " + str_message);
+            Log.e("Scheduler", "Date & Time: " + str_date_time);
+            Log.e("Scheduler", "Contacts: " + contacts.size());
+            if (alarmManager != null) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                saveToDatabase(messsageScheduler);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("SmsSender", "Time Exception: " + e.getMessage());
+            helpers.showError(SmsScheduler.this, "ERROR!", "Something went wrong.\nPlease try again later");
+            Log.e("Scheduler", "Time Exception: " + e.getMessage());
         }
     }
 
-//    private void saveToDatabase(String text){
-//        Helpers.sendNotification(getApplicationContext(), "SMS SCHEDULED SUCCESSFULLY", text);
-//        HistoryBO history = new HistoryBO();
-//        history.setMessage(text);
-//        history.setType(2);
-//        long id = Helpers.addToDatabase(getApplicationContext(), history);
-//        Helpers.showSuccess(SmsScheduler.this, "SMS SCHEDULED", "Your SMS has been scheduled successfully.");
-//    }
+    private void saveToDatabase(MesssageScheduler scheduler) {
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -253,11 +257,23 @@ public class SmsSchedular extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_history: {
+                Log.e("History", "History Clicked");
+                Intent it = new Intent(SmsScheduler.this, SmsSchedulerHistory.class);
+                startActivity(it);
+                break;
+            }
             case android.R.id.home: {
                 finish();
                 break;
             }
         }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.history, menu);
         return true;
     }
 }

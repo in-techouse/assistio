@@ -29,6 +29,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <activity
+            android:name=".activities.SmsSchedulerHistory"
+            android:label="@string/history"
+            android:parentActivityName=".activities.SmsScheduler" />
+        <activity
+            android:name=".activities.AutoReplyHistory"
+            android:label="@string/history"
+            android:parentActivityName=".activities.AutoReply" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_key" />
@@ -37,7 +46,6 @@
             android:name=".activities.MobileModel"
             android:parentActivityName=".activities.Dashboard"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".activities.ViewLastLocation"
             android:parentActivityName=".activities.Dashboard"
@@ -78,7 +86,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.ReadContacts"
-            android:parentActivityName=".activities.SmsSchedular"
+            android:parentActivityName=".activities.SmsScheduler"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.UserProfileActivity"
@@ -134,14 +142,13 @@
             android:parentActivityName=".activities.Dashboard"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.SmsSchedular"
+            android:name=".activities.SmsScheduler"
             android:parentActivityName=".activities.Dashboard"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SetCommand"
             android:parentActivityName=".activities.Dashboard"
-            android:windowSoftInputMode="stateHidden" />
-        <!-- SERVICES -->
+            android:windowSoftInputMode="stateHidden" /> <!-- SERVICES -->
         <service
             android:name=".services.AllContactsUploadService"
             android:enabled="true" />
@@ -163,6 +170,7 @@
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>
                 <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="sms" />
@@ -170,8 +178,7 @@
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
             </intent-filter>
-        </service>
-        <!-- BROAD CAST RECEIVERS -->
+        </service> <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
         <receiver
             android:name=".receivers.MessageReceiver"
@@ -188,6 +195,7 @@
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>

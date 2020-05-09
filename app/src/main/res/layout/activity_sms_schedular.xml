@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activities.SmsSchedular">
+    tools:context=".activities.SmsScheduler">
 
     <EditText
         android:id="@+id/message"
@@ -29,7 +29,8 @@
         <RelativeLayout
             android:id="@+id/date_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/mp_5">
 
             <TextView
                 android:id="@+id/date"
@@ -37,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="@dimen/mp_8" />
+                android:layout_marginStart="@dimen/mp_8"
+                android:layout_marginEnd="@dimen/mp_8" />
 
             <ImageView
                 android:id="@+id/select_date"
@@ -45,7 +47,8 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="@dimen/mp_8"
+                android:layout_marginStart="@dimen/mp_8"
+                android:layout_marginEnd="@dimen/mp_8"
                 android:src="@drawable/calendar" />
         </RelativeLayout>
 
@@ -53,7 +56,8 @@
             android:id="@+id/time_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/date_main">
+            android:layout_below="@id/date_main"
+            android:layout_marginTop="@dimen/mp_5">
 
             <TextView
                 android:id="@+id/time"
@@ -61,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="@dimen/mp_8" />
+                android:layout_marginStart="@dimen/mp_8"
+                android:layout_marginEnd="@dimen/mp_8" />
 
             <ImageView
                 android:id="@+id/select_time"
@@ -69,19 +74,37 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="@dimen/mp_8"
+                android:layout_marginStart="@dimen/mp_8"
+                android:layout_marginEnd="@dimen/mp_8"
                 android:src="@drawable/clock" />
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/select_contacts"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <RelativeLayout
+            android:id="@+id/selectContactsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/time_main"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/mp_8"
-            android:src="@drawable/phonebook" />
+            android:layout_marginTop="@dimen/mp_5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/mp_8"
+                android:layout_marginEnd="@dimen/mp_8"
+                android:text="Select Contacts" />
+
+            <ImageView
+                android:id="@+id/select_contacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/mp_8"
+                android:layout_marginEnd="@dimen/mp_8"
+                android:src="@drawable/phonebook" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 

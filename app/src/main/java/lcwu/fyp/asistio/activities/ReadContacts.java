@@ -1,11 +1,14 @@
 package lcwu.fyp.asistio.activities;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +32,7 @@ import java.util.Set;
 
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.ContactAdapter;
+import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.model.Contact;
 
 public class ReadContacts extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +41,7 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
     private RecyclerView contacts;
     private ProgressBar progress;
     private ContactAdapter adapter;
-    private Button done;
+    private Helpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +51,14 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
         contacts = findViewById(R.id.contacts);
         progress = findViewById(R.id.progress);
         adapter = new ContactAdapter(getApplicationContext());
-        done = findViewById(R.id.done);
+        Button done = findViewById(R.id.done);
         done.setOnClickListener(this);
 
         contacts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         contacts.setAdapter(adapter);
         contactList = new ArrayList<>();
         filteredList = new ArrayList<>();
+        helpers = new Helpers();
 
         new FetchContacts().execute();
     }
@@ -64,7 +70,28 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e("ReadContacts", "onOptionsItemSelected");
         switch (item.getItemId()) {
+            case R.id.action_select_all: {
+                Log.e("ReadContacts", "Select All Clicked");
+                progress.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                final Runnable ru = new Runnable() {
+                    @Override
+                    public void run() {
+                        filteredList.clear();
+                        for (int i = 0; i < contactList.size(); i++) {
+                            filteredList.add(contactList.get(i));
+                            filteredList.get(i).setSelected(true);
+                        }
+                        progress.setVisibility(View.GONE);
+                        adapter.addContacts(filteredList);
+                    }
+                };
+                handler.postDelayed(ru, 100);
+
+                break;
+            }
             case android.R.id.home: {
                 finish();
                 break;
@@ -73,49 +100,49 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-////        getMenuInflater().inflate(R.menu.menu_sms_finder, menu);
-//
-//        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//
-//        SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
-//
-//        search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-//
-//
-//        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                Log.e("Query", "Query: " + query);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(final String newText) {
-//                Log.e("Query", "Query: " + newText);
-//                progress.setVisibility(View.VISIBLE);
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        filteredList.clear();
-//                        Log.e("Query", "Query Final: " + newText);
-//                        for (int i=0; i< contactList.size(); i++){
-//                            if(contactList.get(i).getName().toLowerCase().contains(newText.toLowerCase())){
-//                                filteredList.add(contactList.get(i));
-//                            }
-//                        }
-//                        progress.setVisibility(View.GONE);
-//                        adapter.addContacts(filteredList);
-//                    }
-//                }.run();
-//                return false;
-//            }
-//        });
+        getMenuInflater().inflate(R.menu.contact_menu, menu);
+
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e("Query", "Query: " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String newText) {
+                Log.e("Query", "Query: " + newText);
+                progress.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                final Runnable ru = new Runnable() {
+                    @Override
+                    public void run() {
+                        filteredList.clear();
+                        Log.e("Query", "Query Final: " + newText);
+                        for (int i = 0; i < contactList.size(); i++) {
+                            if (contactList.get(i).getName().toLowerCase().contains(newText.toLowerCase())) {
+                                filteredList.add(contactList.get(i));
+                            }
+                        }
+                        progress.setVisibility(View.GONE);
+                        adapter.addContacts(filteredList);
+                    }
+                };
+                handler.postDelayed(ru, 100);
+                return false;
+            }
+        });
         return true;
     }
 
-    //    @Override
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -137,7 +164,7 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
                     setResult(Activity.RESULT_OK, resultIntent);
                     finish();
                 } else {
-//                    Helpers.showError(ReadContacts.this, "Contact Error", "Select some contacts first.");
+                    helpers.showError(ReadContacts.this, "Contact Error", "Select some contacts first.");
                 }
 
                 break;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class MesssageScheduler implements Serializable {
-    private String id,message,time;
+    private String id, message, time;
     private List<Contact> contactList;
 
     public MesssageScheduler() {

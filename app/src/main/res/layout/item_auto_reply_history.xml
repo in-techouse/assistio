@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/mp_8"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/mp_10"
+    app:cardElevation="@dimen/mp_15">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mp_8"
+            android:layout_marginTop="@dimen/mp_3"
+            android:layout_marginEnd="@dimen/mp_8"
+            android:text="Received Message"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/receivedMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mp_8"
+            android:layout_marginTop="@dimen/mp_3"
+            android:layout_marginEnd="@dimen/mp_8" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/mp_3"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mp_8"
+            android:layout_marginTop="@dimen/mp_3"
+            android:layout_marginEnd="@dimen/mp_8"
+            android:text="Reply Message"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/replyMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mp_8"
+            android:layout_marginTop="@dimen/mp_3"
+            android:layout_marginEnd="@dimen/mp_8" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/mp_3"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mp_8"
+            android:layout_marginTop="@dimen/mp_3"
+            android:layout_marginEnd="@dimen/mp_8"
+            android:text="Contacts"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/contacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mp_8"
+            android:layout_marginTop="@dimen/mp_3"
+            android:layout_marginEnd="@dimen/mp_8" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/mp_3"
+            android:background="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/mp_10"
+            android:src="@drawable/ic_action_name" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

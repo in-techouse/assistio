@@ -293,7 +293,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             }
             case R.id.nav_smssch: {
-                Intent it = new Intent(Dashboard.this, SmsSchedular.class);
+                Intent it = new Intent(Dashboard.this, SmsScheduler.class);
                 startActivity(it);
                 break;
             }

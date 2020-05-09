@@ -3,6 +3,7 @@ package lcwu.fyp.asistio.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,9 +39,6 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
     private Button save;
     private Helpers helpers;
     private User user;
-    private Session session;
-    private ImageView select_contacts;
-    private GridView contactsGrid;
     private SelectedContactsAdapter adapter;
     private String strMessage, strReplyMessage;
     private List<Contact> contacts;
@@ -52,14 +50,14 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_auto_reply);
 
         helpers = new Helpers();
-        session = new Session(getApplicationContext());
+        Session session = new Session(getApplicationContext());
         user = session.getUser();
 
         message = findViewById(R.id.message);
         save = findViewById(R.id.save);
         reply_message = findViewById(R.id.reply_message);
-        select_contacts = findViewById(R.id.select_contacts);
-        contactsGrid = findViewById(R.id.contactsGrid);
+        ImageView select_contacts = findViewById(R.id.select_contacts);
+        GridView contactsGrid = findViewById(R.id.contactsGrid);
         progressBar = findViewById(R.id.progressBar);
         save.setOnClickListener(this);
         select_contacts.setOnClickListener(this);
@@ -179,11 +177,23 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_history: {
+                Log.e("History", "History Clicked");
+                Intent it = new Intent(AutoReply.this, AutoReplyHistory.class);
+                startActivity(it);
+                break;
+            }
             case android.R.id.home: {
                 finish();
                 break;
             }
         }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.history, menu);
         return true;
     }
 }
