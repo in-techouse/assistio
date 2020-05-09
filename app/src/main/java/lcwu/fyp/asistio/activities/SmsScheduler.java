@@ -267,7 +267,7 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("SmsScheduler");
         String schedulerId = reference.child(user.getId()).push().getKey(); // Will return a unique id.
         scheduler.setId(schedulerId);
-        reference.child(schedulerId).setValue(scheduler)
+        reference.child(user.getId()).child(scheduler.getId()).setValue(scheduler)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

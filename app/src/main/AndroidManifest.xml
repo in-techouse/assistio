@@ -182,6 +182,14 @@
         <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
         <receiver
+            android:name=".receivers.SmsSenderReceiver"
+            android:enabled="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="998">
+                <action android:name="lcwu.fyp.asistio.receivers.SmsSenderReceiver" />
+            </intent-filter>
+        </receiver>
+        <receiver
             android:name=".receivers.MessageReceiver"
             android:enabled="true"
             android:exported="true"
