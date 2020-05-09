@@ -37,7 +37,6 @@ public class SmsSchedulerHistory extends AppCompatActivity {
     private Helpers helpers;
     private List<MesssageScheduler> data;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +70,7 @@ public class SmsSchedulerHistory extends AppCompatActivity {
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                data.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     MesssageScheduler scheduler = d.getValue(MesssageScheduler.class);
                     if (scheduler != null)
@@ -102,6 +102,7 @@ public class SmsSchedulerHistory extends AppCompatActivity {
     public void deleteItem(String id) {
         loading.setVisibility(View.VISIBLE);
         historyList.setVisibility(View.GONE);
+        reference.child(user.getId()).child(id).removeValue();
     }
 
     @Override
