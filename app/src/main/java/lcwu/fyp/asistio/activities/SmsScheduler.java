@@ -181,7 +181,6 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
                         } catch (Exception e) {
                             Log.e("Date", "Date parsing exception: " + e.getMessage());
                         }
-
                     }
 
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
