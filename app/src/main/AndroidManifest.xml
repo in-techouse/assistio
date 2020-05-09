@@ -178,7 +178,8 @@
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
             </intent-filter>
-        </service> <!-- BROAD CAST RECEIVERS -->
+        </service>
+        <!-- BROAD CAST RECEIVERS -->
         <receiver android:name=".receivers.ContactReceiver" />
         <receiver
             android:name=".receivers.MessageReceiver"

@@ -16,11 +16,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,8 +38,10 @@ import java.util.List;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.adapters.SelectedContactsAdapter;
 import lcwu.fyp.asistio.director.Helpers;
+import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.Contact;
 import lcwu.fyp.asistio.model.MesssageScheduler;
+import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.receivers.SmsSenderReceiver;
 
 public class SmsScheduler extends AppCompatActivity implements View.OnClickListener {
@@ -43,6 +52,10 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
     private int year, month, day, hour, minute;
     private Helpers helpers;
     private String str_message;
+    private Button save;
+    private ProgressBar progress;
+    private Session session;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +63,16 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_sms_schedular);
 
         helpers = new Helpers();
+        session = new Session(getApplicationContext());
+        user = session.getUser();
 
         message = findViewById(R.id.message);
-        Button save = findViewById(R.id.save);
+        save = findViewById(R.id.save);
         ImageView select_contacts = findViewById(R.id.select_contacts);
         ImageView select_date = findViewById(R.id.select_date);
         ImageView select_time = findViewById(R.id.select_time);
         date = findViewById(R.id.date);
+        progress = findViewById(R.id.progress);
         time = findViewById(R.id.time);
         save.setOnClickListener(this);
         select_contacts.setOnClickListener(this);
@@ -246,7 +262,28 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveToDatabase(MesssageScheduler scheduler) {
-
+        progress.setVisibility(View.VISIBLE);
+        save.setVisibility(View.GONE);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("SmsScheduler");
+        String schedulerId = reference.child(user.getId()).push().getKey(); // Will return a unique id.
+        scheduler.setId(schedulerId);
+        reference.child(schedulerId).setValue(scheduler)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        progress.setVisibility(View.GONE);
+                        save.setVisibility(View.VISIBLE);
+                        helpers.showSuccess(SmsScheduler.this, "", "SMS Scheduler preferences have been saved successfully.");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progress.setVisibility(View.GONE);
+                        save.setVisibility(View.VISIBLE);
+                        helpers.showError(SmsScheduler.this, "ERROR", "Something went wrong.\nPlease try again later.");
+                    }
+                });
     }
 
     @Override
