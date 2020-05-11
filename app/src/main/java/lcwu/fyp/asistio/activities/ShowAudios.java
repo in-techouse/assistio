@@ -2,14 +2,12 @@ package lcwu.fyp.asistio.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
@@ -19,15 +17,11 @@ import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowAudios extends AppCompatActivity {
 
-    List<UserFile> userFiles = new ArrayList<>();
-    List<String> audios = new ArrayList<>();
-    List<UserFile> userAudios = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_audios);
-
 
         Intent it = getIntent();
         if (it == null) {
@@ -46,17 +40,8 @@ public class ShowAudios extends AppCompatActivity {
             finish();
             return;
         }
-        userFiles = userFile.getUserFiles();
-        Log.e("Audios", "received : " + userFiles.size());
-        for (UserFile file : userFiles) {
-            Log.e("Audios", "received : " + file.getName());
-            if (file.getType().equals("Audios")) {
-                audios.add(file.getDownload_url());
-                userAudios.add(file);
-                Log.e("Audios", "in Audios : " + audios);
-            }
-        }
-        Log.e("Audios", "in Audios : " + audios.size());
+
+        List<UserFile> userAudios = userFile.getUserFiles();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
@@ -65,7 +50,6 @@ public class ShowAudios extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ShowAudios.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-
     }
 
     @Override

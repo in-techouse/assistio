@@ -92,6 +92,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private ArrayList<String> imagesList = new ArrayList<>();
     private TextView tvContacts, tvDocuments, tvImages, tvVideos, tvAudio, tvNotes;
     private Intent mServiceIntent;
+    private boolean isLoaded = false;
 
 
     @Override
@@ -455,6 +456,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                 }
                             }
 
+                            isLoaded = true;
+
                             user.setImages(images.size());
                             user.setVideos(videos.size());
                             user.setAudios(audios.size());
@@ -482,6 +485,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     public void onClick(View v) {
         int id = v.getId();
 
+        if (!isLoaded)
+            return;
+
         switch (id) {
             case R.id.contactsBox: {
                 Intent in = new Intent(Dashboard.this, ShowContacts.class);
@@ -489,13 +495,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             }
             case R.id.documentsBox: {
-//                Intent in = new Intent(Dashboard.this, ShowDocuments.class);
-//                ListUserFile listUserFile = new ListUserFile();
-//                listUserFile.setUserFiles(userFiles);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("files", listUserFile);
-//                in.putExtras(bundle);
-//                startActivity(in);
+                Intent in = new Intent(Dashboard.this, ShowDocuments.class);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(documents);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
+                startActivity(in);
                 break;
             }
             case R.id.imagesBox: {
@@ -524,13 +530,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             }
             case R.id.audiosBox: {
-//                Intent in = new Intent(Dashboard.this, ShowAudios.class);
-//                ListUserFile listUserFile = new ListUserFile();
-//                listUserFile.setUserFiles(userFiles);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("files", listUserFile);
-//                in.putExtras(bundle);
-//                startActivity(in);
+                Intent in = new Intent(Dashboard.this, ShowAudios.class);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(audios);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
+                startActivity(in);
                 break;
             }
             case R.id.notesBox: {

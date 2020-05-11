@@ -44,8 +44,6 @@ public class ShowVideos extends AppCompatActivity {
         GridView gridView = findViewById(R.id.gridview);
         ShowVideosAdapter adapter = new ShowVideosAdapter(getApplicationContext(), userVideos);
         gridView.setAdapter(adapter);
-
-
     }
 
     @Override

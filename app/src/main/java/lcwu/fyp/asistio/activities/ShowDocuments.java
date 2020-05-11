@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
@@ -18,10 +17,6 @@ import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowDocuments extends AppCompatActivity {
-
-    List<UserFile> userFiles = new ArrayList<>();
-    List<UserFile> userDocuments = new ArrayList<>();
-    ArrayList<String> documents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +41,7 @@ public class ShowDocuments extends AppCompatActivity {
             finish();
             return;
         }
-        userFiles = userFile.getUserFiles();
-        for (UserFile file : userFiles) {
-            Log.e("intent", "received : " + file.getName());
-            if (file.getType().equals("Documents")) {
-                documents.add(file.getDownload_url());
-                userDocuments.add(file);
-            }
-        }
+        List<UserFile> userDocuments = userFile.getUserFiles();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerDocView);
 
@@ -61,7 +49,6 @@ public class ShowDocuments extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ShowDocuments.this);
         recyclerView.setLayoutManager(layoutManager);
-
     }
 
     @Override

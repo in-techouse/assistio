@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:layout_margin="7dp"
     android:background="@color/colorWhite"
-    app:cardCornerRadius="11dp"
     app:cardElevation="15dp">
 
     <RelativeLayout
@@ -17,7 +15,6 @@
             android:id="@+id/flag"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:padding="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/logo" />
 
