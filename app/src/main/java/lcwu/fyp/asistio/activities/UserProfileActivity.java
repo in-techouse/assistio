@@ -41,20 +41,17 @@ import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.User;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
-
     private final String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };
-
-
-    String strFstName, strLastName, strPhone, strEmail;
+    private String strFstName, strLastName, strPhone, strEmail;
     private TextView profileFirstName, profileLastName, profilePhone, profileEmail;
     private Session session;
     private Button btnUpdate;
     private User user;
-    Helpers helpers;
-    ProgressBar updateProgress;
+    private Helpers helpers;
+    private ProgressBar updateProgress;
     private DatabaseReference databaseReference;
     private ImageView imageView;
     private boolean isImage;
@@ -171,14 +168,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         File file = new File(selectedMediaUri.getPath());
         Log.e("file", "in file object value " + file.toString());
         Log.e("Profile", "Uri: " + selectedMediaUri.getPath() + " File: " + file.exists());
-//
-//        if(!file.exists()){
-//            Log.e("Uri" , "file not exists showing error");
-//            registrationProgress.setVisibility(View.GONE);
-//            editSubmitBtn.setVisibility(View.VISIBLE);
-//            helpers.showError(EditUserProfile.this, "ERROR!", "Something went wrong.\n Please try again later.");
-//            return;
-//        }
         Calendar calendar = Calendar.getInstance();
 
         storageReference.child(calendar.getTimeInMillis() + "").putFile(imagePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

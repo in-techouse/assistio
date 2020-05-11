@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
 
             case R.id.fogotPasword: {
-                Intent it = new Intent(LoginActivity.this, ForgotPasswordAcitivity.class);
+                Intent it = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(it);
                 break;
             }

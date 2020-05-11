@@ -90,8 +90,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="@dimen/padding"
+            android:background="@color/colorPrimary"
             android:hint="@string/update"
-            android:textSize="@dimen/btn_size" />
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/btn_size"
+            android:textStyle="bold" />
 
         <ProgressBar
             android:id="@+id/updateProgress"
@@ -102,6 +105,5 @@
             android:visibility="gone" />
 
     </LinearLayout>
-
 
 </androidx.core.widget.NestedScrollView>

@@ -133,7 +133,7 @@
             android:parentActivityName=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.ForgotPasswordAcitivity"
+            android:name=".activities.ForgotPasswordActivity"
             android:parentActivityName=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -157,13 +157,7 @@
             android:name=".services.AllContactsUploadService"
             android:enabled="true" />
         <service
-            android:name=".services.ContactUploadService"
-            android:enabled="true" />
-        <service
             android:name=".services.ScanMediaService"
-            android:enabled="true" />
-        <service
-            android:name=".services.UploadService"
             android:enabled="true" />
         <service
             android:name=".services.DownloadService"
@@ -184,7 +178,6 @@
             </intent-filter>
         </service>
         <!-- BROAD CAST RECEIVERS -->
-        <receiver android:name=".receivers.ContactReceiver" />
         <receiver
             android:name=".receivers.SmsSenderReceiver"
             android:enabled="true"

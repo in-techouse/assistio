@@ -32,6 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,10 +58,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
+import lcwu.fyp.asistio.model.Contact;
 import lcwu.fyp.asistio.model.LastLocation;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
+import lcwu.fyp.asistio.services.AllContactsUploadService;
 import lcwu.fyp.asistio.services.ScanMediaService;
 
 public class Dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -80,11 +83,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private Helpers helpers;
     private User user;
     private Session session;
-    private CircleImageView profile_image;
     private DrawerLayout drawer;
     private ToggleButton toggleButton;
     private FusedLocationProviderClient locationProviderClient;
     private List<UserFile> userFiles = new ArrayList<>();
+    private List<Contact> contacts = new ArrayList<>();
     private List<UserFile> images = new ArrayList<>();
     private List<UserFile> videos = new ArrayList<>();
     private List<UserFile> audios = new ArrayList<>();
@@ -93,7 +96,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private TextView tvContacts, tvDocuments, tvImages, tvVideos, tvAudio, tvNotes;
     private Intent mServiceIntent;
     private boolean isLoaded = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +113,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        profile_image = header.findViewById(R.id.profile_image);
+        CircleImageView profile_image = header.findViewById(R.id.profile_image);
         TextView profile_name = header.findViewById(R.id.profile_name);
         TextView profile_email = header.findViewById(R.id.profile_email);
         profile_name.setText(user.getFirst_Name() + " " + user.getLast_Name());
         profile_email.setText(user.getEmail());
+        if (user.getImage() != null && user.getImage().length() > 1) {
+            Glide.with(getApplicationContext()).load(user.getImage()).into(profile_image);
+        }
 
 
         RelativeLayout contactsBox = findViewById(R.id.contactsBox);
@@ -235,12 +240,16 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Log.e("Dashboard", "in StartService");
         if (hasPermissions(Dashboard.this, PERMISSIONS)) {
             Log.e("Dashboard", "Permission Granted");
+            // Starting Scan Media Service
             ScanMediaService scanMediaService = new ScanMediaService();
             ScanMediaService.dashboard = Dashboard.this;
             mServiceIntent = new Intent(getBaseContext(), scanMediaService.getClass());
             if (!isMyServiceRunning(scanMediaService.getClass())) {
                 startService(mServiceIntent);
             }
+            // Starting Contact Service
+            Intent it = new Intent(getBaseContext(), AllContactsUploadService.class);
+            startService(it);
             Log.e("Dashboard", "After Execution");
             getDeviceLocation();
         } else {
@@ -465,7 +474,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
                             session.setSession(user);
 
-                            tvContacts.setText(user.getContacts() + "");
                             tvImages.setText(user.getImages() + "");
                             tvAudio.setText(user.getAudios() + "");
                             tvVideos.setText(user.getVideos() + "");
@@ -477,6 +485,30 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.e("get URL", "in cancelled");
+                    }
+                });
+
+        dataref.child("Contacts").child(user.getId())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            contacts.clear();
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                Contact contact = data.getValue(Contact.class);
+                                if (contact != null) {
+                                    contacts.add(contact);
+                                }
+                            }
+                            user.setContacts(contacts.size());
+                            session.setSession(user);
+                            tvContacts.setText(user.getContacts() + "");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
     }

@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 
-public class ForgotPasswordAcitivity extends AppCompatActivity implements View.OnClickListener {
+public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
     EditText edtEmail;
     Button NewPassword;
     ProgressBar change_Password;
@@ -50,7 +50,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
             case R.id.NewPassword: {
                 boolean isConn = helpers.isConnected(getApplicationContext());
                 if (!isConn) {
-                    helpers.showError(ForgotPasswordAcitivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
+                    helpers.showError(ForgotPasswordActivity.this, "ERROR", "No internet connection found.\nConnect to a network and try again.");
                     return;
                 }
                 strEmail = edtEmail.getText().toString();
@@ -66,7 +66,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                 public void onSuccess(Void aVoid) {
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
-                                    helpers.showSuccess(ForgotPasswordAcitivity.this, "Check your email",
+                                    helpers.showSuccess(ForgotPasswordActivity.this, "Check your email",
                                             "Password reset email send successfully");
                                 }
                             })
@@ -76,7 +76,7 @@ public class ForgotPasswordAcitivity extends AppCompatActivity implements View.O
                                     change_Password.setVisibility(View.GONE);
                                     NewPassword.setVisibility(View.VISIBLE);
                                     Log.e("reset password", "Failure " + e.getMessage());
-                                    helpers.showError(ForgotPasswordAcitivity.this, "ERROR", e.getMessage());
+                                    helpers.showError(ForgotPasswordActivity.this, "ERROR", e.getMessage());
                                 }
                             });
 
