@@ -32,7 +32,6 @@ public class SmsSchedulerHistory extends AppCompatActivity {
     private SmsSchedulerHistoryAdapter adapter;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("SmsScheduler");
     private ValueEventListener listener;
-    private Session session;
     private User user;
     private Helpers helpers;
     private List<MesssageScheduler> data;
@@ -48,7 +47,7 @@ public class SmsSchedulerHistory extends AppCompatActivity {
         adapter = new SmsSchedulerHistoryAdapter(SmsSchedulerHistory.this);
         historyList.setLayoutManager(new LinearLayoutManager(SmsSchedulerHistory.this));
         historyList.setAdapter(adapter);
-        session = new Session(getApplicationContext());
+        Session session = new Session(getApplicationContext());
         user = session.getUser();
         helpers = new Helpers();
         data = new ArrayList<>();

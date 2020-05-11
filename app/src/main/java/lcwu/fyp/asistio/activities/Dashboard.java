@@ -1,9 +1,12 @@
 package lcwu.fyp.asistio.activities;
 
 import android.Manifest;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,14 +15,15 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.provider.Telephony;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +44,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mzelzoghbi.zgallery.ZGrid;
+import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
 
 import java.text.SimpleDateFormat;
@@ -52,6 +58,7 @@ import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
 import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.LastLocation;
+import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
 import lcwu.fyp.asistio.services.ScanMediaService;
@@ -78,8 +85,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private ToggleButton toggleButton;
     private FusedLocationProviderClient locationProviderClient;
     private List<UserFile> userFiles = new ArrayList<>();
-    ArrayList<String> imagesList = new ArrayList<>();
-    List<UserFile> userImages = new ArrayList<>();
+    private List<UserFile> images = new ArrayList<>();
+    private List<UserFile> videos = new ArrayList<>();
+    private List<UserFile> audios = new ArrayList<>();
+    private List<UserFile> documents = new ArrayList<>();
+    private ArrayList<String> imagesList = new ArrayList<>();
+    private TextView tvContacts, tvDocuments, tvImages, tvVideos, tvAudio, tvNotes;
+    private Intent mServiceIntent;
 
 
     @Override
@@ -113,12 +125,12 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         RelativeLayout notesBox = findViewById(R.id.notesBox);
 
         toggleButton = findViewById(R.id.toggleButton);
-        TextView contacts = findViewById(R.id.contacts);
-        TextView images = findViewById(R.id.images);
-        TextView audios = findViewById(R.id.audios);
-        TextView videos = findViewById(R.id.videos);
-        TextView documents = findViewById(R.id.documents);
-        TextView notes = findViewById(R.id.notes);
+        tvContacts = findViewById(R.id.contacts);
+        tvImages = findViewById(R.id.images);
+        tvAudio = findViewById(R.id.audios);
+        tvVideos = findViewById(R.id.videos);
+        tvDocuments = findViewById(R.id.documents);
+        tvNotes = findViewById(R.id.notes);
 
         contactsBox.setOnClickListener(this);
         documentsBox.setOnClickListener(this);
@@ -127,35 +139,86 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         audiosBox.setOnClickListener(this);
         notesBox.setOnClickListener(this);
 
-        contacts.setText(user.getContacts() + "");
-        images.setText(user.getImages() + "");
-        audios.setText(user.getAudios() + "");
-        videos.setText(user.getVideos() + "");
-        documents.setText(user.getDocuments() + "");
-        notes.setText(user.getNotes() + "");
+        tvContacts.setText(user.getContacts() + "");
+        tvImages.setText(user.getImages() + "");
+        tvAudio.setText(user.getAudios() + "");
+        tvVideos.setText(user.getVideos() + "");
+        tvDocuments.setText(user.getDocuments() + "");
+        tvNotes.setText(user.getNotes() + "");
         userFiles = new ArrayList<>();
         locationProviderClient = LocationServices.getFusedLocationProviderClient(Dashboard.this);
-        // Service calling
-//        boolean flag = session.getSync();
-//        startServices();
-//        if(flag){
-//            System.out.println("in if with flag" + flag);
-//            toggleButton.setToggleOn();
-        startServices();
-//        }
-//        else{
-//            System.out.println("in else with flag" +flag);
-//            toggleButton.setToggleOff();
-//        }
-//
-//        toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-//            @Override
-//            public void onToggle(boolean on) {
-//                session.setSync(on);
-//            }
-//        });
+
+        setDefaultApp();
+        serviceCalling();
+        toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                Log.e("Dashboard", "Syncing is: " + on);
+                session.setSync(on);
+                serviceCalling();
+            }
+        });
 
         loadFiles();
+    }
+
+    private void serviceCalling() {
+        // Service calling
+        boolean flag = session.getSync();
+        if (flag) {
+            Log.e("Dashboard", "Syncing is On");
+            toggleButton.setToggleOn();
+            startServices();
+        } else {
+            Log.e("Dashboard", "Syncing is Off");
+            toggleButton.setToggleOff();
+        }
+    }
+
+    public void setDefaultApp() {
+
+        List<IntentFilter> filters = new ArrayList<>();
+        List<ComponentName> activities = new ArrayList<>();
+        getPackageManager().getPreferredActivities(filters, activities, null);
+        Log.e("Dashboard", "Filers Size: " + filters.size());
+        Log.e("Dashboard", "Activities Size: " + activities.size());
+        boolean flag = false;
+        for (ComponentName component : activities) {
+            if (component.getPackageName().equals(getPackageName())) {
+                flag = true;
+                Log.e("Dashboard", "Activity, Package Name: " + component.getPackageName());
+                Log.e("Dashboard", "Activity, Class Name: " + component.getClassName());
+            }
+        }
+
+        if (flag) {
+            return;
+        }
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(Dashboard.this);
+        dialog.setMessage("To use ASISTIO, without any flaw, please set ASISTIO as DEFAULT MESSAGE APPLICATION.\nIf not you will not be able to use some major functionality.");
+        dialog.setPositiveButton("SET", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivityForResult(new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT).putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, getPackageName()), 23);
+            }
+        });
+        dialog.setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("Dashboard", "On Activity Result Called, Request Code: " + requestCode + " Result Code: " + resultCode);
+        if (requestCode == 23) {
+            setDefaultApp();
+        }
     }
 
     private boolean hasPermissions(Context c, String... permission) {
@@ -171,13 +234,35 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         Log.e("Dashboard", "in StartService");
         if (hasPermissions(Dashboard.this, PERMISSIONS)) {
             Log.e("Dashboard", "Permission Granted");
+            ScanMediaService scanMediaService = new ScanMediaService();
             ScanMediaService.dashboard = Dashboard.this;
-//            startService(new Intent(Dashboard.this, ScanMediaService.class));
+            mServiceIntent = new Intent(getBaseContext(), scanMediaService.getClass());
+            if (!isMyServiceRunning(scanMediaService.getClass())) {
+                startService(mServiceIntent);
+            }
             Log.e("Dashboard", "After Execution");
             getDeviceLocation();
         } else {
             ActivityCompat.requestPermissions(Dashboard.this, PERMISSIONS, 10);
         }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i("Service status", "Running");
+                return true;
+            }
+        }
+        Log.i("Service status", "Not running");
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(mServiceIntent);
+        super.onDestroy();
     }
 
     private void getDeviceLocation() {
@@ -339,19 +424,50 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.e("get URL", "dataSnapshot is " + dataSnapshot);
                         if (dataSnapshot.exists()) {
-                            Log.e("get URL", "inside if");
+                            userFiles.clear();
+                            images.clear();
+                            videos.clear();
+                            audios.clear();
+                            documents.clear();
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 UserFile uFile = ds.getValue(UserFile.class);
-                                if (uFile != null)
+                                if (uFile != null) {
                                     userFiles.add(uFile);
+                                    switch (uFile.getType()) {
+                                        case "Image": {
+                                            images.add(uFile);
+                                            break;
+                                        }
+                                        case "Video": {
+                                            videos.add(uFile);
+                                            break;
+                                        }
+                                        case "Audio": {
+                                            audios.add(uFile);
+                                            break;
+                                        }
+                                        case "Document": {
+                                            documents.add(uFile);
+                                            break;
+                                        }
+                                    }
+                                }
                             }
-                            Log.e("get URL", "Recieved : " + userFiles.size());
-                            Log.e("get URL", "Recieved : " + userFiles);
-                            Toast.makeText(Dashboard.this, "You can move now", Toast.LENGTH_LONG).show();
 
+                            user.setImages(images.size());
+                            user.setVideos(videos.size());
+                            user.setAudios(audios.size());
+                            user.setDocuments(documents.size());
 
+                            session.setSession(user);
+
+                            tvContacts.setText(user.getContacts() + "");
+                            tvImages.setText(user.getImages() + "");
+                            tvAudio.setText(user.getAudios() + "");
+                            tvVideos.setText(user.getVideos() + "");
+                            tvDocuments.setText(user.getDocuments() + "");
+                            tvNotes.setText(user.getNotes() + "");
                         }
                     }
 
@@ -366,13 +482,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     public void onClick(View v) {
         int id = v.getId();
 
-//        switch (id) {
-//            case R.id.contactsBox: {
-//                Intent in = new Intent(Dashboard.this, ShowContacts.class);
-//                startActivity(in);
-//                break;
-//            }
-//            case R.id.documentsBox: {
+        switch (id) {
+            case R.id.contactsBox: {
+                Intent in = new Intent(Dashboard.this, ShowContacts.class);
+                startActivity(in);
+                break;
+            }
+            case R.id.documentsBox: {
 //                Intent in = new Intent(Dashboard.this, ShowDocuments.class);
 //                ListUserFile listUserFile = new ListUserFile();
 //                listUserFile.setUserFiles(userFiles);
@@ -380,38 +496,34 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //                bundle.putSerializable("files", listUserFile);
 //                in.putExtras(bundle);
 //                startActivity(in);
-//                break;
-//            }
-//            case R.id.imagesBox: {
-//                userImages.clear();
-//                imagesList.clear();
-//                for (UserFile file : userFiles) {
-//                    if (file.getType().equals("Image")) {
-//                        imagesList.add(file.getDownload_url());
-//                        userImages.add(file);
-//                    }
-//                }
-//
-//                ZGrid.with(Dashboard.this, imagesList)
-//                        .setToolbarColorResId(R.color.colorPrimaryDark)
-//                        .setTitle("Assistio")
-//                        .setToolbarTitleColor(ZColor.WHITE)
-//                        .setSpanCount(3)
-//                        .setGridImgPlaceHolder(R.color.colorPrimary)
-//                        .show();
-//                break;
-//            }
-//            case R.id.videosBox: {
-//                Intent in = new Intent(Dashboard.this, ShowVideos.class);
-//                ListUserFile listUserFile = new ListUserFile();
-//                listUserFile.setUserFiles(userFiles);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("files", listUserFile);
-//                in.putExtras(bundle);
-//                startActivity(in);
-//                break;
-//            }
-//            case R.id.audiosBox: {
+                break;
+            }
+            case R.id.imagesBox: {
+                imagesList.clear();
+                for (UserFile file : images) {
+                    imagesList.add(file.getDownload_url());
+                }
+
+                ZGrid.with(Dashboard.this, imagesList)
+                        .setToolbarColorResId(R.color.colorPrimaryDark)
+                        .setTitle("Asistio")
+                        .setToolbarTitleColor(ZColor.WHITE)
+                        .setSpanCount(3)
+                        .setGridImgPlaceHolder(R.color.colorPrimary)
+                        .show();
+                break;
+            }
+            case R.id.videosBox: {
+                Intent in = new Intent(Dashboard.this, ShowVideos.class);
+                ListUserFile listUserFile = new ListUserFile();
+                listUserFile.setUserFiles(videos);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("files", listUserFile);
+                in.putExtras(bundle);
+                startActivity(in);
+                break;
+            }
+            case R.id.audiosBox: {
 //                Intent in = new Intent(Dashboard.this, ShowAudios.class);
 //                ListUserFile listUserFile = new ListUserFile();
 //                listUserFile.setUserFiles(userFiles);
@@ -419,13 +531,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 //                bundle.putSerializable("files", listUserFile);
 //                in.putExtras(bundle);
 //                startActivity(in);
-//                break;
-//            }
-//            case R.id.notesBox: {
-//                Intent in = new Intent(Dashboard.this, ShowNotes.class);
-//                startActivity(in);
-//                break;
-//            }
-//        }
+                break;
+            }
+            case R.id.notesBox: {
+                Intent in = new Intent(Dashboard.this, ShowNotes.class);
+                startActivity(in);
+                break;
+            }
+        }
     }
 }

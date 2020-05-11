@@ -8,7 +8,6 @@ import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
@@ -17,11 +16,7 @@ import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowVideos extends AppCompatActivity {
-    List<UserFile> userFiles = new ArrayList<>();
-    List<UserFile> userVideos = new ArrayList<>();
-    ArrayList<String> videos = new ArrayList<>();
 
-    //Toro Work
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +39,7 @@ public class ShowVideos extends AppCompatActivity {
             finish();
             return;
         }
-        userFiles = userFile.getUserFiles();
-        Log.e("intent", "received : " + userFile);
-        for (UserFile file : userFiles) {
-            Log.e("intent", "received : " + file.getName());
-            if (file.getType().equals("Videos")) {
-                videos.add(file.getDownload_url());
-                userVideos.add(file);
-                Log.e("intent", "inVedios : " + videos);
-            }
-        }
+        List<UserFile> userVideos = userFile.getUserFiles();
 
         GridView gridView = findViewById(R.id.gridview);
         ShowVideosAdapter adapter = new ShowVideosAdapter(getApplicationContext(), userVideos);
@@ -64,9 +50,7 @@ public class ShowVideos extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         finish();
-
     }
 
     @Override

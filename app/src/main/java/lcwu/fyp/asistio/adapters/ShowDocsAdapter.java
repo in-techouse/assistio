@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import lcwu.fyp.asistio.R;
-import lcwu.fyp.asistio.activities.Dashboard;
 import lcwu.fyp.asistio.model.UserFile;
 import lcwu.fyp.asistio.services.DownloadService;
-import lcwu.fyp.asistio.services.ScanMediaService;
 
 public class ShowDocsAdapter extends RecyclerView.Adapter<ShowDocsAdapter.DocsViewHolder> {
 
