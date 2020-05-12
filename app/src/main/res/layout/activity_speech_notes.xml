@@ -23,8 +23,8 @@
         android:layout_marginBottom="@dimen/mp_15"
         android:background="@color/colorSuccess"
         android:drawableEnd="@drawable/record"
-        android:paddingStart="@dimen/mp_10"
-        android:paddingEnd="@dimen/mp_10"
+        android:paddingStart="@dimen/mp_30"
+        android:paddingEnd="@dimen/mp_30"
         android:text="Record"
         android:textColor="@color/colorWhite" />
 
