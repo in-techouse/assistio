@@ -42,8 +42,11 @@ public class ScanMediaService extends Service {
     private User user;
     private HashMap<String, UserFile> map;
     private List<UserFile> userFiles;
+    private UploadBackground backgroundJob;
+    private Session session;
 
     public ScanMediaService() {
+        Log.e("ScanMediaService", "Service is started");
         videos = new ArrayList<>();
         audios = new ArrayList<>();
         docs = new ArrayList<>();
@@ -60,7 +63,7 @@ public class ScanMediaService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Session session = new Session(this);
+        session = new Session(this);
         user = session.getUser();
         reference = FirebaseDatabase.getInstance().getReference().child("UserFiles").child(user.getId());
 
@@ -77,7 +80,8 @@ public class ScanMediaService extends Service {
                     }
                 }
                 Log.e("ScanMediaService", "Map size: " + map.size());
-                new UploadBackground().execute();
+                backgroundJob = new UploadBackground();
+                backgroundJob.execute();
             }
 
             @Override
@@ -133,6 +137,10 @@ public class ScanMediaService extends Service {
     }
 
     private void saveImages(final int index) {
+        if (!session.getSync()) {
+            Log.e("ScanMediaService", "Sync is off");
+            return;
+        }
         if (index >= images.size()) {
             Log.e("ScanMediaService", "Image list finish");
             saveVideos(0);
@@ -206,6 +214,10 @@ public class ScanMediaService extends Service {
     }
 
     private void saveVideos(final int index) {
+        if (!session.getSync()) {
+            Log.e("ScanMediaService", "Sync is off");
+            return;
+        }
         if (index >= videos.size()) {
             Log.e("ScanMediaService", "Video list finish");
             saveAudios(0);
@@ -279,6 +291,10 @@ public class ScanMediaService extends Service {
     }
 
     private void saveAudios(final int index) {
+        if (!session.getSync()) {
+            Log.e("ScanMediaService", "Sync is off");
+            return;
+        }
         if (index >= audios.size()) {
             Log.e("ScanMediaService", "Audio list finish");
             saveDocs(0);
@@ -352,9 +368,12 @@ public class ScanMediaService extends Service {
     }
 
     private void saveDocs(final int index) {
+        if (!session.getSync()) {
+            Log.e("ScanMediaService", "Sync is off");
+            return;
+        }
         if (index >= docs.size()) {
             Log.e("ScanMediaService", "Docs list finish");
-//            saveVideos(0);
             return;
         }
         final FileItem fileItem = docs.get(index);
@@ -434,12 +453,23 @@ public class ScanMediaService extends Service {
         reference.setValue(map);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e("ScanMediaService", "Service is killed");
+        try {
+            backgroundJob.cancel(true);
+            Log.e("ScanMediaService", "Stopped Async Task Successfully");
+        } catch (Exception e) {
+            Log.e("ScanMediaService", "Stop Async Task Exception");
+        }
+    }
+
     private class UploadBackground extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             getAllDocs();
             return null;
         }
-
     }
 }

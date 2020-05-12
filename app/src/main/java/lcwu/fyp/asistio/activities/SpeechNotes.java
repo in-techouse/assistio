@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,18 +12,33 @@ import lcwu.fyp.asistio.R;
 
 public class SpeechNotes extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText notes;
-    private ImageView record_ur_voice;
-    private Button save;
+    private Button save, record;
+    private TextView txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_notes);
 
-        notes = findViewById(R.id.notes);
-        record_ur_voice= findViewById(R.id.record_ur_voice);
+        record = findViewById(R.id.record);
         save = findViewById(R.id.save);
+        txt = findViewById(R.id.txt);
+
+        save.setOnClickListener(this);
+        record.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.record: {
+                break;
+            }
+            case R.id.save: {
+                break;
+            }
+        }
     }
 
     @Override
@@ -41,10 +55,5 @@ public class SpeechNotes extends AppCompatActivity implements View.OnClickListen
             }
         }
         return true;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

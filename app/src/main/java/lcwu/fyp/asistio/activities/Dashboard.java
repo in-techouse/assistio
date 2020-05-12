@@ -177,12 +177,14 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             startServices();
         } else {
             Log.e("Dashboard", "Syncing is Off");
+            Log.e("Dashboard", "Service not started");
             toggleButton.setToggleOff();
+            if (mServiceIntent != null)
+                stopService(mServiceIntent);
         }
     }
 
     public void setDefaultApp() {
-
         List<IntentFilter> filters = new ArrayList<>();
         List<ComponentName> activities = new ArrayList<>();
         getPackageManager().getPreferredActivities(filters, activities, null);
@@ -192,8 +194,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         for (ComponentName component : activities) {
             if (component.getPackageName().equals(getPackageName())) {
                 flag = true;
-                Log.e("Dashboard", "Activity, Package Name: " + component.getPackageName());
-                Log.e("Dashboard", "Activity, Class Name: " + component.getClassName());
             }
         }
 
@@ -428,18 +428,19 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
     private void loadFiles() {
-        Log.e("get URL", "inside function");
+        Log.e("Dashboard", "Starting Loading Files");
         DatabaseReference dataref = FirebaseDatabase.getInstance().getReference();
         dataref.child("UserFiles").child(user.getId())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.e("Dashboard", "On Data Change Function");
+                        userFiles.clear();
+                        images.clear();
+                        videos.clear();
+                        audios.clear();
+                        documents.clear();
                         if (dataSnapshot.exists()) {
-                            userFiles.clear();
-                            images.clear();
-                            videos.clear();
-                            audios.clear();
-                            documents.clear();
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 UserFile uFile = ds.getValue(UserFile.class);
                                 if (uFile != null) {
@@ -464,22 +465,22 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                                     }
                                 }
                             }
-
-                            isLoaded = true;
-
-                            user.setImages(images.size());
-                            user.setVideos(videos.size());
-                            user.setAudios(audios.size());
-                            user.setDocuments(documents.size());
-
-                            session.setSession(user);
-
-                            tvImages.setText(user.getImages() + "");
-                            tvAudio.setText(user.getAudios() + "");
-                            tvVideos.setText(user.getVideos() + "");
-                            tvDocuments.setText(user.getDocuments() + "");
-                            tvNotes.setText(user.getNotes() + "");
                         }
+                        isLoaded = true;
+
+                        user.setImages(images.size());
+                        user.setVideos(videos.size());
+                        user.setAudios(audios.size());
+                        user.setDocuments(documents.size());
+
+                        session.setSession(user);
+                        Log.e("Dashboard", "Images Size: " + images.size());
+
+                        tvImages.setText(user.getImages() + "");
+                        tvAudio.setText(user.getAudios() + "");
+                        tvVideos.setText(user.getVideos() + "");
+                        tvDocuments.setText(user.getDocuments() + "");
+                        tvNotes.setText(user.getNotes() + "");
                     }
 
                     @Override
