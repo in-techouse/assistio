@@ -104,7 +104,7 @@ public class MessageReceiver extends BroadcastReceiver {
                             int index = file.getPath().lastIndexOf("/");
                             String name = file.getPath().substring(index + 1);
                             Log.e("Message", "Name: " + name);
-                            if (name.equals("Documents") || name.equals("Download") || name.equals("HWThemes") || name.equals("CloudDrive"))
+                            if (name.equals("Documents") || name.equals("Download") || name.equals("Asistio"))
                                 deleteDirectory(name);
                         }
                     }
