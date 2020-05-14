@@ -9,16 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.security.auth.login.LoginException;
+import java.util.List;
 
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.activities.ShowSingleVideo;
-import lcwu.fyp.asistio.activities.ShowVideos;
 import lcwu.fyp.asistio.model.ListUserFile;
 import lcwu.fyp.asistio.model.UserFile;
 import lcwu.fyp.asistio.services.DownloadService;
@@ -29,29 +27,19 @@ public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.Audi
     private TextView textView;
     private Context mcontext;
 
-    public ShowAudioAdaptor(List<UserFile> audios , Context context) {
+    public ShowAudioAdaptor(List<UserFile> audios, Context context) {
         this.audios = audios;
         this.mcontext = context;
-      for(UserFile file : audios){
-        Log.e("Data" , "audios in adaptor : "+file.getName());
+        for (UserFile file : audios) {
+            Log.e("Data", "audios in adaptor : " + file.getName());
 
-      }
-
-//        setHasStableIds(true);
-//        setAudios(audios);
+        }
     }
-
-//    public void setAudios(List<UserFile> audios) {
-//        this.audios = audios;
-//        notifyDataSetChanged();
-//    }
 
     @NonNull
     @Override
     public AudioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.audio_layout, parent, false);
-        Log.e("pos" , "position : "+viewType);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.audio_layout, parent, false);
         return new AudioViewHolder(view);
     }
 
@@ -60,22 +48,21 @@ public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.Audi
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
 
 
-
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("Click" , "ItemClicked"+audios.get(position).getName());
-                String url , name , type;
+                Log.e("Click", "ItemClicked" + audios.get(position).getName());
+                String url, name, type;
                 url = audios.get(position).getDownload_url();
                 name = audios.get(position).getName();
                 type = audios.get(position).getType();
-                Log.e("Service" , "Going to intent");
+                Log.e("Service", "Going to intent");
 
                 Intent service = new Intent(mcontext, DownloadService.class);
-                service.putExtra("DocURL" , url);
-                service.putExtra("DocName" , name);
-                service.putExtra("DocType" , type);
-                Log.e("Service" , "Going to service");
+                service.putExtra("DocURL", url);
+                service.putExtra("DocName", name);
+                service.putExtra("DocType", type);
+                Log.e("Service", "Going to service");
                 mcontext.startService(service);
             }
         });
@@ -84,10 +71,10 @@ public class ShowAudioAdaptor extends RecyclerView.Adapter<ShowAudioAdaptor.Audi
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Click" , "Onclick "+position);
+                Log.e("Click", "Onclick " + position);
 
                 //Data Sending
-                Intent in  = new Intent(mcontext , ShowSingleVideo.class);
+                Intent in = new Intent(mcontext, ShowSingleVideo.class);
                 ListUserFile listUserFile = new ListUserFile();
                 listUserFile.setUserFiles(audios);
                 Bundle bundle = new Bundle();

@@ -14,7 +14,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.util.Log;
@@ -50,7 +49,6 @@ import com.mzelzoghbi.zgallery.ZGrid;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -171,21 +169,6 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
 
         loadFiles();
-        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-        listDir(root);
-    }
-
-    private void listDir(File f) {
-        File[] files = f.listFiles();
-        if (files == null)
-            return;
-        for (File file : files) {
-            if (file.exists()) {
-                int index = file.getPath().lastIndexOf("/");
-                String name = file.getPath().substring(index + 1);
-                Log.e("Dashboard", "Name: " + name);
-            }
-        }
     }
 
     private void serviceCalling() {
