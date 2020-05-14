@@ -1,6 +1,5 @@
 package lcwu.fyp.asistio.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.director.Helpers;
-import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.User;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -84,44 +82,60 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                    //Save  Registration
-                                    final User user = new User();
-                                    user.setFirst_Name(strFName);
-                                    user.setLast_Name(strLName);
-                                    user.setPhone_no(strphno);
-                                    user.setEmail(stremai1);
-                                    user.setDocuments(0);
-                                    user.setAudios(0);
-                                    user.setContacts(0);
-                                    user.setVideos(0);
-                                    user.setImages(0);
-                                    user.setNotes(0);
-                                    user.setFirst(false);
-                                    String id = stremai1.replace("@", "-");
-                                    id = id.replace(".", "_");
-                                    user.setId(id);
+                                    if (auth.getCurrentUser() == null) {
+                                        registrationProgress.setVisibility(View.GONE);
+                                        btnRegister.setVisibility(View.VISIBLE);
+                                        helpers.showError(RegistrationActivity.this, "ERROR", "Something went wrong");
+                                        return;
+                                    }
+                                    auth.getCurrentUser().sendEmailVerification()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                                    //Save  Registration
+                                                    final User user = new User();
+                                                    user.setFirst_Name(strFName);
+                                                    user.setLast_Name(strLName);
+                                                    user.setPhone_no(strphno);
+                                                    user.setEmail(stremai1);
+                                                    user.setDocuments(0);
+                                                    user.setAudios(0);
+                                                    user.setContacts(0);
+                                                    user.setVideos(0);
+                                                    user.setImages(0);
+                                                    user.setNotes(0);
+                                                    user.setFirst(false);
+                                                    String id = stremai1.replace("@", "-");
+                                                    id = id.replace(".", "_");
+                                                    user.setId(id);
 
-                                    // ya line data save kar da ge
-                                    reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Session session = new Session(RegistrationActivity.this);
-                                            session.setSession(user);
-                                            //Start Dashboard Activity
-                                            Intent it = new Intent(RegistrationActivity.this, Dashboard.class);
-                                            startActivity(it);
-                                            finish();
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            registrationProgress.setVisibility(View.GONE);
-                                            btnRegister.setVisibility(View.VISIBLE);
-                                            helpers.showError(RegistrationActivity.this, "ERROR", "Something went wrong");
-                                        }
-                                    });
+                                                    // ya line data save kar da ge
+                                                    reference.child("Users").child(id).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            registrationProgress.setVisibility(View.GONE);
+                                                            btnRegister.setVisibility(View.VISIBLE);
+                                                            helpers.showSuccess(RegistrationActivity.this, "EMAIL VERIFICATION", "A verification email has been sent to your given email address.\nPlease verify your email.\nYou can login after your email verification");
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            registrationProgress.setVisibility(View.GONE);
+                                                            btnRegister.setVisibility(View.VISIBLE);
+                                                            helpers.showError(RegistrationActivity.this, "ERROR", "Something went wrong");
+                                                        }
+                                                    });
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    registrationProgress.setVisibility(View.GONE);
+                                                    btnRegister.setVisibility(View.VISIBLE);
+                                                    helpers.showError(RegistrationActivity.this, "ERROR", "Something went wrong");
+                                                }
+                                            });
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -136,9 +150,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                 break;
             }
-
         }
-
     }
 
     private boolean isValid() {

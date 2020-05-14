@@ -1,9 +1,6 @@
 package lcwu.fyp.asistio.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -82,14 +79,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    if (auth.getCurrentUser() == null) {
+                                        login_process.setVisibility(View.GONE);
+                                        btnLogin.setVisibility(View.VISIBLE);
+                                        helpers.showError(LoginActivity.this, "ERROR", "Something Went Wrong");
+                                        return;
+                                    }
+
+                                    if (!auth.getCurrentUser().isEmailVerified()) {
+                                        login_process.setVisibility(View.GONE);
+                                        btnLogin.setVisibility(View.VISIBLE);
+                                        helpers.showError(LoginActivity.this, "EMAIL NOT VERIFIED", "Your email is not verified yet. Please verify your email first.");
+                                        return;
+                                    }
 
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                                     String id = strEmail.replace("@", "-");
                                     id = id.replace(".", "_");
 
                                     reference.child("Users").child(id).addValueEventListener(new ValueEventListener() {
-                                        //reading login data from database
-
                                         @Override
                                         //if successfully read
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,6 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                                 //Start Dashboard Activity
                                                 Intent it = new Intent(LoginActivity.this, Dashboard.class);
+                                                it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(it);
                                                 finish();
 
@@ -164,21 +173,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return flag;
 
     }
-
-
-    // Check Internet Connection
-    private boolean isConnected() {
-        boolean connected = false;
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState()
-                == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo
-                (ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)
-            connected = true;
-        else
-            connected = false;
-        return connected;
-    }
-
-
 }

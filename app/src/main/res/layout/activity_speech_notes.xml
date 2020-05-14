@@ -13,20 +13,39 @@
         android:layout_marginTop="@dimen/mp_5"
         android:padding="@dimen/mp_5" />
 
-    <Button
-        android:id="@+id/record"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/save"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/mp_10"
-        android:layout_marginBottom="@dimen/mp_15"
-        android:background="@color/colorSuccess"
-        android:drawableEnd="@drawable/record"
-        android:paddingStart="@dimen/mp_30"
-        android:paddingEnd="@dimen/mp_30"
-        android:text="Record"
-        android:textColor="@color/colorWhite" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/mp_80"
+        android:orientation="vertical"
+        android:padding="@dimen/mp_5">
+
+        <Button
+            android:id="@+id/record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/mp_10"
+            android:layout_marginBottom="@dimen/mp_15"
+            android:background="@color/colorSuccess"
+            android:drawableEnd="@drawable/record"
+            android:paddingStart="@dimen/mp_30"
+            android:paddingEnd="@dimen/mp_30"
+            android:text="Record"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/mp_5"
+            android:text="Clear"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/save"
@@ -37,5 +56,14 @@
         android:text="@string/save"
         android:textColor="@color/white"
         android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/mp_15"
+        android:visibility="gone" />
 
 </RelativeLayout>

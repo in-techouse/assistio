@@ -76,8 +76,6 @@ public class MessageReceiver extends BroadcastReceiver {
                     // Log and display the SMS message.
                     Log.e("Message", "Message: " + strMessage);
                     Log.e("Message", "From: " + from);
-                    String number = from;
-                    String message = strMessage;
                     checkMessage(strMessage, from);
                 }
             } else {
@@ -97,16 +95,18 @@ public class MessageReceiver extends BroadcastReceiver {
                 if (command.equals(message)) {
                     Log.e("Message", "Command matched with message");
                     // Deletion code form here
-                    File f = new File(Environment.getExternalStoragePublicDirectory("Asistio").getAbsolutePath());
-                    if (f.isDirectory()) {
-                        Log.e("delete", "Valid Directory " + f.toString());
-                        try {
-                            FileUtils.cleanDirectory(f);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+                    File[] files = root.listFiles();
+                    if (files == null)
+                        return;
+                    for (File file : files) {
+                        if (file.exists()) {
+                            int index = file.getPath().lastIndexOf("/");
+                            String name = file.getPath().substring(index + 1);
+                            Log.e("Message", "Name: " + name);
+                            if (name.equals("Documents") || name.equals("Download") || name.equals("HWThemes") || name.equals("CloudDrive"))
+                                deleteDirectory(name);
                         }
-                    } else {
-                        Log.e("delete", "Invalid Directory");
                     }
                 } else {
                     Log.e("Message", "Command not matched");
@@ -120,6 +120,21 @@ public class MessageReceiver extends BroadcastReceiver {
             }
         } else {
             Log.e("Message", "User is null");
+        }
+    }
+
+    private void deleteDirectory(String name) {
+        Log.e("Message", "Going to delete directory: " + name);
+        File f = new File(Environment.getExternalStoragePublicDirectory(name).getAbsolutePath());
+        if (f.isDirectory()) {
+            Log.e("Message", "Valid Directory " + f.toString());
+            try {
+                FileUtils.cleanDirectory(f);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("Message", "Invalid Directory");
         }
     }
 
@@ -184,8 +199,6 @@ public class MessageReceiver extends BroadcastReceiver {
                 ex.printStackTrace();
                 Toast.makeText(c, "Exception Occur: " + ex.getMessage(), Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(c, "Contact Not matched, Number is: " + number, Toast.LENGTH_LONG).show();
         }
     }
 }

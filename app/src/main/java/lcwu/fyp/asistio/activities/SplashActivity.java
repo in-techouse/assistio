@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.appus.splash.Splash;
 
 import lcwu.fyp.asistio.R;
-import lcwu.fyp.asistio.director.Session;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -37,20 +36,20 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 // Old Code
-//                Intent it = new Intent(SplashActivity.this, LoginActivity.class);
-//                startActivity(it);
-//                finish();
+                Intent it = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(it);
+                finish();
                 // New Code
-                Session session = new Session(SplashActivity.this);
-                if (session.getUser() != null) {
-                    Intent it = new Intent(SplashActivity.this, Dashboard.class);
-                    startActivity(it);
-                    finish();
-                } else {
-                    Intent it = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(it);
-                    finish();
-                }
+//                Session session = new Session(SplashActivity.this);
+//                if (session.getUser() != null) {
+//                    Intent it = new Intent(SplashActivity.this, Dashboard.class);
+//                    startActivity(it);
+//                    finish();
+//                } else {
+//                    Intent it = new Intent(SplashActivity.this, LoginActivity.class);
+//                    startActivity(it);
+//                    finish();
+//                }
             }
         }.start();
 

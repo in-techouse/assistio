@@ -100,14 +100,15 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
                                 session.setSession(user);
                                 ShowSuccess();
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        setkey_progress.setVisibility(View.GONE);
-                        btn_key.setVisibility(View.VISIBLE);
-                        helpers.showError(SetCommand.this, "Error", "Something went wrong");
-                    }
-                });
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                setkey_progress.setVisibility(View.GONE);
+                                btn_key.setVisibility(View.VISIBLE);
+                                helpers.showError(SetCommand.this, "Error", "Something went wrong");
+                            }
+                        });
                 break;
             }
         }

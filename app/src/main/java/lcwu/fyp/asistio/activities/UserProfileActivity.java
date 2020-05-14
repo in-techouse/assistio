@@ -64,6 +64,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setHomeButtonEnabled(true);
+
         session = new Session(UserProfileActivity.this);
         user = session.getUser();
         helpers = new Helpers();
@@ -272,7 +275,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 toast.setMargin(50, 50);
                 toast.show();
                 Intent in = new Intent(UserProfileActivity.this, Dashboard.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(in);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

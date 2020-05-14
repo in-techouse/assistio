@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.util.Log;
@@ -49,6 +50,7 @@ import com.mzelzoghbi.zgallery.ZGrid;
 import com.mzelzoghbi.zgallery.entities.ZColor;
 import com.zcw.togglebutton.ToggleButton;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +63,7 @@ import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.Contact;
 import lcwu.fyp.asistio.model.LastLocation;
 import lcwu.fyp.asistio.model.ListUserFile;
+import lcwu.fyp.asistio.model.SpeechNotesObject;
 import lcwu.fyp.asistio.model.User;
 import lcwu.fyp.asistio.model.UserFile;
 import lcwu.fyp.asistio.services.AllContactsUploadService;
@@ -93,6 +96,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     private List<UserFile> videos = new ArrayList<>();
     private List<UserFile> audios = new ArrayList<>();
     private List<UserFile> documents = new ArrayList<>();
+    private List<SpeechNotesObject> notes = new ArrayList<>();
     private ArrayList<String> imagesList = new ArrayList<>();
     private TextView tvContacts, tvDocuments, tvImages, tvVideos, tvAudio, tvNotes;
     private Intent mServiceIntent;
@@ -167,6 +171,21 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
 
         loadFiles();
+        File root = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        listDir(root);
+    }
+
+    private void listDir(File f) {
+        File[] files = f.listFiles();
+        if (files == null)
+            return;
+        for (File file : files) {
+            if (file.exists()) {
+                int index = file.getPath().lastIndexOf("/");
+                String name = file.getPath().substring(index + 1);
+                Log.e("Dashboard", "Name: " + name);
+            }
+        }
     }
 
     private void serviceCalling() {
@@ -272,8 +291,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     protected void onDestroy() {
-        stopService(mServiceIntent);
         super.onDestroy();
+        if (mServiceIntent != null)
+            stopService(mServiceIntent);
     }
 
     private void getDeviceLocation() {
@@ -513,6 +533,30 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
                     }
                 });
+
+        dataref.child("SpeechNotes").child(user.getId())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            notes.clear();
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                SpeechNotesObject object = data.getValue(SpeechNotesObject.class);
+                                if (object != null) {
+                                    notes.add(object);
+                                }
+                            }
+                            user.setNotes(notes.size());
+                            session.setSession(user);
+                            tvNotes.setText(user.getNotes() + "");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     @Override
@@ -574,7 +618,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 break;
             }
             case R.id.notesBox: {
-                Intent in = new Intent(Dashboard.this, ShowNotes.class);
+                Intent in = new Intent(Dashboard.this, SpeechNotesHistory.class);
                 startActivity(in);
                 break;
             }

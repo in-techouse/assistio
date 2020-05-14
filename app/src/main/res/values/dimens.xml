@@ -20,6 +20,7 @@
     <dimen name="mp_20">20dp</dimen>
     <dimen name="mp_30">30dp</dimen>
     <dimen name="mp_8">8dp</dimen>
+    <dimen name="mp_80">80dp</dimen>
     <dimen name="mp_5">5dp</dimen>
     <dimen name="mp_3">3dp</dimen>
     <dimen name="height">120dp</dimen>
