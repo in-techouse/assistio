@@ -117,7 +117,7 @@ public class ScanMediaService extends Service {
                             } else if (extension.contains(".jpg") || extension.contains(".png") || extension.contains(".jpeg") || extension.contains(".gif")) {
                                 // Image
                                 images.add(file);
-                            } else if (extension.contains(".mp3") || extension.contains(".3gp") || extension.contains(".amr") || extension.contains(".opus") || extension.contains(".wav")) {
+                            } else if (extension.contains(".mp3") || extension.contains(".amr") || extension.contains(".opus") || extension.contains(".wav")) {
                                 // Audio
                                 audios.add(file);
                             } else if (extension.contains(".doc") || extension.contains(".docx") || extension.contains(".ods") || extension.contains(".xls") || extension.contains(".xlsx") || extension.contains(".pdf") || extension.contains(".ppt") || extension.contains(".pptx") || extension.contains(".txt")) {
