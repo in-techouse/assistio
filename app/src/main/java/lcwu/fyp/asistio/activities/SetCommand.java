@@ -122,7 +122,7 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
                 .setPositiveBtnBackground("#FF4081")
                 .setPositiveBtnText("Ok")
                 .setNegativeBtnBackground("#FFA9A7A8")
-                .setGifResource(R.drawable.bcb5aea7be9a3c8bd8be1b0d345d76e9)   //Pass your Gif here
+                .setGifResource(R.drawable.success)   //Pass your Gif here
                 .isCancellable(true)
                 .OnPositiveClicked(new FancyGifDialogListener() {
                     @Override
