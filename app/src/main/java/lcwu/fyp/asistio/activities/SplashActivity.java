@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Splash.Builder splash = new Splash.Builder(this, getSupportActionBar());
-        splash.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        splash.setBackgroundImage(getResources().getDrawable(R.drawable.splashscreen));
         splash.setSplashImage(getResources().getDrawable(R.drawable.logo));
         splash.perform();
     }

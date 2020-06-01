@@ -66,13 +66,11 @@
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_of_contacts"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp" />
+                    <ImageView
+                        android:src="@drawable/contacts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
 
                     <TextView
                         android:id="@+id/contacts"
@@ -101,13 +99,12 @@
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_of_document"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:src="@drawable/documents"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
 
                     <TextView
                         android:id="@+id/documents"
@@ -145,13 +142,12 @@
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_of_images"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:src="@drawable/images"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
 
                     <TextView
                         android:id="@+id/images"
@@ -178,13 +174,12 @@
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_of_videos"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:src="@drawable/videos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
 
                     <TextView
                         android:id="@+id/videos"
@@ -218,13 +213,11 @@
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_of_audios"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:src="@drawable/audios"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/audios"
@@ -250,13 +243,10 @@
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_of_notes"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20dp" />
+                    <ImageView
+                        android:src="@drawable/notes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/notes"
