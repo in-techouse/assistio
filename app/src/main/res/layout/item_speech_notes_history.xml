@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/mp_8"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/colorPrimaryDark"
     app:cardCornerRadius="@dimen/mp_10"
     app:cardElevation="@dimen/mp_15">
 
@@ -29,6 +29,7 @@
             android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000"
             android:layout_marginStart="@dimen/mp_8"
             android:layout_marginTop="@dimen/mp_3"
             android:layout_marginEnd="@dimen/mp_8" />
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="@dimen/mp_10"
-            android:src="@drawable/ic_action_name" />
+            android:src="@drawable/ic_delete_black_24dp" />
 
     </LinearLayout>
 

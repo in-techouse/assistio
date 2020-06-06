@@ -3,20 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.AutoReply">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        android:id="@+id/auto_reply_toolbar"
+        app:subtitleTextColor="@color/white"
+        android:theme="@style/ToolbarStyle.DotsDarkTheme"
+        >
+    </androidx.appcompat.widget.Toolbar>
 
     <EditText
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/mp_5"
-        android:gravity="top|start"
+        android:layout_below="@+id/auto_reply_toolbar"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:hint="@string/enter_your_text_here"
         android:inputType="textMultiLine"
+        android:background="@drawable/transparent"
+        android:paddingTop="5dp"
+        android:paddingLeft="13dp"
+        android:paddingBottom="8dp"
         android:maxLines="5"
-        android:minLines="2"
-        android:padding="@dimen/mp_10"
         android:scrollbars="vertical" />
 
     <EditText
@@ -24,13 +40,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/message"
-        android:layout_margin="@dimen/mp_5"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:gravity="top"
         android:hint="@string/enter_your_reply_here"
         android:inputType="textMultiLine"
+        android:background="@drawable/transparent"
+        android:paddingTop="5dp"
+        android:paddingLeft="13dp"
+        android:paddingBottom="8dp"
         android:maxLines="5"
-        android:minLines="2"
-        android:padding="@dimen/mp_10"
         android:scrollbars="vertical" />
 
     <RelativeLayout
@@ -48,6 +68,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="16dp"
             android:text="Select Contacts" />
 
         <ImageView
@@ -57,24 +81,25 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/mp_8"
-            android:src="@drawable/phonebook" />
+            android:src="@drawable/ic_perm_contact_calendar_black_24dp" />
     </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
 
     <Button
         android:id="@+id/save"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_background"
         android:text="@string/save"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/white"
         android:textStyle="bold" />
 
@@ -85,6 +110,7 @@
         android:layout_above="@id/save"
         android:layout_below="@id/selectContactsLayout"
         android:gravity="center"
+        android:layout_marginBottom="20dp"
         android:horizontalSpacing="@dimen/mp_8"
         android:numColumns="auto_fit"
         android:paddingStart="@dimen/mp_10"

@@ -92,7 +92,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         if (user.getImage() != null && !user.getImage().equalsIgnoreCase("")) {
             Glide.with(getApplicationContext()).load(user.getImage()).into(imageView);
         } else {
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.profile));
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.profileblue));
         }
 
     }

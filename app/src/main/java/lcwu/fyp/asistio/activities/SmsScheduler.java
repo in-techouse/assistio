@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,12 +56,18 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
     private Button save;
     private ProgressBar progress;
     private Session session;
+    private Toolbar schedular_toolbar;
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_schedular);
+
+        schedular_toolbar=findViewById(R.id.schedular_toolbar);
+
+        setSupportActionBar(schedular_toolbar);
+        getSupportActionBar().setTitle("SMS Scheduler");
 
         helpers = new Helpers();
         session = new Session(getApplicationContext());

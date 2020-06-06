@@ -12,6 +12,7 @@
         android:id="@+id/action_search"
         android:icon="@drawable/search"
         android:orderInCategory="100"
+        android:iconTint="@color/white"
         android:title="@string/empty"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />

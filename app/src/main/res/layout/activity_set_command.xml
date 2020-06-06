@@ -5,12 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
     tools:context=".activities.SetCommand">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        android:id="@+id/set_command"
+        android:theme="@style/ToolbarStyle.DotsDarkTheme"
+        >
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/HeadingPadding"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:padding="@dimen/HeadingPadding"
         app:passwordToggleEnabled="true">
 
@@ -18,16 +31,19 @@
             android:id="@+id/edtKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/transparent"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_key"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/HeadingPadding"
-        android:hint="@string/enter_your_key"
+        android:layout_gravity="center"
+        android:background="@drawable/button_background"
+        android:layout_marginTop="25dp"
+        android:textColor="#ffff"
         android:padding="@dimen/HeadingPadding"
         android:text="@string/set" />
 

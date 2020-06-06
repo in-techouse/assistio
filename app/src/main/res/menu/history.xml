@@ -6,6 +6,7 @@
         android:id="@+id/action_history"
         android:orderInCategory="99"
         android:title="@string/history"
+        android:iconTint="@color/white"
         app:showAsAction="never" />
 
 </menu>

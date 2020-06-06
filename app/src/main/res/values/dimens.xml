@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="HeadingPadding">15sp</dimen>
+    <dimen name="HeadingPadding">8sp</dimen>
     <dimen name="TextSizeHeading">24sp</dimen>
     <dimen name="paddingbottom">20dp</dimen>
     <dimen name="txtsize">17dp</dimen>

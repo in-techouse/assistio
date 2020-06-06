@@ -3,17 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.SpeechNotes">
 
-    <TextView
-        android:id="@+id/txt"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/mp_5"
-        android:padding="@dimen/mp_5" />
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        android:id="@+id/speechToolbar"
+        app:subtitleTextColor="@color/white"
+        android:theme="@style/ToolbarStyle.DotsDarkTheme"
+        >
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/speechToolbar"
+        android:background="@color/colorPrimaryDark"
+        android:layout_above="@+id/voice"
+        >
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/mp_5"
+            android:padding="16dp" />
+    </LinearLayout>
+
 
     <LinearLayout
+        android:id="@+id/voice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -49,11 +71,13 @@
 
     <Button
         android:id="@+id/save"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_background"
         android:text="@string/save"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/white"
         android:textStyle="bold" />
 

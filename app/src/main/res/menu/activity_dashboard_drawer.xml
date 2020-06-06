@@ -6,43 +6,43 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/home"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/account"
+            android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/menu_profile" />
         <item
             android:id="@+id/nav_autoreply"
-            android:icon="@drawable/auto"
+            android:icon="@drawable/ic_replay_black_24dp"
             android:title="@string/auto_reply" />
         <item
             android:id="@+id/nav_smssch"
-            android:icon="@drawable/sms"
+            android:icon="@drawable/ic_date_range_black_24dp"
             android:title="@string/sms_scheduler" />
         <item
             android:id="@+id/nav_speech"
-            android:icon="@drawable/speech"
+            android:icon="@drawable/ic_speaker_phone_black_24dp"
             android:title="@string/speech_notes" />
 
         <item
             android:id="@+id/set_command"
-            android:icon="@drawable/settings"
+            android:icon="@drawable/ic_insert_comment_black_24dp"
             android:title="@string/set_command" />
 
         <item
             android:id="@+id/last_location"
-            android:icon="@drawable/tracking"
+            android:icon="@drawable/ic_location_on_black_24dp"
             android:title="@string/last_location" />
 
         <item
             android:id="@+id/mobileInfo"
-            android:icon="@drawable/mobile"
+            android:icon="@drawable/ic_perm_device_information_black_24dp"
             android:title="@string/mobileInfo" />
 
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/logout"
+            android:icon="@drawable/ic_vpn_key_black_24dp"
             android:title="@string/logout" />
 
     </group>

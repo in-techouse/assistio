@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:toggle="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#E4E4E4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -15,7 +16,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/colorPrimary"
+        android:background="#E4E4E4"
         android:padding="@dimen/mp_15">
 
         <TextView
@@ -24,18 +25,20 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:text="@string/sync"
-            android:textColor="@color/colorWhite" />
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary" />
 
         <com.zcw.togglebutton.ToggleButton
             android:id="@+id/toggleButton"
-            android:layout_width="54dp"
-            android:layout_height="30dp"
+            android:layout_width="45dp"
+            android:layout_height="25dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            toggle:tbBorderWidth="2dp"
-            toggle:tbOffBorderColor="#000"
-            toggle:tbOffColor="#ddd"
-            toggle:tbOnColor="#ddd"
+            toggle:tbBorderWidth="1dp"
+            toggle:tbOffBorderColor="@color/colorPrimary"
+            toggle:tbOffColor="#fff"
+            toggle:tbOnColor="@color/colorPrimary"
             toggle:tbSpotColor="@color/colorPrimaryDark" />
     </RelativeLayout>
 
@@ -43,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toggleMain"
-        android:background="@color/colorPrimary"
+        android:layout_marginBottom="30dp"
+        android:background="#E4E4E4"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -61,15 +65,16 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
                     <ImageView
                         android:src="@drawable/contacts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_gravity="center"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"/>
 
 
                     <TextView
@@ -77,8 +82,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
+                        android:text="Contacts"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
@@ -94,16 +100,17 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
 
                     <ImageView
-                        android:src="@drawable/documents"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/document"
+                        android:layout_gravity="center"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"/>
 
 
                     <TextView
@@ -112,7 +119,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:text="Documents"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
@@ -137,7 +145,7 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
@@ -145,8 +153,9 @@
 
                     <ImageView
                         android:src="@drawable/images"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_gravity="center"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"/>
 
 
                     <TextView
@@ -154,8 +163,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
+                        android:text="Images"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
@@ -169,7 +179,7 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
@@ -177,8 +187,9 @@
 
                     <ImageView
                         android:src="@drawable/videos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_gravity="center"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"/>
 
 
                     <TextView
@@ -187,7 +198,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:text="Videos"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -208,16 +220,17 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
 
                     <ImageView
-                        android:src="@drawable/audios"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:src="@drawable/audio"
+                        android:layout_gravity="center"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"/>
 
                     <TextView
                         android:id="@+id/audios"
@@ -225,7 +238,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:text="Audios"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -238,15 +252,16 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
 
                     <ImageView
                         android:src="@drawable/notes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_gravity="center"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"/>
 
                     <TextView
                         android:id="@+id/notes"
@@ -254,7 +269,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
                         android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
+                        android:text="Notes"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,12 +44,17 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
     private String strMessage, strReplyMessage;
     private List<Contact> contacts;
     private ProgressBar progressBar;
+    private Toolbar autoToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_reply);
 
+        autoToolbar=findViewById(R.id.auto_reply_toolbar);
+
+        setSupportActionBar(autoToolbar);
+        getSupportActionBar().setTitle("Auto Reply");
         helpers = new Helpers();
         Session session = new Session(getApplicationContext());
         user = session.getUser();

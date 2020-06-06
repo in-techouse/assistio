@@ -1,7 +1,9 @@
 package lcwu.fyp.asistio.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +53,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         go_to_registration.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
+
+        //Format the text
+        String formattedText = "<font color='#0000'>No one?</font> <b><font color='#00C8D7'>Create new account.</font></b>";
+        // or getString(R.string.htmlFormattedText);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            go_to_registration.setText(Html.fromHtml(formattedText, Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            go_to_registration.setText(Html.fromHtml(formattedText));
+        }
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,12 +26,18 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     ProgressBar change_Password;
     String strEmail;
     Helpers helpers;
+    Toolbar forgot_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password_acitivity);
 
+
+        forgot_pass=findViewById(R.id.forgot_pass_toolbar);
+
+        setSupportActionBar(forgot_pass);
+        getSupportActionBar().setTitle("Forgot Password");
         edtEmail = findViewById(R.id.edtEmail);
         NewPassword = findViewById(R.id.NewPassword);
         change_Password = findViewById(R.id.change_Password);

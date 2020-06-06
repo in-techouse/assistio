@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,10 +19,16 @@ import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowDocuments extends AppCompatActivity {
 
+    Toolbar documents_toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_documents);
+
+        documents_toolbar=findViewById(R.id.documents_toolbar);
+
+        setSupportActionBar(documents_toolbar);
+        getSupportActionBar().setTitle("Documents");
 
         Intent it = getIntent();
         if (it == null) {

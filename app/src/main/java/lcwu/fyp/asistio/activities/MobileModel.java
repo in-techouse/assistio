@@ -5,15 +5,23 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import lcwu.fyp.asistio.R;
 
 public class MobileModel extends AppCompatActivity {
 
+    Toolbar mobile_model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_model);
+
+        mobile_model=findViewById(R.id.mobile_model);
+
+        setSupportActionBar(mobile_model);
+        getSupportActionBar().setTitle("Mobile Model");
 
         TextView brand = findViewById(R.id.brand);
         TextView model = findViewById(R.id.model);

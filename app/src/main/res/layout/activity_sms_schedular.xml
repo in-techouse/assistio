@@ -3,108 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryDark"
     tools:context=".activities.SmsScheduler">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        android:id="@+id/schedular_toolbar"
+        android:theme="@style/ToolbarStyle.DotsDarkTheme"
+        >
+    </androidx.appcompat.widget.Toolbar>
 
     <EditText
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/mp_10"
+        android:layout_margin="20dp"
         android:gravity="top|start"
+        android:layout_below="@+id/schedular_toolbar"
         android:hint="@string/message"
         android:inputType="textMultiLine"
+        android:background="@drawable/transparent"
+        android:paddingTop="5dp"
+        android:paddingLeft="13dp"
+        android:paddingBottom="8dp"
         android:maxLines="5"
-        android:minLines="2"
-        android:padding="@dimen/mp_10"
         android:scrollbars="vertical" />
-
     <RelativeLayout
-        android:id="@+id/rrl2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/message">
+        android:id="@+id/select_timer"
+        android:layout_below="@+id/message"
+        >
 
-        <RelativeLayout
-            android:id="@+id/date_main"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/mp_5">
+            android:layout_marginTop="5dp"
+            android:text="Date"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="25dp"
+            android:textColor="@color/colorAccent"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/mp_8"
-                android:layout_marginEnd="@dimen/mp_8" />
+        <ImageView
+            android:id="@+id/select_date"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_today_black_24dp" />
 
-            <ImageView
-                android:id="@+id/select_date"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/mp_8"
-                android:layout_marginEnd="@dimen/mp_8"
-                android:src="@drawable/calendar" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/time_main"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/date_main"
-            android:layout_marginTop="@dimen/mp_5">
+            android:text="Time"
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/date"
+            android:layout_marginStart="25dp"
+            android:textColor="@color/colorAccent"
+            />
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/mp_8"
-                android:layout_marginEnd="@dimen/mp_8" />
+        <ImageView
+            android:id="@+id/select_time"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/date"
+            android:src="@drawable/ic_timer_black_24dp" />
 
-            <ImageView
-                android:id="@+id/select_time"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/mp_8"
-                android:layout_marginEnd="@dimen/mp_8"
-                android:src="@drawable/clock" />
-        </RelativeLayout>
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/selectContactsLayout"
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/selectContactsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_timer"
+        android:layout_marginStart="@dimen/mp_5"
+        android:layout_marginTop="@dimen/mp_5"
+        android:layout_marginEnd="@dimen/mp_5"
+        android:paddingStart="@dimen/mp_10"
+        android:paddingEnd="@dimen/mp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/time_main"
-            android:layout_marginTop="@dimen/mp_5">
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="Select Contacts" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/mp_8"
-                android:layout_marginEnd="@dimen/mp_8"
-                android:text="Select Contacts" />
-
-            <ImageView
-                android:id="@+id/select_contacts"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/mp_8"
-                android:layout_marginEnd="@dimen/mp_8"
-                android:src="@drawable/phonebook" />
-        </RelativeLayout>
-
+        <ImageView
+            android:id="@+id/select_contacts"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_perm_contact_calendar_black_24dp" />
     </RelativeLayout>
 
 
@@ -113,8 +121,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/save"
-        android:layout_below="@id/rrl2"
-        android:layout_margin="@dimen/mp_8"
+        android:layout_below="@id/selectContactsLayout"
+        android:layout_margin="15dp"
         android:gravity="center"
         android:horizontalSpacing="@dimen/mp_8"
         android:numColumns="auto_fit"
@@ -125,10 +133,12 @@
 
     <Button
         android:id="@+id/save"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_background"
         android:text="@string/save"
         android:textColor="@color/white"
         android:textStyle="bold" />

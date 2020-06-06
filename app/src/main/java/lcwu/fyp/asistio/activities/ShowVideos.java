@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
 
@@ -17,10 +18,17 @@ import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowVideos extends AppCompatActivity {
 
+    Toolbar videos_toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_videos);
+
+        videos_toolbar=findViewById(R.id.videos_toolbar);
+
+        setSupportActionBar(videos_toolbar);
+        getSupportActionBar().setTitle("Videos");
+
         Intent it = getIntent();
         if (it == null) {
             finish();

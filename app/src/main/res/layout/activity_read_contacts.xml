@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".activities.ReadContacts">
 
     <Button
         android:id="@+id/done"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_background"
         android:text="@string/done"
         android:textColor="@color/white" />
 
@@ -18,7 +21,9 @@
         android:id="@+id/contacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_above="@id/done"
+        android:padding="16dp"
         android:layout_alignParentTop="true" />
 
     <ProgressBar

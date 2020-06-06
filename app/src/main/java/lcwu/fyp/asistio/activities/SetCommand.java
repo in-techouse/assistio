@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,11 +34,17 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
     private Helpers helpers;
     String strKey;
     ProgressBar setkey_progress;
+    Toolbar set_command;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_command);
+
+        set_command=findViewById(R.id.set_command);
+
+        setSupportActionBar(set_command);
+        getSupportActionBar().setTitle("Set Command");
 
         helpers = new Helpers();
         edtKey = findViewById(R.id.edtKey);

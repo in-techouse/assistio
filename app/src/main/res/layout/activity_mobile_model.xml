@@ -4,18 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".activities.MobileModel">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:titleTextColor="@color/white"
+        android:id="@+id/mobile_model"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        >
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mobile_model"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:layout_margin="@dimen/mp_20"
         app:cardCornerRadius="@dimen/mp_10"
         app:cardElevation="@dimen/mp_15">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/colorPrimary"
                         android:text="Brand"
                         android:textAllCaps="true"
                         android:textStyle="bold" />
@@ -55,6 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/colorPrimary"
                         android:text="Model"
                         android:textAllCaps="true"
                         android:textStyle="bold" />
@@ -77,6 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:textColor="@color/colorPrimary"
                         android:text="Serial Number"
                         android:textAllCaps="true"
                         android:textStyle="bold" />
@@ -100,6 +116,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:text="Android SDK Version"
+                        android:textColor="@color/colorPrimary"
                         android:textAllCaps="true"
                         android:textStyle="bold" />
 
@@ -122,6 +139,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:text="Android Version Code"
+                        android:textColor="@color/colorPrimary"
                         android:textAllCaps="true"
                         android:textStyle="bold" />
 

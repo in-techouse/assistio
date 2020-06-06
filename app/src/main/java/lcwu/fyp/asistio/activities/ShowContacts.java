@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,10 +46,17 @@ public class ShowContacts extends AppCompatActivity {
     private ValueEventListener listener;
     private ShowContactAdapter adapter;
 
+    private Toolbar contacts_toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_contacts);
+
+        contacts_toolbar=findViewById(R.id.contacts_toolbar);
+
+        setSupportActionBar(contacts_toolbar);
+        getSupportActionBar().setTitle("Contacts");
 
         loading = findViewById(R.id.loading);
         contacts = findViewById(R.id.contacts);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,11 +18,17 @@ import lcwu.fyp.asistio.model.UserFile;
 
 public class ShowAudios extends AppCompatActivity {
 
+    Toolbar audioToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_audios);
+
+        audioToolbar=findViewById(R.id.audios_toolbar);
+
+        setSupportActionBar(audioToolbar);
+        getSupportActionBar().setTitle("Audios");
 
         Intent it = getIntent();
         if (it == null) {
