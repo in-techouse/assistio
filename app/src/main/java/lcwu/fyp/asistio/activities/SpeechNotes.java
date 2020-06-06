@@ -47,7 +47,7 @@ public class SpeechNotes extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_notes);
 
-        speechToolbar=findViewById(R.id.speechToolbar);
+        speechToolbar = findViewById(R.id.speechToolbar);
 
         setSupportActionBar(speechToolbar);
         getSupportActionBar().setTitle("Speech Notes");
