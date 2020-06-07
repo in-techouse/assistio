@@ -15,16 +15,20 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Splash.Builder splash = new Splash.Builder(this, getSupportActionBar());
-        splash.setBackgroundImage(getResources().getDrawable(R.drawable.splashscreen));
-        splash.setSplashImage(getResources().getDrawable(R.drawable.logo));
-        splash.perform();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
+
+        Splash.Builder splash = new Splash.Builder(this, getSupportActionBar());
+        splash.setBackgroundImage(getResources().getDrawable(R.drawable.splashscreen));
+        splash.setSplashImage(getResources().getDrawable(R.drawable.logo));
+        splash.perform();
 
 
         new CountDownTimer(2000, 1000) {

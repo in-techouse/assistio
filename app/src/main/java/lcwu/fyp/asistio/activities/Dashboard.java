@@ -572,7 +572,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                 }
 
                 ZGrid.with(Dashboard.this, imagesList)
-                        .setToolbarColorResId(R.color.colorPrimaryDark)
+                        .setToolbarColorResId(R.color.colorPrimary)
                         .setTitle("Asistio")
                         .setToolbarTitleColor(ZColor.WHITE)
                         .setSpanCount(3)
