@@ -14,12 +14,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Asistio"
         android:textColor="#fff"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp"
-        />
+        android:textStyle="bold" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="96dp"
@@ -33,16 +33,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:textColor="#ffff"
         android:text="@string/nav_header_title"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#ffff"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/profile_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:text="@string/nav_header_subtitle" />
+        android:text="@string/nav_header_subtitle"
+        android:textColor="#fff" />
 
 </LinearLayout>

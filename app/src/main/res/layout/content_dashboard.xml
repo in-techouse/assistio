@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:toggle="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#E4E4E4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E4E4E4"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_dashboard">
 
@@ -25,9 +25,9 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:text="@string/sync"
+            android:textColor="@color/colorPrimary"
             android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary" />
+            android:textStyle="bold" />
 
         <com.zcw.togglebutton.ToggleButton
             android:id="@+id/toggleButton"
@@ -71,10 +71,10 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:src="@drawable/contacts"
-                        android:layout_gravity="center"
                         android:layout_width="65dp"
-                        android:layout_height="65dp"/>
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/contacts" />
 
 
                     <TextView
@@ -107,10 +107,10 @@
 
 
                     <ImageView
-                        android:src="@drawable/document"
-                        android:layout_gravity="center"
                         android:layout_width="65dp"
-                        android:layout_height="65dp"/>
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/document" />
 
 
                     <TextView
@@ -118,8 +118,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
-                        android:textAlignment="center"
                         android:text="Documents"
+                        android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -152,10 +152,10 @@
 
 
                     <ImageView
-                        android:src="@drawable/images"
-                        android:layout_gravity="center"
                         android:layout_width="65dp"
-                        android:layout_height="65dp"/>
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/images" />
 
 
                     <TextView
@@ -186,10 +186,10 @@
 
 
                     <ImageView
-                        android:src="@drawable/videos"
-                        android:layout_gravity="center"
                         android:layout_width="65dp"
-                        android:layout_height="65dp"/>
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/videos" />
 
 
                     <TextView
@@ -197,8 +197,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
-                        android:textAlignment="center"
                         android:text="Videos"
+                        android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -227,18 +227,18 @@
 
 
                     <ImageView
-                        android:src="@drawable/audio"
-                        android:layout_gravity="center"
                         android:layout_width="65dp"
-                        android:layout_height="65dp"/>
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/audio" />
 
                     <TextView
                         android:id="@+id/audios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
-                        android:textAlignment="center"
                         android:text="Audios"
+                        android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -258,18 +258,18 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:src="@drawable/notes"
-                        android:layout_gravity="center"
                         android:layout_width="65dp"
-                        android:layout_height="65dp"/>
+                        android:layout_height="65dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/notes" />
 
                     <TextView
                         android:id="@+id/notes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/mp_8"
-                        android:textAlignment="center"
                         android:text="Notes"
+                        android:textAlignment="center"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20dp"
                         android:textStyle="bold" />

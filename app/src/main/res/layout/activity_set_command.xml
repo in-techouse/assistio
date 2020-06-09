@@ -4,25 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
     tools:context=".activities.SetCommand">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/set_command"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        app:titleTextColor="@color/white"
-        android:id="@+id/set_command"
         android:theme="@style/ToolbarStyle.DotsDarkTheme"
-        >
-    </androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@color/white" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="10dp"
         android:padding="@dimen/HeadingPadding"
         app:passwordToggleEnabled="true">
@@ -41,11 +39,11 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/button_background"
         android:layout_marginTop="25dp"
-        android:textColor="#ffff"
+        android:background="@drawable/button_background"
         android:padding="@dimen/HeadingPadding"
-        android:text="@string/set" />
+        android:text="@string/set"
+        android:textColor="#ffff" />
 
     <ProgressBar
         android:id="@+id/setKey_Progress"

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.ShowSingleVideo">
 
-
     <include
         layout="@layout/mk_player"
         android:layout_width="match_parent"

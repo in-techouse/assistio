@@ -20,11 +20,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/padding"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
             android:text="@string/profile_page"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding"
                 android:layout_weight="1"
-                android:inputType="textPersonName"
                 android:background="@drawable/transparent"
+                android:inputType="textPersonName"
                 android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding"
                 android:layout_weight="1"
-                android:outlineProvider="none"
                 android:background="@drawable/transparent"
                 android:inputType="textPersonName"
+                android:outlineProvider="none"
                 android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,9 +67,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
-                android:outlineProvider="none"
                 android:background="@drawable/transparent"
                 android:inputType="phone"
+                android:outlineProvider="none"
                 android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,12 +83,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding"
-                android:outlineProvider="none"
                 android:layout_weight="1"
-                android:focusable="false"
                 android:background="@drawable/transparent"
+                android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:inputType="textEmailAddress"
+                android:outlineProvider="none"
                 android:padding="@dimen/padding" />
         </com.google.android.material.textfield.TextInputLayout>
 

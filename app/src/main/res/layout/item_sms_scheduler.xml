@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -30,10 +30,10 @@
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:layout_marginStart="@dimen/mp_8"
             android:layout_marginTop="@dimen/mp_3"
-            android:layout_marginEnd="@dimen/mp_8" />
+            android:layout_marginEnd="@dimen/mp_8"
+            android:textColor="#000" />
 
         <View
             android:layout_width="match_parent"
@@ -59,8 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mp_8"
             android:layout_marginTop="@dimen/mp_3"
-            android:textColor="#000"
-            android:layout_marginEnd="@dimen/mp_8" />
+            android:layout_marginEnd="@dimen/mp_8"
+            android:textColor="#000" />
 
         <View
             android:layout_width="match_parent"
@@ -86,8 +86,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mp_8"
             android:layout_marginTop="@dimen/mp_3"
-            android:textColor="#000"
-            android:layout_marginEnd="@dimen/mp_8" />
+            android:layout_marginEnd="@dimen/mp_8"
+            android:textColor="#000" />
 
         <View
             android:layout_width="match_parent"

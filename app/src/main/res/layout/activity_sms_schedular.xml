@@ -1,85 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     tools:context=".activities.SmsScheduler">
+
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/schedular_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        app:titleTextColor="@color/white"
-        android:id="@+id/schedular_toolbar"
         android:theme="@style/ToolbarStyle.DotsDarkTheme"
-        >
-    </androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@color/white" />
 
     <EditText
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="top|start"
         android:layout_below="@+id/schedular_toolbar"
+        android:layout_margin="20dp"
+        android:background="@drawable/transparent"
+        android:gravity="top|start"
         android:hint="@string/message"
         android:inputType="textMultiLine"
-        android:background="@drawable/transparent"
-        android:paddingTop="5dp"
-        android:paddingLeft="13dp"
-        android:paddingBottom="8dp"
         android:maxLines="5"
+        android:paddingLeft="13dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="8dp"
         android:scrollbars="vertical" />
+
     <RelativeLayout
+        android:id="@+id/select_timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/select_timer"
-        android:layout_below="@+id/message"
-        >
+        android:layout_below="@+id/message">
 
         <TextView
             android:id="@+id/date"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="5dp"
             android:text="Date"
+            android:textColor="@color/colorAccent"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginStart="25dp"
-            android:textColor="@color/colorAccent"
             tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/select_date"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginRight="25dp"
-            android:layout_alignParentEnd="true"
             android:src="@drawable/ic_today_black_24dp" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Time"
-            android:layout_marginTop="20dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:layout_below="@+id/date"
             android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Time"
             android:textColor="@color/colorAccent"
-            />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/select_time"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_below="@+id/date"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="18dp"
             android:layout_marginRight="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/date"
             android:src="@drawable/ic_timer_black_24dp" />
 
     </RelativeLayout>
@@ -99,11 +97,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColor="@color/colorPrimary"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold"
+            android:text="Select Contacts"
+            android:textColor="@color/colorPrimary"
             android:textSize="16dp"
-            android:text="Select Contacts" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/select_contacts"

@@ -1,13 +1,17 @@
 package lcwu.fyp.asistio.services;
 
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import lcwu.fyp.asistio.R;
 import lcwu.fyp.asistio.activities.Dashboard;
 import lcwu.fyp.asistio.director.Session;
 import lcwu.fyp.asistio.model.User;
@@ -63,6 +68,22 @@ public class ScanMediaService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "1");
+        builder.setTicker("SYNCING IS ON");
+        builder.setAutoCancel(true);
+        builder.setChannelId("1");
+        builder.setContentInfo("SYNCING IS ON");
+        builder.setContentTitle("SYNCING IS ON");
+        builder.setContentText("Your data is being synced.");
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        builder.build();
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.notify(10, builder.build());
+        }
+
         session = new Session(this);
         user = session.getUser();
         reference = FirebaseDatabase.getInstance().getReference().child("UserFiles").child(user.getId());

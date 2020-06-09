@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:padding="16dp"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/flag"

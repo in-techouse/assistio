@@ -24,8 +24,8 @@
         android:id="@+id/dateTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:layout_marginBottom="@dimen/mp_10" />
+        android:layout_marginBottom="@dimen/mp_10"
+        android:textColor="#000" />
 
     <TextView
         android:layout_width="match_parent"
@@ -40,8 +40,8 @@
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:layout_marginBottom="@dimen/mp_10" />
+        android:layout_marginBottom="@dimen/mp_10"
+        android:textColor="#000" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,22 +49,22 @@
         android:padding="@dimen/mp_5">
 
         <TextView
-            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:text="Brand"
             android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:textColor="#000" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -73,22 +73,22 @@
         android:padding="@dimen/mp_5">
 
         <TextView
-            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:text="Model"
             android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/model"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:textColor="#000" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -97,31 +97,31 @@
         android:padding="@dimen/mp_5">
 
         <TextView
-            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:text="Serial Number"
             android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/serialNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:textColor="#000" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/close"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:background="@color/colorPrimary"
         android:text="CLOSE"
-        android:layout_gravity="center_horizontal"
         android:textColor="@color/colorWhite"
         android:textStyle="bold" />
 

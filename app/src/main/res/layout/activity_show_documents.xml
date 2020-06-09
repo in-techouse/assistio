@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.ShowDocuments">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/documents_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        app:titleTextColor="@color/white"
-        android:id="@+id/documents_toolbar"
         android:theme="@style/ToolbarStyle.DotsDarkTheme"
-        >
-    </androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDocView"
-        android:padding="16dp"
-        android:layout_below="@+id/documents_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/documents_toolbar"
+        android:padding="16dp" />
 
 </RelativeLayout>
