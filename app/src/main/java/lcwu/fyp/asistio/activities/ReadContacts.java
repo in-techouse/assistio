@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,11 +44,21 @@ public class ReadContacts extends AppCompatActivity implements View.OnClickListe
     private ProgressBar progress;
     private ContactAdapter adapter;
     private Helpers helpers;
+    private Toolbar contactsTool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_contacts);
+
+        contactsTool=findViewById(R.id.contactsTool);
+
+        setSupportActionBar(contactsTool);
+        getSupportActionBar().setTitle("Contacts");
+        contactsTool.setTitleTextColor(Color.WHITE);
+        contactsTool.setSubtitleTextColor(Color.WHITE);
+
+
 
         contacts = findViewById(R.id.contacts);
         progress = findViewById(R.id.progress);

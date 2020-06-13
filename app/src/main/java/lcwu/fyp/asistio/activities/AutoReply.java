@@ -55,6 +55,9 @@ public class AutoReply extends AppCompatActivity implements View.OnClickListener
 
         setSupportActionBar(autoToolbar);
         getSupportActionBar().setTitle("Auto Reply");
+
+        autoToolbar.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         helpers = new Helpers();
         Session session = new Session(getApplicationContext());
         user = session.getUser();

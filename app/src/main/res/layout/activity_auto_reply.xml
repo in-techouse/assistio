@@ -8,13 +8,15 @@
     tools:context=".activities.AutoReply">
 
     <androidx.appcompat.widget.Toolbar
+
         android:id="@+id/auto_reply_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         android:theme="@style/ToolbarStyle.DotsDarkTheme"
         app:subtitleTextColor="@color/white"
-        app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@color/white">
+
+    </androidx.appcompat.widget.Toolbar>
 
     <EditText
         android:id="@+id/message"

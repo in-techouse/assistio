@@ -10,12 +10,18 @@ import lcwu.fyp.asistio.R;
 
 public class ShowNotes extends AppCompatActivity {
 
-
+    Toolbar notes_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_notes);
+
+        notes_toolbar = findViewById(R.id.notes_toolbar);
+
+
+        setSupportActionBar(notes_toolbar);
+        getSupportActionBar().setTitle("Notes");
 
 
     }

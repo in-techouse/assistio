@@ -100,7 +100,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-            android:text="No one? Create new account"
+            android:text="@string/no_one_create_new_account"
             android:textSize="16dp" />
     </RelativeLayout>
 

@@ -38,6 +38,9 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
         setSupportActionBar(forgot_pass);
         getSupportActionBar().setTitle("Forgot Password");
+
+        forgot_pass.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         edtEmail = findViewById(R.id.edtEmail);
         NewPassword = findViewById(R.id.NewPassword);
         change_Password = findViewById(R.id.change_Password);

@@ -2,14 +2,11 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
    <gradient
+       android:angle="360"
+       android:type="linear"
        android:startColor="#5A64EA"
        android:endColor="#00C9D7"
        />
-    <padding
-        android:bottom="2dp"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="2dp" />
 
     <corners android:radius="5dp" />
 </shape>

@@ -52,6 +52,8 @@ public class SpeechNotes extends AppCompatActivity implements View.OnClickListen
         setSupportActionBar(speechToolbar);
         getSupportActionBar().setTitle("Speech Notes");
 
+        speechToolbar.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         Button record = findViewById(R.id.record);
         save = findViewById(R.id.save);
         txt = findViewById(R.id.txt);

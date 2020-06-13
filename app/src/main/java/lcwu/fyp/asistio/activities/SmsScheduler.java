@@ -69,6 +69,8 @@ public class SmsScheduler extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(schedular_toolbar);
         getSupportActionBar().setTitle("SMS Scheduler");
 
+       schedular_toolbar.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         helpers = new Helpers();
         session = new Session(getApplicationContext());
         user = session.getUser();

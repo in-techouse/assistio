@@ -58,6 +58,8 @@ public class ShowContacts extends AppCompatActivity {
         setSupportActionBar(contacts_toolbar);
         getSupportActionBar().setTitle("Contacts");
 
+        contacts_toolbar.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         loading = findViewById(R.id.loading);
         contacts = findViewById(R.id.contacts);
         contactList = new ArrayList<>();

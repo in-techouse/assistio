@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgotPassword.setOnClickListener(this);
 
         //Format the text
-        String formattedText = "<font color='#0000'>No one?</font> <b><font color='#00C8D7'>Create new account.</font></b>";
+        String formattedText = "<font color='#0000'>No one?</font> <b><font color='#00AEEF'>Create new account.</font></b>";
         // or getString(R.string.htmlFormattedText);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

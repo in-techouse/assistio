@@ -29,6 +29,8 @@ public class ShowVideos extends AppCompatActivity {
         setSupportActionBar(videos_toolbar);
         getSupportActionBar().setTitle("Videos");
 
+        videos_toolbar.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         Intent it = getIntent();
         if (it == null) {
             finish();

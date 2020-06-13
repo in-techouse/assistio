@@ -23,6 +23,8 @@ public class MobileModel extends AppCompatActivity {
         setSupportActionBar(mobile_model);
         getSupportActionBar().setTitle("Mobile Model");
 
+        mobile_model.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         TextView brand = findViewById(R.id.brand);
         TextView model = findViewById(R.id.model);
         TextView serialNumber = findViewById(R.id.serialNumber);

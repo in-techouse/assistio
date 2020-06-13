@@ -46,6 +46,8 @@ public class SetCommand extends AppCompatActivity implements View.OnClickListene
         setSupportActionBar(set_command);
         getSupportActionBar().setTitle("Set Command");
 
+        set_command.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         helpers = new Helpers();
         edtKey = findViewById(R.id.edtKey);
         btn_key = findViewById(R.id.btn_key);

@@ -8,7 +8,7 @@
     tools:context=".activities.ShowAudios">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/audios_toolbar"
+        android:id="@+id/notes_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"

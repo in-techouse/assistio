@@ -30,6 +30,8 @@ public class ShowDocuments extends AppCompatActivity {
         setSupportActionBar(documents_toolbar);
         getSupportActionBar().setTitle("Documents");
 
+        documents_toolbar.setBackground(getResources().getDrawable(R.drawable.mygradient));
+
         Intent it = getIntent();
         if (it == null) {
             finish();
